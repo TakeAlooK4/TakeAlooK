@@ -1,0 +1,557 @@
+
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>상품 detail 페이지</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="/royal/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/royal/css/animate.css">
+    
+    <link rel="stylesheet" href="/royal/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/royal/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/royal/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/royal/css/aos.css">
+
+    <link rel="stylesheet" href="/royal/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/royal/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/royal/css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="/royal/css/flaticon.css">
+    <link rel="stylesheet" href="/royal/css/icomoon.css">
+    <link rel="stylesheet" href="/royal/css/style.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+//
+	$(window).scroll(function(){ 
+	    var height = $(document).scrollTop(); //실시간으로 스크롤의 높이를 측정
+	    if(height > 0){ 
+	      $('#followquick').addClass('fixinner'); 
+	    }else if(height == 0){ 
+	      $('#followquick').removeClass('fixinner'); 
+	    } 
+	  });
+});
+
+//dialog box 테그 
+$(function(){
+    $("#contentQuestion").dialog({
+    	title:'글쓰기',
+    	width: '700',
+    	height:'450',
+        autoOpen:false, //자동으로 열리지않게
+        position:[100,200], //x,y  값을 지정
+        //"center", "left", "right", "top", "bottom"
+        modal:true, //모달대화상자
+        resizable:false, //크기 조절 못하게
+		buttons: [
+			{
+				text: "OK",
+				click: function() {
+					var check = confirm("글을 등록하시겠습니까?");
+					
+					if(check==true){
+					var prNo = $("#prNo").val();
+			    	var question = $("#questionContent").val();
+			    	var nickname = $("#writer2").val();
+			    	
+			    	alert(nickname);
+					$.ajax({
+						url:"/questionInsert.do",
+						data:{
+							product:prNo,
+							pQcomment:question,
+							user:nickname
+						},
+						datatype:"json",
+							success:function(data){
+							
+
+						}
+					});
+					$(this).dialog("close");
+				}else{  					
+	   					$(this).dialog("close");
+					
+				}
+				}
+			},
+			{
+				text: "Cancel",
+				click: function() {
+					console.log("You pressed Cancel!");
+					$(this).dialog("close");
+				}
+			}
+		]
+});  
+    //창 열기 버튼을 클릭했을경우
+    $("#btn2").on("click",function(){
+    	alert('111111');
+       var nickname = $("#writer").val();
+       var companyName = $("#companyWriter").val();
+       
+       if(nickname!=null || companyName!= null){
+    	$("#contentQuestion").dialog("open"); //다이얼로그창 오픈                
+       } else{
+    		   alert("로그인 해주세요");
+    	   location.href="/memberLogin";
+    	 }
+      
+       });
+});
+///////////////////////////////////////
+$(function(){	
+
+	
+	$("#buyBtn").on('click',function(){
+		var nickname = $("#writer").val();
+		if(nickname==null){
+			alert("로그인이 필요합니다.");
+			 location.href="/memberLogin";
+		}else{
+		var check = confirm("구매 하시겠습니까?");
+		if(check==true){
+		var prNo= $("#prNo").val();
+		var cartAmount = $("#cartAmount").val();
+		var nickname = $("#writer").val();
+				
+		$.ajax({
+			url:"/insertCart.do",
+			data:{
+				prNo:prNo,
+				cartAmount:cartAmount,
+				nickname:nickname
+			},
+			datatype:"json",
+			success:function(data){
+					if(check){
+						location.href="/productCartPage";
+					}
+			}
+			});
+		}else{
+			
+			}
+		}
+			
+		});
+	
+});	
+	
+	
+	
+	
+//장바구니에 데이터 넣기	
+$(function(){
+	$("#cartBtn").on('click',function(){
+		var nickname = $("#writer").val();
+		
+		if(nickname==null){
+			alert("로그인이 필요합니다.");
+			 location.href="/memberLogin";
+		}else{
+		var check = confirm("장구니에 담으시겠습니까?.");
+		if(check==true){
+				
+		var prNo= $("#prNo").val();
+		var cartAmount = $("#cartAmount").val();
+		var nickname = $("#writer").val();
+		$.ajax({
+			url:"/insertCart.do",
+			data:{
+				prNo:prNo,
+				cartAmount:cartAmount,
+				nickname:nickname
+			},
+			datatype:"json",
+			success:function(data){
+					alert("장바구니에 추가 되었습니다.");
+					}
+		});
+		
+			
+		}
+		}
+	
+		});
+});
+
+	// dialog 사용 하는 jquery
+$(function(){
+	        $("#content").dialog({
+	        	title:'글쓰기',
+	        	width: '700',
+	        	height:'450',
+	            autoOpen:false, //자동으로 열리지않게
+	            position:[100,200], //x,y  값을 지정
+	            //"center", "left", "right", "top", "bottom"
+	            modal:true, //모달대화상자
+	            resizable:false, //크기 조절 못하게
+	    		buttons: [
+	    			{
+	    				text: "OK",
+	    				click: function() {
+							var check = confirm("글을 등록하시겠습니까?");
+							
+						if(check==true){	
+	    					var prNo = $("#prNo").val();
+	    			    	var review = $("#reviewContent").val();
+	    			    	var nickname = $("#writer").val();
+	    			    	alert(nickname);
+	    					$.ajax({
+	    						url:"/reviewInsert.do",
+	    						data:{
+	    							product:prNo,
+	    							review:review,
+	    							user:nickname
+	    						},
+	    						datatype:"json",
+	    							success:function(data){
+	    						
+	    						}
+	    					});
+			   					$(this).dialog("close");
+	    				}else{
+	    					$(this).dialog("close");
+	    				}
+	    				}
+	    			},
+	    			{
+	    				text: "Cancel",
+	    				click: function() {
+	    					console.log("You pressed Cancel!");
+	    					$(this).dialog("close");
+	    				}
+	    			}
+	    		]
+	    });
+});
+	    //창 열기 버튼을 클릭했을경우
+$(function(){	    
+	    $("#btn").on("click",function(){
+	    	alert('2222');
+	       var nickname = $("#writer").val();
+	       var companyName = $("#companyWriter").val();
+	       
+	       if(nickname!=null || companyName!= null){
+	    	$("#content").dialog("open"); //다이얼로그창 오픈                
+	       } else{
+	    		   alert("로그인 해주세요");
+	    	   location.href="/memberLogin";
+	    	 }
+	       if(companyName!=null || nickname!=null){
+	   	    	$("#content").dialog("open"); //다이얼로그창 오픈     
+	    	}
+	       else{
+	    		   alert("로그인 해주세요");
+	    	   location.href="/memberLogin";
+	    	   }
+	    	   
+	       });
+
+	});	
+
+// ////////////////////결제 ////////////////////////////////////////////
+
+// 		var IMP = window.IMP; // 생략가능
+// 		IMP.init('imp12160241'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+		
+// 		IMP.request_pay({
+// 		    pg : 'kakaopay', // version 1.1.0부터 지원.
+// 		    pay_method : 'card',
+// 		    merchant_uid : 'merchant_' + new Date().getTime(),
+// 		    name : '결제 페이지',
+// 		    amount : '',
+// 		    buyer_email : 'cjj105301@naver.com',
+// 		    buyer_name : '구매자이름',
+// 		    buyer_tel : '010-1234-5678',
+// 		    buyer_addr : '서울특별시 강남구 삼성동',
+// 		    buyer_postcode : '123-456',
+// 		    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+// 		}, function(rsp) {
+// 		    if ( rsp.success ) {
+// 		        var msg = '결제가 완료되었습니다.';
+// 		        msg += '고유ID : ' + rsp.imp_uid;
+// 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+// 		        msg += '결제 금액 : ' + rsp.paid_amount;
+// 		        msg += '카드 승인번호 : ' + rsp.apply_num;
+// 		    } else {
+// 		        var msg = '결제에 실패하였습니다.';
+// 		        msg += '에러내용 : ' + rsp.error_msg;
+// 		    }
+// 		    alert(msg);
+// 		});
+
+
+
+</script>
+
+<style type="text/css">
+#cartAmount{
+	    margin-left: 14%;
+}
+#detailAll{
+	padding-top: 50px;
+  		margin-left: 9%; 
+  		margin-right: 9%; 
+
+}
+#menu1{
+	    text-align: center;
+}
+
+#detailInfo{
+padding-top: 15px;
+}
+#detail{
+    padding-top: 190px;
+}
+
+
+
+#detailTable1{
+	padding-top: 0;
+	width: 50%;
+	margin-left: 33%;
+}
+#detailTable2{
+	border-bottom :groove;
+	width: 515px;
+    height: 94px;
+}
+
+#cartBtn{
+	
+	
+	width: 255px;
+	height: 50px;
+	background-color:saddlebrown;
+	color: white;
+}
+#buyBtn{
+	
+	width: 254px;
+	height: 50px;
+	background-color:saddlebrown;
+	color: white;
+}
+
+#btn_Warp{
+	text-align: center;
+}
+#followquick { 
+
+		position:absolute; 
+		top:850px;
+		width: 2000px;
+		height:150px;
+		background: white;
+		list-style: none;
+		margin: 0;
+		}
+
+#followquick.fixinner{
+	position:fixed;
+	top:0;
+}
+
+#followquick li{
+		float: left;
+		margin-right: 200px;
+	padding-top: 50px;
+}
+
+
+#followquick li a{
+	font-size:45px;
+	color:black;
+	font-weight:bold;
+	text-decoration:none;
+}
+#cartImg{
+	    padding-right: 10%;
+}
+</style>
+</head>
+<body>
+<th:block th:include="header.html">
+</th:block>
+
+
+<!-- main 내용 -->
+<div id="detailAll">
+		<input type="hidden" id="prNo" name="prNo" th:value="${product.prNo}">
+	<div id="detailTable1">
+		
+			<div>
+				<img th:src="${product.mainImg01}" width="600" height="450" id="cartImg">
+				<div id="detailTable2">
+					 <div style="padding-left: 13%;">
+						 <div>상품명  :
+						<a th:text="${product.prName}" style="margin-left: 4%;"></a></div>
+					 </div>
+					 <div style="text-align: center;">
+					 	<div style="padding-right: 24.5%;">가격 : 
+						 <a th:text="${product.prCost}+원" style="margin-left: 30%;"></a></div>
+					 </div>
+					<div id="cartAmountPosition">
+						<div style="padding-left: 16%;">수량 :<input type="number" id="cartAmount" name="cartAmount">&nbsp; 개
+						</div>
+					</div>	
+				</div>
+			</div>
+
+				<input type="button" id="buyBtn" value="구매 하기" > 
+				<input type="button" id="cartBtn" value="장바구니"  >
+		
+			
+	</div>	
+		
+		
+<div id="followquick_wrap">
+	<ul id="followquick">
+	
+			<li><a href="#menu1">상세 내용</a></li>
+			<li><a href="#menu2">상품 후기</a></li>
+			<li><a href="#menu3">상품 문의</a></li>
+			<li><a href="#menu4">배송 안내</a></li>
+	</ul>
+</div>
+<br><br><br><br><br><br>
+<h2 id="detailInfo">상세 내용</h2>
+<hr>
+		<div id="menu1">
+		 	<img th:src="${product.detailImg01}">
+		</div>
+		
+<br><br><br><br><br><br>
+<h2 id="review">구매 후기</h2>
+<hr>
+
+<!-- dialog로 나오는 부분 -->
+<div id="menu2">
+<button id="btn" >구매후기 쓰기</button>
+<div id="content">
+	<table >
+		<tbody>
+			<tr>
+				<th>
+					이름 :
+ 				</th>
+ 				<td>
+ 					<label  for="name"  th:if="${session['muser'] != null}">
+ 					<span style="color: black;" th:text="${session['muser'].nickname}"></span>
+ 					<input type="hidden" th:value="${session['muser'].nickname}" id="writer" name="writer">
+ 					</label>
+ 					<label  for="name1"  th:if="${session['company'] != null}">
+ 					<span style="color: black;" th:text="${session['company'].cName}"></span>
+ 					<input type="hidden" th:value="${session['company'].cName}" id="companyWriter" name="companyWriter">
+ 					</label>
+ 				</td>
+			</tr>
+						<tr>
+				<th>
+					내용 입력 :
+ 				</th>
+ 				<td>
+ 					<textarea rows="10px" cols="50px" id="reviewContent"></textarea>
+ 				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div th:each="reviewList:${reviewList}">
+	<div th:if="${reviewList.review != null}">
+		<div>
+			<input type="hidden" th:value="${reviewList.reviewNo}"></span>
+			닉네임 : <span th:text="${reviewList.user.nickname}"></span>
+		</div>
+		<div>
+			-<span th:text="${reviewList.review}"></span>
+		</div>
+	
+	</div>
+</div>
+<hr><br>
+<!-- 문의글 DIALOG -->
+</div>
+<div id="menu3">
+<h2>상품 문의</h2>
+<hr>
+<button id="btn2" >상품 문의 등록</button>
+<div id="contentQuestion">
+	<table >
+		<tbody>
+			<tr>
+				<th>
+					이름 :
+ 				</th>
+ 				<td>
+ 					<label  for="name"  th:if="${session['muser'] != null}">
+ 					<span style="color: black;" th:text="${session['muser'].nickname}"></span>
+ 					<input type="hidden" th:value="${session['muser'].nickname}" id="writer2" name="writer2">
+ 					</label>
+ 					<label  for="name1"  th:if="${session['company'] != null}">
+ 					<span style="color: black;" th:text="${session['company'].cName}"></span>
+ 					<input type="hidden" th:value="${session['company'].cName}" id="companyWriter" name="companyWriter">
+ 					</label>
+ 				</td>
+			</tr>
+						<tr>
+				<th>
+					내용 입력 :
+ 				</th>
+ 				<td>
+ 					<textarea rows="10px" cols="50px" id="questionContent"></textarea>
+ 				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div th:each="questionList:${questionList}">
+	<div th:if="${questionList.pQno != null}">
+		<div>
+			<input type="hidden" th:value="${questionList.pQno}"></span>
+			<span th:text="${questionList.user.nickname}"></span>
+		</div>
+		<div>
+			<span th:text="${questionList.pQcomment}"></span>
+		</div>
+	
+	</div>
+</div>
+<hr>
+</div>
+<br><br><br><br><br><br>
+<div id="menu4">
+<h2>배송 정보</h2>
+<hr>
+			<label>서비스 상품</label>
+					<p>
+					동물병원의 모든 상품의 경우에는 고객변심, 수술불가 또는 보류로 인한 모든 사유의 환불 요청시 구매 후 30일 이내에 100% 전액 환불이 가능합니다.<br>
+					동물병원 외의 카페,호텔링,교육,미용,목욕 그 외의 서비스의 경우에는 구매 후 7일 이내에 100% 전액 환불이 가능합니다.<br>
+					식품,용품의 경우에는 해당 업체의 환불 및 교환 정책에 따릅니다.<br>
+					이미 사용하였거나 카테고리별 구매 이후 해당 기간이 지난 상품은 본 환불규정에서 제외됩니다.<br>
+					유효기간이 따로 정해진 이벤트성 상품의 경우, 유효기간 지난 이후 70% 환불가능합니다.(병원상품 포함)결제일로부터 7일이 지난 동물병원 이외의 상품의 단순변심/개인사정으로 인한 환불은 70% 환불가능합니다.<br>
+					결제일로부터 1년이 경과한 상품은 소멸되어 환불이 불가합니다.<br>
+					</p>
+				<label>배송 상품</label>
+					<p>
+					배송 상품의 경우, 해당업체들이 정한 교환 및 환불 정책에 따릅니다.<br>
+					구매하신 해당상품의 상세페이지 하단 내용을 참고하여 주시기 바랍니다.<br>상품이 훼손되었거나 상품가치가 떨어진 경우에는 환불 및 교환 불가 합니다.<br>
+					제품의 하자가 있는 경우에 한하여 상품 수령일로부터 7일 이내에 1:1 문의로 교환 및 환불 진행을 신청하실 수 있으며,<br>
+					비회원 구매고객께서는 고객센터로 연락을 주셔서 환불 신청을 하실 수 있습니다.
+					</p>
+		</div>
+</div>
+</body>
+</html>

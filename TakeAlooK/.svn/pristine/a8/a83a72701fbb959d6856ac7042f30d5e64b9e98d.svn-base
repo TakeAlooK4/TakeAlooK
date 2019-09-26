@@ -1,0 +1,79 @@
+package com.bit.tak.model.vo.host;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.bit.tak.model.vo.member.User;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@Entity
+public class Host {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "host_no")
+	private int hostNo;
+	
+	@ManyToOne
+	@JoinColumn(name = "nickname", nullable = false)
+	private User nickname;
+	
+	@Column(name = "host_title")
+	private String hostTitle;
+	
+	@Column(name = "host_recruit")
+	private Date hostRecruit;
+	
+	@Column(name = "host_deadline")
+	private Date hostDeadline;
+	
+	@Column(name = "host_startdate")
+	private Date hostStartdate;
+	
+	@Column(name = "host_arrivaldate")
+	private Date hostArrivaldate;
+	
+	@Column(name = "host_participant")
+	private int hostParticipant;
+	
+	@Column(name = "host_totalparticipant")
+	private int hostTotalparticipant;
+	
+	@Column(name = "host_cost")
+	private int hostCost;
+	
+	@Column(name = "host_size")
+	private String hostSize;
+	
+	@Column(name = "host_place")
+	private String hostPlace;
+	
+	@Column(name = "host_contents")
+	private String hostContents;
+	
+	@Column(name = "host_gpa")
+	private int hostGpa;
+	
+	@Temporal(value = TemporalType.TIMESTAMP)
+	@Column(name = "host_date")
+	private Date hostDate;
+	
+	@Column(name = "host_hit")
+	private int hostHit;
+	
+	@Column(name = "host_manager")
+	private boolean hostManager;
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>모임 메인</title>
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+//버튼부터 작동되게
+$(document).ready(function(){	
+	   $( ".moveButton" ).on( "click", function() {
+		alert("만들러 함갈까?");
+		var move = $(event.target).attr("id");
+		
+		if(move=="writing"){
+			location.href = "/hostWriting";
+		}else if(move=="detail"){
+			location.href = "/hostDetail";
+		}
+		
+	});
+	
+	
+});
+</script>
+</head>
+<body>
+	<header> 머리입니다 자라나라 머리머리 </header>
+
+	<!-- select 공간 -->
+
+	<div>
+		<table title="selectOption" border="1">
+			<tr>
+				<th>서울</th>
+				<th>부산</th>
+				<th>광주</th>
+				<th>대전</th>
+				<th>대구</th>
+			</tr>
+			<tr>
+				<th>경기도</th>
+				<th>경상도</th>
+				<th>강원도</th>
+				<th>충청도</th>
+				<th>전라도</th>
+			</tr>
+			<tr>
+				<th>주중</th>
+				<th>주말</th>
+				<th>대형견</th>
+				<th>중형견</th>
+				<th>소형견</th>
+			</tr>
+		</table>
+		
+	</div>
+	
+		<input type='button' id="writing" value='모임 만들기' name="moveButton" />	
+	
+	
+	<!-- 모임 ---------------------------------------------------------------------------->
+	<div>
+		<table title="host">
+			<thead>
+				<tr valign="top">
+					사진부분
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr>
+					<th>제목</th>
+					<th>얍</th>
+				</tr>
+				<tr>
+					<td>날짜</td>
+					<td>얍</td>
+				</tr>
+				<tr>
+					<td>장소</td>
+					<td>얍</td>
+				</tr>
+				<tr>
+					<td>유형</td>
+					<td>얍</td>
+				</tr>
+				<tr>
+					<td>참가비</td>
+					<td>얍</td>
+				</tr>
+				<tr>
+					<td><input type="button" id="detail" value="자세히" name="moveButton" ></td>
+				</tr>
+			</tbody>		
+		</table>
+	
+	</div>
+	
+	
+		
+	
+
+
+
+
+
+
+	<footer> 발입니다 아 그랬냐~ 발발이 치와와 </footer>
+</body>
+</html>

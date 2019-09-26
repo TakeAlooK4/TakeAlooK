@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 로그인 페이지</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<script type="text/javascript">
+// 아이디 비밀번호 일치 / 불일치 체크
+	$(function(){
+		var checkId = $("#checkId").val();
+		if(checkId) {
+			alert(checkId);			
+		}
+	});
+	
+// 기업아이디 비밀번호 찾기 팝업
+	function searchPopUp() {
+		var screenW = screen.availWidth;	// 스크린 가로사이즈
+		var screenH = screen.availHeight;	// 스크린 세로사이즈
+		var popW = 650;	// 띄울창의 가로사이즈
+		var popH = 350; // 띄울창의 세로사이즈
+		var posL = (screenW-popW)/ 2;	// 띄울창의 가로 포지션
+		var posT = (screenH-popH)/ 2;	// 띄울창의 세로 포지션
+		window.open("companySearchId", "정보찾기", "width="+ popW + ", height="+ popH + ",top="+ posT + ",left=" + posL + ",scrollbars=no, menubar=no, toolbar=no, status=no, location=no, resizable=no");
+	}
+	
+</script>
+</head>
+
+<!-- bootstrap include header 적용코드 -->
+<th:block th:include="/header"></th:block>
+
+<!-- <header class="headerMenu">
+	<div class="wrapper">
+		<h1 class="pageName"><a href="/">Take A looK</a></h1>
+				<ul class="menu">
+					<li><a th:href="memberLogin">로그인 /</a></li>
+					<li><a th:href="memberSignUp">회원가입 /</a></li>
+					<li><a th:href="myPage">마이페이지 /</a></li>
+					<li><a th:href="productCart">장바구니 /</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</div>
+</header> -->
+	
+<body th:align="center">
+	<br><br><br><br>
+	<input type="hidden" th:value="${msg}" id="checkId">	
+	<h1 align="center">Company Login</h1><br>
+	<form action="/companyLogin.do" method="post">
+		<div align="center">
+			<p><a href="memberLogin"><input type="button" value="개인회원"></a> | <input type="button" value="기업회원"></p><br>
+			<label for="id">COMPANY ID :</label> <input type="text" name="cNo" placeholder="사업자번호를 입력해주세요." required="required"><br>
+			<label for="pw">PASSWORD :</label> <input type="password" name="cPassword" placeholder="비밀번호를 입력해주세요." required="required"><br>
+		<p align="center">
+			<br><input type="submit" value="로그인">
+		</p>
+		<p><br><a href="/companyLogin" onclick="javascript:searchPopUp();">아이디 / 비밀번호 찾기 | </a><a href="companySignUp">회원가입</a></p>
+		</div>
+	</form>
+</body>
+<th:block th:include="/footer"></th:block>
+</html>

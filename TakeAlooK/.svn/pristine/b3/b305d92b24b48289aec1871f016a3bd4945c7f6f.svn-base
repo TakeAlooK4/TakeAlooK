@@ -1,0 +1,13 @@
+package com.bit.tak.model.repository;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import com.bit.tak.model.vo.member.Muser;
+
+@Repository
+public interface MemberRepo extends CrudRepository<Muser, String>{
+	@Query("SELECT u FROM Muser u where u.id = ?1 and u.password = ?2")
+	Muser findByUser(String id, String password);
+}

@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 고양이</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="/royal/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/royal/css/animate.css">
+    
+    <link rel="stylesheet" href="/royal/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/royal/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/royal/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/royal/css/aos.css">
+
+    <link rel="stylesheet" href="/royal/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/royal/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/royal/css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="/royal/css/flaticon.css">
+    <link rel="stylesheet" href="/royal/css/icomoon.css">
+    <link rel="stylesheet" href="/royal/css/style.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script type="text/javascript">
+//ss
+</script>
+
+<style type="text/css">
+	 
+	#costValue{
+		color: yellowgreen;
+	}
+	#mainList{
+		display: inline-block;  
+  		width : 24%; 
+  		text-align: center; 
+  		margin-right: 1%;
+	}
+
+	#titleHeight{
+		height: 153px;
+	}
+
+#mainList:nth-child(4n){margin-right:0;}
+</style>
+<title>상품 페이지</title>
+</head>
+<body>
+<th:block th:include="header.html">
+</th:block>
+<section class="petSection">
+<h2 class="titlej">PET PRODUCT</h2>
+<hr>
+<form id="mainPage" >	
+
+ <div id="menuList">	
+ 	<div>
+	<h1>
+			<a href="/productListDog.do" th:href="@{productListDog.do(animalType=D,pCode1=Dfc01,pCode2=Dfc02,pCode3=Dfc03)}" style="text-decoration: none;color: burlywood;">강아지
+			</a> |  
+ 			<a href="/productListCat.do" th:href="@{/productListCat.do(animalType=C,pCode1=Cfc01,pCode2=Cfc02,pCode3=Cfc03)}"  style="text-decoration: none;color: burlywood;">고양이</a>
+	</h1>
+ 	</div> 
+
+
+
+<div class="catMenu">	
+	<h2>| <a href="/productListCat.do" th:href="@{/productListCat.do(animalType=C,pCode1=Cfc01,pCode2=Cfc02,pCode3=Cfc03)}"  style="text-decoration: none;color: burlywood;">사료</a> 
+	| <a href="/productListCat.do" th:href="@{productListCat.do(animalType=c,pCode1=csn01,pCode2=csn02,pCode3=csn03)}" style="text-decoration: none;color: burlywood;">간식</a> 
+	| <a href="/productListCat.do" th:href="@{productListCat.do(animalType=c,pCode1=BAPc01,pCode2=BAFA02,pCode3=BAFA01)}" style="text-decoration: none;color: burlywood;">목욕/미용</a> 
+	| <a href="/productListCat.do" th:href="@{productListCat.do(animalType=c,pCode1=OPc01,pCode2=OPc02,pCode3=OPc03)}" style="text-decoration: none;color: burlywood;">기타 용품</a>
+	 |</h2>
+</div>	
+</div>
+  	<hr>
+
+		<div class="catList">	
+	<div class="properties">
+		<div th:each="product2:${productListCat}" id="mainList">
+		<div><input type=hidden id="animalType" class="animalType" th:value="${product2.animalType}"></div>
+		<div><input type=hidden th:value="${product2.prNo}"  ></div>
+    					<a href="property-single.html"  th:href="@{productDetailPage(prNo=${product2.prNo})}" >
+    					
+    					 <img th:src="|/upload/displayFile?fileName=/${product2.mainImg01}|"  style="width: 50%; height: 30%"></a>
+    					<div class="text p-3" id="titleHeight">
+    						
+    						<div class="d-flex">
+    							<div class="one">
+		    							<h3><a href="property-single.html" th:href="@{productDetailPage(prNo=${product2.prNo})}"><div  th:text ="${product2.prName}" ></div></a></h3>
+		    						<p>사료</p>
+	    						</div>
+	    						<div class="two" id="costValue">
+	    							<div  th:text="${product2.prCost}+원"></div>
+    							</div>
+    						</div>
+    						
+    						<hr>
+    					</div>
+    				</div>
+    			</div> 
+			</div>
+
+</div>
+</form>	
+</section>
+</body>
+<th:block th:include="/footer"></th:block>
+</html>
+

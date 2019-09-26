@@ -1,0 +1,43 @@
+package com.bit.tak.model.vo.dictionary;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.bit.tak.model.vo.member.Muser;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@Entity
+public class D_Comment {
+	
+	@Id
+	@Column(name = "dment_no")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int dMentNo;
+	
+	@ManyToOne
+	@JoinColumn(name = "dic_no", nullable = false)
+	private Dictionary dicNo;
+	
+	@ManyToOne
+	@JoinColumn(name = "nickname", nullable = false)
+	private Muser nickname;
+	
+	@Column(name = "dment_contents")
+	private String dMentContents;
+	
+	@Column(name = "dment_date")
+	private Date dMentDate;
+}

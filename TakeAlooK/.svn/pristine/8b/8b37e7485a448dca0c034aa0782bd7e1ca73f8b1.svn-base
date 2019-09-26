@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+
+// 	$(document).read(function(){
+// 		$(".catMenu2").hide(); 
+// 		$(".dogMenu1").show();
+		
+// 	$(".dog").click(function(){
+// 	 	var dogData =
+		
+// 		$.ajax({
+// 			url:"foodList.do",
+// 			data:{
+// 				dogData:dogData
+// 			},
+// 			datatype:"json",
+// 			success:function(data){
+	//s		
+// 				$(".menu2").hide();
+// 				$(".menu1").show();	
+// 				location.href="/productMain";
+// 			}
+// 		});
+// 	});
+	
+// 	$(".cat").click(function(){
+// 		var catData =
+		
+// 		$.ajax({
+// 			url:"foodList.do",
+// 			data:{
+// 				catData:catData
+// 			},
+// 			datatype:"json",
+// 			success:function(data){
+		
+// 				$(".menu1").hide();	
+// 				$(".menu2").show();
+// 				location.href="/productMain";
+// 				}
+// 			});
+// 		});
+// 	});
+
+					
+
+
+</script>
+<style type="text/css">
+  
+  	.feed li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+	
+	  	.snack li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+		  	.bueaty li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+
+</style>
+
+
+
+<title>상품 페이지</title>
+</head>
+<body>
+<header class="headerId">
+	<div class="wrapper">
+		<h1><a href="/">Take A looK</a></h1>
+			<nav>
+				<ul class="menu">
+					<li><a th:href="memberLogin">로그인 |</a></li>
+					<li><a th:href="memberSignUp">회원가입 |</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCart">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+			</nav>
+	</div>
+</header>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<form name="mainPage" >	
+
+	<h1>
+			<div >
+			<a href="/productListDog.do" th:href="@{productListDog.do(animalType=C,pCode1=Dfc01,pCode2=Dfc02,pCode3=Dfc03)}" style="text-decoration: none">강아지
+			</a> |  
+ 			<a href="/productListCat.do" th:href="@{/productListCat.do(animalType=C,pCode1=Cfc01,pCode2=Cfc02,pCode3=Cfc03)}"  style="text-decoration: none">고양이</a>
+ 	</div> 
+
+	</h1>
+
+
+	<div class="dogMenu">
+	<h2>| <a href="/productListDog.do" th:href="@{productListDog.do(animalType=C,pCode1=Dfc01,pCode2=Dfc02,pCode3=Dfc03)}" style="text-decoration: none">사료</a>
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=dsn01,pCode2=dsn02,pCode3=dsn03)}" style="text-decoration: none">간식</a> 
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=BAPD01,pCode2=BAPD02,pCode3=BAPD03)}" style="text-decoration: none">목욕/미용</a> 
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=OPD01,pCode2=OPD02,pCode3=OPD03)}" style="text-decoration: none">기타 용품</a> 
+	 |</h2>
+	</div>	
+
+
+  	<hr>
+
+	<h1>사료 </h1>
+	
+	<ul class="feed">
+		<li th:each="feed:${feedAll}">
+			<div><input type=hidden th:value="${feed.prNo}" ></div>
+			<div><input type=hidden id="animalType" class="animalType" th:value="${feed.animalType}"></div>
+			<div><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${feed.prNo})}"  >
+			 					<img th:src="${feed.mainImg01}"  style="width: 50%; height: 30%"></a></div>
+			<div  th:text ="${feed.prName}" ></div>
+			<div  th:text="${feed.prCost}+원"></div>
+		</li>
+	
+	</ul>
+	
+	
+
+	
+	<h1>간식</h1>
+
+		<ul class="snack">
+		<li th:each="snack:${snackAll}">
+			<div><input type=hidden th:value="${snack.prNo}"  ></div>
+			<div><input type=hidden id="animalType" class="animalType" th:value="${snack.animalType}"></div>
+			<div><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${snack.prNo})}" >
+			 					<img th:src="${snack.mainImg01}"  style="width: 50%; height: 30%"></a></div>
+			<div th:text ="${snack.prName}"  ></div>
+			<div th:text="${snack.prCost}+원"></div>
+		</li>
+	
+	</ul>
+
+	<h1>목욕/미용</h1>
+
+		<ul class="bueaty">
+		<li th:each="bueaty:${bueatyAll}">
+			<div><input type=hidden th:value="${bueaty.prNo}"  ></div>
+			<div><input type=hidden id="animalType" class="animalType" th:value="${bueaty.animalType}"></div>
+			<div><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${bueaty.prNo})}" >
+			 					<img th:src="${bueaty.mainImg01}"  style="width: 50%; height: 30%"></a></div>
+			<div th:text ="${bueaty.prName}"  ></div>
+			<div th:text="${bueaty.prCost}+원"></div>
+		</li>
+	
+	</ul>
+
+
+</form>	
+</body>
+</html>
+

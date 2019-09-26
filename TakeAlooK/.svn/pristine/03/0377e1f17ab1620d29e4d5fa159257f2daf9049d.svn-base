@@ -1,0 +1,43 @@
+package com.bit.tak.model.vo.pet;
+
+import java.io.Serializable;
+import java.sql.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import com.bit.tak.model.vo.clinic.Tclinic;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@Entity
+public class Pet_cycle implements Serializable{
+	
+	@Id
+	@ManyToOne
+	@JoinColumn(name = "pet_id")
+	private Pet petId;
+	
+	@ManyToOne
+	@JoinColumn(name = "life_cycle_no")
+	private Life_Cycle lifeCycleNo;
+	
+	
+	@Column(name = "clinic_date")
+	private Date clinicDate;
+
+	@Column(name = "clinic_check")
+	private Date clinicCheck;
+	
+}

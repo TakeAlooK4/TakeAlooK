@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 강아지</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+//ss
+</script>
+
+
+<style type="text/css">
+	 
+	 
+	 	.dogList li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+	#mainPage{
+		    padding-top: 50px;
+		padding-left: 10px;
+	}
+</style>
+<title>상품 페이지</title>
+</head>
+<body>
+<header id="headerMenu">
+	
+
+	<th:block th:if="${session['user']==null && session['company'] ==null}" id="wrapper">
+		<h1 id="pageName"><a href="/">Take A looK</a></h1>
+				<ul id="menu">
+					<li><a th:href="memberLogin">로그인 |</a></li>
+					<li><a th:href="memberSignUp">회원가입 |</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCartPage">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</th:block>
+
+
+
+	<th:block th:if="${session['user'] != null}" id="wrapper">
+	<h1 id="pageName"><a href="/">Take A looK</a></h1>
+				<ul id="menu">
+					<li><h3 class="loginText" align="left"><font style="color: black;" th:text="${session['user'].nickname}"></font>님 게시판 입장을 환영합니다.</h3></li>
+					<li><a href="/userLogOut">로그아웃</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCartPage">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</th:block>
+
+
+
+	<th:block th:if="${session['company'] != null}" id="wrapper">
+	<h1 id="pageName"><a href="/">Take A looK</a></h1>
+				<ul id="menu">
+					<li><h3 class="loginText" align="left"><font style="color: black;" th:text="${session['company'].cName}"></font>님 게시판 입장을 환영합니다.</h3></li>
+					<li><a href="/companyLogOut">로그아웃</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCartPage">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</th:block>
+
+</header>
+
+<div id="mainMenu_Wrap">
+	<ul id="mainMenu">
+		<li><a href="/productMain"  style="text-decoration: none">상품</a></li>
+		<li><a href="" style="text-decoration: none">병원</a></li>
+		<li><a href="" style="text-decoration: none">커뮤니티</a></li>
+		<li><a href="" style="text-decoration: none">펫 케어</a></li>
+	
+	</ul>
+
+</div>
+
+
+<form id="mainPage" >	
+	
+	
+	<h1>
+ 	
+ 	<div  align="left" >
+			<a href="/productListDog.do" th:href="@{productListDog.do(animalType=C,pCode1=Dfc01,pCode2=Dfc02,pCode3=Dfc03)}" style="text-decoration: none">강아지
+			</a> |  
+ 			<a href="/productListCat.do" th:href="@{/productListCat.do(animalType=C,pCode1=Cfc01,pCode2=Cfc02,pCode3=Cfc03)}"  style="text-decoration: none">고양이</a>
+ 	</div> 
+
+	</h1>
+	<div class="dogMenu">
+	<h2>| <a href="/productListDog.do" th:href="@{productListDog.do(animalType=C,pCode1=Dfc01,pCode2=Dfc02,pCode3=Dfc03)}" style="text-decoration: none">사료</a>
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=dsn01,pCode2=dsn02,pCode3=dsn03)}" style="text-decoration: none">간식</a> 
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=BAPD01,pCode2=BAPD02,pCode3=BAPD03)}" style="text-decoration: none">목욕/미용</a> 
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=OPD01,pCode2=OPD02,pCode3=OPD03)}" style="text-decoration: none">기타 용품</a> 
+	 |</h2>
+	</div>	
+
+
+  	<hr>
+		<ul class="dogList">
+		<li th:each="product1:${productListDog}">
+			<div><input type=hidden th:value="${product1.prNo}"  ></div>
+			<div><input type=hidden id="animalType" class="animalType" th:value="${product1.animalType}"></div>
+			<div><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${product1.prNo})}" >
+			 					<img th:src="${product1.mainImg01}" style="width: 50%; height: 30%"></a></div>
+			<div th:text ="${product1.prName}"  ></div>
+			<div th:text="${product1.prCost}+원"></div>
+		</li>
+	
+	</ul>
+
+</div>
+</form>	
+</body>
+</html>
+

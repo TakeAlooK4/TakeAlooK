@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>일반 유저 회원가입 페이지</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#signUpSuccess").click(function(){
+		alert("회원가입이 완료되었습니다.");		
+		});
+	});
+	
+	$(function(){
+		$("#alert-success").hide();
+		$("#alert-danger").hide();
+		$("#alert-success").css("color", "blue")
+		$("#alert-danger").css("color", "red")
+		$("input").keyup(function(){
+			var pw1=$("#pw1").val();
+			var pw2=$("#pw2").val();
+			if(pw1 != "" || pw2 != ""){
+				if(pw1 == pw2){
+					$("#alert-success").show();
+					$("#alert-danger").hide();
+					$("#signUpSuccess").removeAttr("disabled");
+				} else if(pw1 == "" || pw2 == ""){
+					$("#alert-success").hide();
+					$("#alert-danger").hide();
+				}
+				else{
+					$("#alert-success").hide();
+					$("#alert-danger").show();
+					$("#signUpSuccess").attr("disabled", "disabled");
+				}
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<h1 align="left">
+		<a href="/">Take A looK</a>
+	</h1>
+	<h2 align="center">Take A looK 유저 회원가입</h2>
+	<form th:action="@{/memberSignUp.do}" method="post">
+		<div align="center">
+			<input type="button" value="개인회원"> | <a href="companySignUp"><input type="button" value="기업회원"></a>
+				<p><input type="email" id="id" name="id" placeholder="아이디(이메일입력)"></p>
+				<p><input type="password" id="pw1" name="password" class="form-control" placeholder="비밀번호(영문, 숫자, 특수문자 2가지 이상 8~15이내)" required /></p>
+				<p><input type="password" id="pw2" name="password2" class="form-control" placeholder="비밀번호 확인" required /></p>
+					<div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
+					<div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div>
+				<p><input type="text" id="name" name="name" placeholder="이름(휴대폰 가입자명으로 정확하게 입력)"></p>
+				<p><input type="text" id="nickname" name="nickname" placeholder="닉네임 입력란"></p>
+				<p><input type="text" id="contact" name="contact" placeholder="휴대폰번호 입력란"></p><br>
+				<p><input type="submit" id="signUpSuccess" value="회원가입"></p>
+		</div>
+	</form>
+	
+</body>
+
+</html>

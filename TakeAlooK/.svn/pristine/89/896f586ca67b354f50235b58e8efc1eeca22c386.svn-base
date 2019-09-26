@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>반려동물 돌봄</title>
+<!-- 아코디언/데이트 피커/모달-->
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
+
+ .fileDrop{
+ 	width: 300px;
+ 	height: 150px;
+ 	border: 1px dotted blue;
+ }
+ small{
+ 	margin-left:3px;
+ 	font-weight: bold;
+ 	color: gray;
+ }
+ table.tableSpace{
+   border-collapse: separate;
+   border-spacing: 0px;
+ }
+
+ 
+</style>
+<script>
+
+	//아코디언
+	$(function() {
+		$("#accordion").accordion({
+			collapsible : true,
+			header : "> div > h3",
+		}).sortable({
+			
+			axis : "y",
+			handle : "h3",
+			stop : function(event, ui) {
+				
+				ui.item.children("h3").triggerHandler("focusout");
+				$(this).accordion("refresh");
+			}
+		});
+		
+		//데이터 피커
+		$.datepicker.regional['kr'] = {
+			    monthNames: ['1 월','2 월','3 월','4 월','5 월','6 월','7 월','8 월','9 월','10 월','11 월','12 월'],
+			    //monthNamesShort: ['1 월','2 월','3 월','4 월','5 월','6 월','7 월','8 월','9 월','10 월','11 월','12 월'],	     
+			    monthNamesShort: ['1','2 ','3','4','5','6','7','8','9','10','11','12'],
+			    dayNamesMin: ['월','화','수','목','금','토','일'],
+			    dateFormat: 'yy/mm/dd'
+			};
+		
+		$.datepicker.setDefaults($.datepicker.regional['kr']);
+		
+		$( ".datepicker" ).datepicker({ 
+			yearRange: "-100:+0",
+		    showOn: "button",
+		    buttonImage: "image/calendar.png",
+		    buttonImageOnly: true,
+		    buttonText: "Select date",
+		    changeMonth: true,
+		    changeYear: true
+		   });
+	    
+
+	    
+	 	//모달
+		$( ".openModal" ).dialog({
+		    autoOpen: false,
+		    modal:true,
+		    resizable: false,
+		    width: 600,
+		    height: 500,
+		    show: {
+		      effect: "Drop",
+		      duration: 500
+		    },
+		    hide: {
+		      effect: "Drop",
+		      duration: 1000
+		    }
+		  });
+		
+	    $( ".opener" ).on( "click", function() {
+	    	
+	    	var thisPet = $(event.target).attr("id");
+	    	
+	    	if(thisPet == "insertOpener"){
+	    		$( "#petInsert" ).dialog( "open" );
+	    		
+	    	}else if(thisPet == "updateOpener"){
+	    		$( "#petUpdate" ).dialog( "open" );
+	    		
+	    	}else if(thisPet == "medicalOpener"){
+	    		$( "#medicalInsert" ).dialog( "open" );
+	    	}
+	    });
+	 } );
+	
+	//드래그앤 드롭
+	$(document).ready(function(){
+		//드래그앤드롭 작동
+		$(".fileDrop").on("dragenter dragover", function(event){
+			//기본효과를 막음 - a tag 이동막음
+			event.preventDefault();
+			$(".fileDrop").css('background-color','#FFFFFF');
+		
+		});
+		
+		$(".fileDrop").on("drop", function(event){
+			event.preventDefault();
+			
+			 $(".fileDrop").css('border','#FFFFFF');
+			$(".fileDrop").css('background-color','#E3F2FC');
+			
+			//드래그된 파일의 정보
+			var files = event.originalEvent.dataTransfer.files;
+			//첫번째 파일
+			var file = files[0];
+			//콘솔에서 파일정보 확인
+			console.log("콘솔");
+			console.log(file);
+	
+			//이미지파일만 받기
+			var fileN = file.name;	
+			var ext = fileN.slice(fileN.lastIndexOf(".") + 1).toLowerCase(); 
+			  
+			if (!(ext == "jpg" || ext == "png")) { 
+			    alert("이미지파일 (.jpg, .png ) 만 업로드 가능합니다."); 
+			    return false; 
+			    
+			}
+		
+		
+			//ajax로 전달한 폼 객체
+			var formData = new FormData();
+			
+			//폼 객체에 파일추가 append("변수명",값)
+			formData.append("file",file); 
+
+		 //$("#dd *").prop("disabled", true);
+			
+			 $.ajax({
+				url: '/upload/uploadAjax',
+				data: formData,
+				dataType:'text',
+				processData:false,
+				contentType:false,
+				type: 'POST',
+				
+				/*
+				//시큐security를 적용했을때 ajax를쓰면 에러난당403
+				beforeSend : function(xhr)
+                 {  
+                     xhr.setRequestHeader("${_csrf.headerName}", "${_csrf.token}");
+                     
+                 },  
+                */
+				success: function(data){
+					alert("썸네일명 : "+data);
+					var str = "";
+					//str = "<div><input type='text' hidden='true' name='petImg' value="+getImageLink(data)+">";
+					//$(".uploadedList").append(str);
+					
+					//이미지 파일이면 썸네일 이미지 출력
+					 if(checkImageType(data)){
+						alert(getImageLink(data));
+						$(".uploadedList").empty();
+						str = "<div><input type='text' hidden='true' name='petImg' value="+getImageLink(data)+">";
+						str += "<a href='/upload/displayFile?fileName="+getImageLink(data)+"'>";
+						str += "<img src='/upload/displayFile?fileName="+data+"'></a>";
+						$(".fileDrop").css('background-color','#FFFFFF');
+						//$("#dd").attr("disabled", true);
+						//$("#dd").unbind("mouseenter mouseleave" );
+					
+					}
+					str += "<span data-src="+data+"  name='petImg' >[삭제]</span></div>";
+					$(".uploadedList").append(str);
+					//리스
+						 	
+				}      
+			}); 
+			//alert("ddddddddddddddddd");
+			//$("#dd *").attr('disabled', true);
+			//$("#dd").find("div").prop("disabled", true);
+			//$("#dd").unbind("mouseenter mouseleave" );
+			
+		});
+		$(".uploadedList").on("click","span",function(event){
+			alert("이미지 삭제")
+			//this : 클릭한 <span>
+			var that = $(this);
+			$.ajax({
+				url:"/upload/deleteFile",
+				type: "post",
+				//json방식
+				data: {fileName:$(this).attr("data-src")},
+				dataType: "text",
+				success: function(result){
+					//클릭한 span태그가 속한 div를 제거
+					that.parent("div").remove();
+				}
+			});
+		});
+	});
+	//원본파일이름을 목록에 출력하기위해
+	function getOriginalName(fileName){
+		//이미지파일
+		
+		if(checkImageType(fileName)){
+			return;
+			
+		}
+		//uuid를 제외한 원라파일 이름을 리턴
+		var idx = fileName.indexOf("-")+1;
+		
+		return fileName.substr(idx);
+	}
+	//이미지파일 링크 - 클릭하면 원본 이미지를 출력해주기 위해
+	function getImageLink(fileName){
+		//이미지파일이 아니면
+		if(!checkImageType(fileName)){
+			return;
+			
+		}
+		//이미지파일이면(썸네일이 아닌 원본이미지를 가져오기 위해)
+		//년월일 경로 추출
+		var front = fileName.substr(0,12);
+		//년월일 경로와 s_를 제거한 원본 파일명을 추출
+		var end = fileName.substr(14);
+		console.log(front);
+		console.log(end);
+		console.log("DB저장명 :"+front+end);
+		return front+end;
+	}
+	
+	function checkImageType(fileName){
+		var pattern = /jpg|gif|png|jpeg/i;
+		return fileName.match(pattern);
+	}
+
+	//제이쿼리로 강아지인지 고양이인지 값 넣기기
+	$(document).ready(function(){
+		$("input:radio[name=petCode]").click(function(){
+			var petCodeData = $(this).val();
+			
+			$.ajax({
+				url:"/petCode",
+				type:"GET",
+				data: { petCode :petCodeData},
+				
+				success: function(selBreed){
+					var str = "<option>--품종 선택--</option>";
+					for(var i=0 in selBreed){
+						str += "<option value="+selBreed[i].breedCode+">"+selBreed[i].breedName+"</option>";
+					}
+					$(".breedCode option").remove();
+					$(".breedCode").append(str);
+					
+				}
+			});
+		})
+	});
+	 //제이쿼리로 진단명 추출
+	$(document).ready(function(){
+		$("select[id=fClinic]").change(function(){
+
+			//var clinicData = { "lclinic" : $("#clinicL").val(),"mclinic": $("#clinicM").val()};
+			//var clinicData = { "selectId":$(this).attr('id'),"clinic": $(this).val() };
+			var fCode =  $(this).val();
+			
+			$.ajax({
+				url:"/sClinic",
+				type:"GET",
+				data: { "fCode" : fCode},
+				success: function(sclinic){
+					var str = "";
+					for(var i=0 in sclinic){
+						
+						str += "<option value="+sclinic[i].scode+">"+sclinic[i].sname+"</option>";
+					}
+					$("#sClinic option").remove();
+					$("#sClinic").append(str);	
+					
+				}
+			});
+		})
+	}); 
+	 
+	 //나중에 고칠거
+	  //제이쿼리로 진단명 추출
+	$(document).ready(function(){
+		$("select[id=sClinic]").change(function(){
+
+			//var clinicData = { "lclinic" : $("#clinicL").val(),"mclinic": $("#clinicM").val()};
+			//var clinicData = { "selectId":$(this).attr('id'),"clinic": $(this).val() };
+			var sCode =  $(this).val();
+
+			$.ajax({
+				url:"/tClinic",
+				type:"GET",
+				
+				data: { "sCode" : sCode},
+				
+				success: function(tclinic){
+					var str = "";
+					for(var i=0 in tclinic){
+						
+						str += "<option value="+tclinic[i].tcode+">"+tclinic[i].tname+"</option>";
+						
+					}
+					$("#tClinic option").remove();
+					$("#tClinic").append(str);	
+					
+				}
+			});
+		})
+	}); 
+	 
+	
+	$(document).ready(function(){
+		$("button[name=petDelete]").click(function(){
+			var s = $(this).val();
+			alert(s);
+			
+		})
+	}); 
+</script>
+<style>
+
+</style>
+</head>
+<body>
+
+	<h2>반려동물 케어</h2>
+	
+	
+	<!-- 아코디언시작 -->
+	<div id="accordion" >
+	
+		<!-- for each문 시작 -->
+		<th:block th:each="p:${pet}">
+		<div class="petGroup"  >
+		
+			<!-- 제목 -->
+			<h3 th:text="|${p.petName} ${#dates.format(p.petBirth,'yyyy-MM-dd')}|" />
+			
+			<!-- 반려동물정보 -->
+			<div align="center">
+
+				<!--  하나의 동물정보 -->			
+				<table class="tableSpace" >
+				
+					<tr valign="top" >
+						
+						<!-- [ 정보수정 ] -->
+						<td colspan="2">
+							
+							<button name="petDelete" th:value="${p.petId}" style="float: right">삭제</button>
+							
+							<button id="updateOpener" class="opener" style="float:right;">정보 수정</button>
+							<!-- 수정 -->
+							<div id="petUpdate" class="openModal" title="정보 수정" hidden="true">
+							 	<form action="/petUpdate" method="post">
+								 	<input type="text" name="petId" th:value="${p.petId}" hidden="true">
+								 	<input type="text" name="nickname" th:value="${p.nickname.nickname}" hidden="true">
+									<label for="petImg">반려동물 사진 : [사진을  드래그 하시오.]</label>
+									<div class="fileDrop"><div class="uploadedList"></div></div>
+									<br/>
+								 
+								 	<label for="petName">반려동물 이름 : </label>
+								 	<input type="text" th:id="petName" th:value="${p.petName}" name="petName">
+								 	<br/>
+								 	
+								 	<!-- 라디오 버튼 -->
+								 	<div th:switch="${p.petCode}">
+								 	<label for="petCode">반려동물 유형 : </label>
+									 	<span th:case="D">
+									 		<input type="radio" name="petCode" th:value="D" checked="checked">강아지
+									 		<input type="radio" name="petCode" th:value="C">고양이
+									 	</span>
+									 	<span th:case="C">
+									 		<input type="radio" name="petCode" th:value="D">강아지
+									 		<input type="radio" name="petCode" th:value="C" checked="checked">고양이
+								 		</span>
+								 	</div>
+						
+								 	<label for="breedCode">반려동물 품종 : </label>
+									<select class="breedCode" name="breedCode">
+										<option th:value="${p.breedCode}" th:text="${p.breedCode.breedName}"></option>
+										<option th:each="b:${breed}" th:value="${b.breedCode}" th:text="${b.breedName}"></option>
+									</select>
+								 	<br/>
+								 	
+								 	<div th:switch="${p.petGender}">
+								 	 <label for="petGender">반려동물 성별 : </label>
+									 	<span th:case="M">
+									 		<input type="radio" name="petGender" th:value="M" checked="checked">수컷
+								 			<input type="radio" name="petGender" th:value="F">암컷
+									 	</span>
+									 	<span th:case="F">
+									 		<input type="radio" name="petGender" th:value="M">수컷
+								 			<input type="radio" name="petGender" th:value="F" checked="checked">암컷
+								 		</span>
+								 	</div>
+						
+									<label for="petBirth">반려동물 생일 : </label>
+								 	<input type="text" class="datepicker" th:value="${#dates.format(p.petBirth,'yyyy-MM-dd')}" name="petBirth">									 	<br/>
+								 		
+								 	<input type="submit" value="수정" >
+							 	</form>
+							</div><!-- 정보수정끝 -->
+							
+						</td><!-- 정보수정끝  -->
+						
+					</tr>
+					
+					<!--[사진 / 정보]-->
+					<tr valign="middle" >
+					
+						<!-- 사진영역 -->
+						<td>
+							<table> 
+								<tr>
+									<td><img height="150" width="200" th:src="|C:/image${p.petImg}|"/></td>
+								</tr>
+							</table>
+						</td>
+						
+						<!-- 기본 정보 영역 -->
+						<td>
+							<table height="150" width="500" border="1"> 
+								<tr>
+									<th>유형</th>
+									<td th:text="${p.petCode}=='D'? '강아지':'고양이'"></td>	
+									
+									<th>품종</th>
+									<td th:text="${p.breedCode.breedName}"></td>
+								</tr>
+												
+								<tr>
+									<th>나이</th>
+									<td th:text="|(만) ${p.petAge} 세|"></td>
+									
+									<th>생일</th>
+									<td th:text="${#dates.format(p.petBirth,'yyyy-MM-dd')}" />
+								</tr>
+											
+								<tr>
+									<th>병원기록</th>
+									<td>계산해야돼</td>
+									
+									<th>접종(검사)예정일</th>
+									<td>계산해야돼</td>
+								</tr>
+							</table>
+						</td>
+					</tr>	
+						
+					<!-- [생애주기 차트 / 의료기록] -->
+					<tr valign="bottom">
+					
+						<!-- 생애주기 -->
+						<td>
+							<table> 
+								<tr>
+									<td>생애주기 부분 하..</td>
+								</tr>
+							</table>
+						</td><!--둘째줄 왼쪽 끝 테이블-->
+						
+						
+						<!-- 의료기록 -->
+						<td>
+							<table border="1" width="500">
+							
+								<thead>
+									<tr>
+										<th align="right" colspan="4">
+										<button id="medicalOpener" class="opener"> + </button>
+											<div id="medicalInsert" class="openModal" title="의료 기록" hidden="true">
+											 	<form action="/medicalInsert" method="post">
+											 	
+											 		<input type="text" name="petId" th:value="${p.petId}" hidden="true">
+											 		
+												 	<label>병원이름 : </label><br>
+												 	<input type="text" name="clinicHos">
+												 	<br/>
+												 	
+												 	<label>진단명 : </label><br>
+												 	<!-- 대분류 --> 
+												 	<select style="width:180px" id="fClinic">
+												 		<option th:each="f:${fClinic}"  th:text="${f.fName}" th:value="${f.fCode}" ></option>
+												 	</select>
+												 	
+												 	<!--중분류-->
+												 	<select style="width:180px" id="sClinic">
+												 		<option th:each="s:${sClinic}"  th:text="${s.sName}" th:value="${s.sCode}" ></option>
+												 	</select>
+												 	
+												 	<!--소분류-->
+												 	<select style="width:180px" name="tCode" id="tClinic">
+												 		<option th:each="t:${tClinic}"  th:text="${t.tName}" th:value="${t.tCode}" ></option>
+												 	</select> 
+												 	
+												 	<input type="text" name="clinicName" hidden="true">
+												 	<br/>
+												 	
+												 	
+												 	<label>의료일 : </label><br>
+												 	<input type="text" name="medicalDate" class="datepicker">
+												 	<br/>
+												 	
+												 	<label>의료비 : </label><br>
+												 	<input type="text" name="medicalCost">
+												 	<br/>
+												 	
+												 	<label>메모 : </label><br>
+												 	<textarea rows="15" cols="65" name="medicalMemo" style="resize: none;"></textarea>
+												 	<br/>
+												 	
+												 	
+												 	<input type="submit" value="등록" >
+											 		
+											 	</form>
+						 					</div><!-- 정보수정끝 -->
+										</th>
+									</tr>
+									<tr>
+										<th>병원이름</th>
+										<th>진단명</th>
+										<th>의료일</th>
+										<th>의료비(원)</th>
+										
+									</tr>
+								</thead>
+								<tbody align="center">
+									<tr th:each="m:${medical}">
+										<td th:text="${m.clinicHos}"></td>
+										<td th:text="${m.tCode.tName}"></td>
+										<td th:text="${#dates.format(m.medicalDate,'yyyy-MM-dd')}"></td>
+										<td th:text="${m.medicalCost}"></td>
+									</tr>
+								</tbody>
+							</table>
+						</td><!--둘째줄 오른쪽 끝 테이블-->
+					</tr><!--둘째줄 tr끝-->
+						
+				
+				</table><!--전체 윤곽 테이블 끝-->
+				
+				
+			</div><!-- 반려동물정보 -->
+		</div><!-- for each문-->
+		</th:block>
+	</div><!-- 아코디언 -->
+	
+
+
+
+
+
+
+	<button id="insertOpener" class="opener">정보 등록</button>
+	<!-- 정보등록 -->
+ 	<div id="petInsert" class="openModal" title="반려동물 등록">
+ 	
+	 	<form action="/petInsert" method="post">
+	 		
+	 		<input type="text" th:value="${user.nickname}" hidden="true" name="nickname">
+	 		
+		 	<label for="petImg">반려동물 사진 : [사진을  드래그 하시오.] </label> 
+		 	<div class="fileDrop"><div class="uploadedList"></div></div>
+		 	<br/>
+		 	
+		 	<label for="petName">반려동물 이름 : </label>
+		 	<input type="text" name="petName"><br/>
+		
+		 	<label for="petCode">반려동물 유형 : </label>
+		 	<input type="radio" name="petCode" value="D">강아지
+		 	<input type="radio" name="petCode" value="C">고양이
+		 	<br/>
+		 	
+		 	<label for="breedCode">반려동물 품종 : </label>
+			<select class="breedCode" name="breedCode">
+					<option value="0">--품종 선택--</option>
+					<option th:each="b:${breed}" th:value="${b.breedCode}" th:text="${b.breedName}"></option>
+			</select>
+		 	<br/>
+		 	
+		 	<label for="petCode">반려동물 성별 : </label>
+		 	<input type="radio" name="petGender" th:value="M">수컷
+		 	<input type="radio" name="petGender" th:value="F">암컷
+		 	<br/>
+		 	
+		 	<label for="datepicker">반려동물 생일 : </label>
+		 	<input type="text" class="datepicker" name="petBirth">
+		 	<br/>
+		 	
+		 	<input type="submit" value="등록" >
+	 	</form>
+ 	</div>
+ 	
+ 	<br/>
+ 
+ 	
+ 	
+ 	
+ 	
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>반려동물 돌봄</title>
+<!-- 아코디언/데이트 피커/모달-->
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<style>
+.fileDrop {
+	width: 300px;
+	height: 150px;
+	border: 1px dotted blue;
+}
+
+small {
+	margin-left: 3px;
+	font-weight: bold;
+	color: gray;
+}
+
+table.tableSpace {
+	/* border-collapse: separate;
+	border-spacing: 0px; */
+	width: 100%;
+	
+}
+
+#accordion h3 {
+	background-color: #f6e4c4;
+	border: #f6e4c4;
+	font-size: 20px;
+	height: 50px;
+	color: #808080;
+	 vertical-align: middle; 
+	/*#F0CCC0;*/
+}
+
+.petCareInfo {
+	align: center;
+	
+}
+.insertOpener{
+	background-color: #b5acac59;
+	border: #b5acac59;
+	height: 50px;
+	width: 100%;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	font-size:20px;
+	
+	color:gray;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.insertOpener:hover{
+	background-color: #b5acac;
+	border: #b5acac;
+	height: 50px;
+	width: 100%;
+	color:white;
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+
+.settingPet{
+	margin: auto;
+	margin-bottom  :30px;
+	width: 100%;
+	height: 100%;
+	border-collapse: separate;
+    border-spacing: 0 30px;
+    text-align: inherit;
+}
+.settingPet th{
+  border-top-right-radius: 1.5625rem;
+  border-top-left-radius: 1.5625rem;
+  border-bottom-left-radius: 1.5625rem;
+  border-bottom-right-radius: 1.5625rem;
+ }
+.settingMedical{
+	margin: auto;
+	width: 100%;
+	height: 100%;
+	border-collapse: separate;
+    border-spacing: 0 15px;
+    margin-top: -50px;
+	text-align: center;
+    /* margin-left: -30px; */
+}
+
+.settingImg{
+	margin: auto;
+}
+ table {
+ font-family: "Rajdhani", sans-serif;
+ }
+ table  table th {
+  background-color: #f6e4c4;
+  color: gray;
+  /*크기가 이상할 경우 여기보기*/
+  height: 35px;
+  width: 150px;
+  text-align: center;
+ 
+ 
+ }
+
+/*  input[type="text"] {
+    display: block;
+    width: 30%;
+    height: 34px;
+   /*  padding: 6px 12px; */
+    font-size: 14px;
+    /* line-height: 1.42857143; */
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+ } */
+ .petTitle{
+ 	font-size: 20px;
+ 	font-family: "Rajdhani", sans-serif;
+ 	font-weight: bold;
+ 	line-height:45px;
+ }
+ .petSubmit{
+ 	float: right;
+ 	font-size: 20px;
+ }
+ .petSubmit:hover {
+  color: #777;
+  text-decoration: none;
+  background-color: #b5acac59;
+  
+}
+</style>
+
+<th:block th:include="/header"></th:block>
+
+</head>
+<body>
+
+	<section class="petSection">
+		<h2 class="titlej ">PET CARE</h2>
+		<hr>
+		
+		<!-- 아코디언시작 -->
+		<div id="accordion">
+
+			<!-- for each문 시작 -->
+
+			<th:block th:each="p,index:${pet}">
+				<div class="petGroup">
+
+					<!-- 제목 -->
+					<h3
+						th:text="|${p.petName} ${#dates.format(p.petBirth,'yyyy-MM-dd')}|"
+						th:id="${p.petId}"></h3>
+
+					<!-- 반려동물정보 아코디언 안에 있는 애들 -->
+					<div class="petCareInfo">
+
+						<!--  하나의 동물정보 -->
+						<table class="tableSpace">
+
+							<tr valign="top">
+
+								<!-- [ 정보수정 ] -->
+								<td colspan="2">
+
+									<button type="button" id="petDelete" th:value="${p.petId}"
+										style="float: right" class="btnj">삭제</button>
+
+									<button class="updateOpener btnj" style="float: right;">정보
+										수정</button>
+
+
+									<div class="petModal">
+										<div class="modalContent" title="정보 수정">
+											<span class="petTitle">[ 정보수정 ]</span>
+											<span class="close" id="updateClose">&times;</span>
+											<form action="/petUpdate" method="post">
+												 <input
+													type="text" name="petId" th:value="${p.petId}" id="id"
+													hidden="true"> <input type="text" name="nickname"
+													th:value="${p.nickname.nickname}" hidden="true"> <label
+													for="petImg">반려동물 사진 : [사진을 드래그 하시오.]</label>
+												<!-- <input type="text" name="petImg" text="${p.petImg}" hidden="true"> -->
+												<div class="fileDrop">
+													<div class="uploadedList">
+						<!-- 이미지 부분 -->							
+														<img height="150" width="200"
+															th:src="|/upload/displayFile?fileName=${p.petImg}|" />
+													</div>
+												</div>
+												<!-- <input type="file"> -->
+												<br /> <label for="petName">반려동물 이름 : </label> <input
+													type="text" th:id="petName" th:value="${p.petName}"
+													name="petName" required="required"> <br />
+
+												<!-- 라디오 버튼 -->
+												<div th:switch="${p.petCode}">
+													<label for="petCode">반려동물 유형 : </label> <span th:case="D">
+														<input type="radio" name="petCode" th:value="D"
+														checked="checked" required="required">강아지 <input
+														type="radio" name="petCode" th:value="C"
+														required="required">고양이
+													</span> <span th:case="C"> <input type="radio"
+														name="petCode" th:value="D" required="required">강아지
+														<input type="radio" name="petCode" th:value="C"
+														checked="checked" required="required">고양이
+													</span>
+												</div>
+
+												<label for="breedCode">반려동물 품종 : </label> <select
+													class="breedCode" name="breedCode" required="required">
+													<option th:value="${p.breedCode}"
+														th:text="${p.breedCode.breedName}" selected="selected"></option>
+													<option th:each="b:${breed}" th:value="${b.breedCode}"
+														th:text="${b.breedName}"></option>
+												</select> <br />
+
+												<div th:switch="${p.petGender}">
+													<label for="petGender">반려동물 성별 : </label> <span th:case="M">
+														<input type="radio" name="petGender" th:value="M"
+														checked="checked" required="required">수컷 <input
+														type="radio" name="petGender" th:value="F"
+														required="required">암컷
+													</span> <span th:case="F"> <input type="radio"
+														name="petGender" th:value="M" required="required">수컷
+														<input type="radio" name="petGender" th:value="F"
+														checked="checked" required="required">암컷
+													</span>
+												</div>
+
+												<label for="petBirth">반려동물 생일 : </label> <input type="text"
+													class="datepicker"
+													th:value="${#dates.format(p.petBirth,'yyyy-MM-dd')}"
+													name="petBirth" required="required"> <br /> 
+													<input type="submit" value="수정 " class="btnj petSubmit"> 												
+											</form>
+										</div>
+									</div><!-- 정보수정끝 -->
+								</td>
+								<!-- 정보수정끝  -->
+							</tr>
+
+							<!--[사진 / 정보]-->
+							<tr valign="middle">
+								<!-- 사진영역 -->
+								<td>
+									<table class="settingImg" >
+										<tr>
+				<!-- 이미지 부분 -->
+											<td><img height="175" width="250"
+												th:src="|/upload/displayFile?fileName=/${p.petImg}|" /></td>
+												
+										</tr>
+										<tr>
+										<td align="center">
+												<button class="ucycleOpener btnj">
+												지난 의료  진단일
+												</button>
+										</td>
+										</tr>
+										<tr>
+										<td align="center">
+												<button class="cycleOpener btnj">
+												권장  / 필수 의료  진단일
+												</button>
+										</td>
+										</tr>
+										
+										
+									</table>
+								</td>
+
+								<!-- 기본 정보 영역 -->
+								<td>
+<!-- 									<table height="150" width="500" border="1"> -->
+									<table class="settingPet" >
+										<tr>
+											<th>유형</th>
+											<td th:text="${p.petCode}=='D'? '강아지':'고양이'"></td>
+
+											<th>품종</th>
+											<td th:text="${p.breedCode.breedName}"></td>
+										</tr>
+
+										<tr>
+											<th>나이</th>
+											<td th:text="|(만) ${p.petAge} 세|"></td>
+
+											<th>생일</th>
+											<td th:text="${#dates.format(p.petBirth,'yyyy-MM-dd')}"></td>
+										</tr>
+
+										<tr>
+											<th>의료기록</th>
+											<td class="money" th:text="|${count}(건) / ${#numbers.formatInteger(total, 3, 'COMMA')}(원)|">
+							
+											</td>
+
+											<th>접종(검사)예정일</th>
+											<td class="petCycle">
+												<div>
+													<span style="color: red;"
+														th:text="${cycle.lifeCycleNo.tCode.tName}"></span><br>
+													<span style="color: red;" th:text="|(${cycle.clinicDate})|"></span>
+												</div>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+
+							<!-- [생애주기 차트 / 의료기록] -->
+							<tr valign="bottom">
+
+								<!-- 생애주기 -->
+								<td>
+									<table class="settingCycle">
+
+										<tr>
+											
+										</tr>
+
+									</table>
+								</td>
+								<!--둘째줄 왼쪽 끝 테이블-->
+
+
+								<!-- 의료기록 -->
+								<td>
+									<table class="settingMedical">
+
+										<thead>
+											<tr>
+												<th align="right" colspan="4" style="background-color: white; margin-bottom: -10px;">
+
+													<button class="medicalOpener btnj" style="font-size:25px; float: right;"  >+</button>
+
+													<div class="medicalModal" title="의료 기록">
+
+														<!-- 의료기록 등록 -->
+														<div class="modalContent" title="의료기록 등록" align="left">
+														<span class="petTitle">[ 의료기록 등록 ]</span>
+														<span class="close" id="medicalClose">&times;</span>
+															<form action="/medicalInsert" method="post"
+																id="medicalForm" name="medicalInsert">
+																 <input
+																	type="text" name="petId" th:value="${p.petId}"
+																	hidden="true"> <label>병원이름 : </label><br>
+																<input type="text" name="clinicHos" required="required">
+																<br /> <label>진단명 : </label><br>
+																<!-- 대분류 -->
+																<select style="width: 200px" class="fClinic"
+																	required="required">
+																	<option value="" selected="selected">--대분류--</option>
+																	<option th:each="f:${fClinic}" th:text="${f.fName}"
+																		th:value="${f.fCode}"></option>
+																</select>
+
+																<!--중분류-->
+																<select style="width: 200px" class="sClinic"
+																	required="required">
+																	<option>--중분류--</option>
+																	<option th:each="s:${sClinic}" th:text="${s.sName}"
+																		th:value="${s.sCode}"></option>
+																</select>
+
+																<!--소분류-->
+																<select style="width: 200px" name="tCode"
+																	class="tClinic" required="required">
+																	<option value="" selected="selected">--소분류--</option>
+																	<option th:each="t:${tClinic}" th:text="${t.tName}"
+																		th:value="${t.tCode}"></option>
+																</select>
+
+																<!-- <input type="text" name="clinicName" hidden="true"> -->
+																<br /> <label>의료일 : </label><br> <input
+																	type="text" name="medicalDate" class="datepicker"
+																	required="required"> <br /> <label>의료비
+																	: </label><br> <input type="text" name="medicalCost"
+																	required="required"> <br /> <label>메모
+																	: </label><br>
+																<textarea rows="10" cols="75" name="medicalMemo"
+																	style="resize: none;"></textarea>
+																<br /> <input type="submit" value="등록" class="btnj petSubmit" >
+
+															</form>
+														</div>
+													</div> <!-- 정보수정끝 -->
+												</th>
+											</tr>
+											<tr>
+											    
+												<th style="border-top-left-radius: 1.5625rem; border-bottom-left-radius: 1.5625rem;">
+												병원이름</th>
+												<th>진단명</th>
+												<th>의료일</th>
+												<th style="border-top-right-radius: 1.5625rem; border-bottom-right-radius: 1.5625rem;">의료비(원)</th>
+										     
+											</tr>
+										</thead>
+										<tbody class="medicalList">
+
+											<th:block th:each="m:${medical}">
+
+												<tr>
+													<td th:text="${m.clinicHos}"></td>
+													<td>
+													<a href="javascript:void(0);" class="mSelectOpner"
+														th:id="${m.medicalNo}"><span th:text="${m.tCode.tName}"></span></a>
+													</td>
+													<!-- <td><button class="mSelectOpner" th:id="${m.medicalNo}"><span th:text="${m.tCode.tName}"></span></button></td> -->
+													<td th:text="${#dates.format(m.medicalDate,'yyyy-MM-dd')}"></td>
+													<td	th:text="${#numbers.formatInteger(m.medicalCost, 3, 'COMMA')}"></td>
+												</tr>
+
+												<!-- 의료기록 수정 -->
+												<div class="mSelectModal" title="의료기록 " th:id="|mSelectModal${m.medicalNo}|">
+													<div class="modalContent" title="의료기록 수정">
+														<span class="petTitle">[ 의료기록 수정 ]</span>
+														<span class="close" id="mSelectClose">&times;</span>
+														<form action="/medicalUpdate" method="post">
+															<!-- <input type="text" th:value="${m.petId}" hidden="true" name="petId"> -->
+															<input type="text" th:value="${m.medicalNo}"
+																name="medicalNo" hidden="true"> <label>병원이름 : </label><br>
+															<input type="text" name="clinicHos"
+																th:value="${m.clinicHos}" required="required"> <br />
+
+															<label>진단명 : </label><br>
+															<!-- 대분류 -->
+															<select style="width: 200px" class="fClinic"
+																required="required">
+																<option th:value="${m.tCode.sCode.fCode}"
+																	th:text="${m.tCode.sCode.fCode.fName}"></option>
+																<option th:each="f:${fClinic}" th:text="${f.fName}"
+																	th:value="${f.fCode}"></option>
+															</select>
+
+															<!--중분류-->
+															<select style="width: 200px" class="sClinic"
+																required="required">
+																<option th:value="${m.tCode.sCode}"
+																	th:text="${m.tCode.sCode.sName}"></option>
+																<option th:each="s:${sClinic}" th:text="${s.sName}"
+																	th:value="${s.sCode}"></option>
+															</select>
+
+															<!--소분류-->
+															<select style="width: 200px" name="tCode" class="tClinic"
+																required="required">
+																<option th:value="${m.tCode}" th:text="${m.tCode.tName}"
+																	selected="selected"></option>
+																<option th:each="t:${tClinic}" th:text="${t.tName}"
+																	th:value="${t.tCode}"></option>
+															</select> <input type="text" name="clinicName" hidden="true">
+															<br /> <label>의료일 : </label><br> <input type="text"
+																name="medicalDate" class="datepicker"
+																th:value="${m.medicalDate}" required="required">
+															<br /> <label>의료비 : </label><br> <input type="text"
+																name="medicalCost" th:value="${m.medicalCost}"
+																required="required"> <br /> <label>메모 :
+															</label><br>
+															<textarea rows="10" cols="75" name="medicalMemo"
+																style="resize: none;" th:text="${m.medicalMemo}">
+											 	
+											 	</textarea>
+															<br />
+
+
+															<button type="button" id="medicalDelete"
+																style="float: right" th:value="${m.medicalNo}" class="btnj petSubmit">삭제</button>
+															<input type="submit" value="수정" style="float: right" class="btnj petSubmit">
+														</form>
+													</div>
+												</div>
+
+											</th:block>
+
+										</tbody>
+									</table>
+								</td>
+								<!--둘째줄 오른쪽 끝 테이블-->
+							</tr>
+							<!--둘째줄 tr끝-->
+
+
+						</table>
+						<!--전체 윤곽 테이블 끝-->
+
+					</div>
+					<!-- 반려동물정보 -->
+				</div>
+				<!-- for each문-->
+			</th:block>
+		</div>
+		<!-- 아코디언 -->
+
+
+		<div title="의료진단일 " class="cycleModal">
+			<div class="modalContent" title="필수 /권장 의료 진단일" id="cycleList">
+			<span class="petTitle">[ 필수 /권장 의료 진단일 ]</span>
+				<span class="close" id="cycleClose">&times;</span>
+				<div th:each="t:${tCycle}">
+					<span th:text="|${t.lifeCycleNo.tCode.tName}  (${t.clinicDate})|"></span><br>
+				</div>
+			</div>
+		</div>
+		
+		<div title="지난 의료 진단일 " class="ucycleModal">
+			<div class="modalContent" title="지난 의료 진단일" id="ucycleList">
+			<span class="petTitle">[ 지난 의료 진단일 ]</span>
+			<span class="close" id="ucycleClose">&times;</span>
+				<th:block th:if="${uCycle !=null} ">
+				<div th:each="u:${uCycle}">
+					<span th:text="|${u.lifeCycleNo.tCode.tName}  (${u.clinicDate})|"></span><br>
+				</div>
+				</th:block>
+				<th:block th:if="${uCycle ==null} ">
+				<div>
+					<span> 지난 의료진단일이 없습니다.</span>
+				</div>
+				</th:block>
+			</div>
+		</div>
+		
+		
+		
+		
+
+
+		<button id="insertOpener" class="insertOpener">등록</button>
+
+		<!-- 정보등 -->
+		<div class="modal" title="반려동물 등록" >
+			<div class="modalContent" title="정보 등록">
+				<span class="petTitle">정보 등록</span>
+					<span class="close" id="insertClose">&times;</span> 
+				<form action="/petInsert" method="post" name="petInsert" style="margin: auto;">
+									
+					<input
+						type="text" th:value="${user.nickname}" hidden="true"
+						name="nickname"> <label for="petImg">반려동물 사진 :
+						[사진을 드래그 하시오.] </label>
+					<div class="fileDrop">
+						<div class="uploadedList"></div>
+					</div>
+
+					<br /> <label for="petName">반려동물 이름 : </label> <input type="text"
+						name="petName" required="required" class="fol"><br /> <label
+						for="petCode">반려동물 유형 : </label> <input type="radio"
+						name="petCode" value="D" required="required">강아지 <input
+						type="radio" name="petCode" value="C" required="required">고양이
+					<br /> <label for="breedCode">반려동물 품종 : </label> <select
+						class="breedCode" name="breedCode" required="required">
+						<option value="" selected="selected">--품종 선택--</option>
+						<option th:each="b:${breed}" th:value="${b.breedCode}"
+							th:text="${b.breedName}"></option>
+					</select> <br /> <label for="petCode">반려동물 성별 : </label> <input
+						type="radio" name="petGender" th:value="M" required="required">수컷
+					<input type="radio" name="petGender" th:value="F"
+						required="required">암컷 <br /> <label for="datepicker">반려동물
+						생일 : </label> <input type="text" class="datepicker" name="petBirth"
+						required="required"> <br /> <input type="submit"
+						value="등록" class="btnj petSubmit" >
+				</form>
+			</div>
+
+		</div>
+
+
+	</section>
+
+	<script src="js/getPetCare.js"></script>
+</body>
+</html>

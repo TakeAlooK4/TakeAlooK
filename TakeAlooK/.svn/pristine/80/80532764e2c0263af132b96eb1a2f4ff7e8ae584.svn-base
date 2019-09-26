@@ -1,0 +1,383 @@
+
+package com.bit.tak.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+import javax.swing.text.html.HTML;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.engine.AttributeName;
+
+import com.bit.tak.model.repository.CartRepo;
+import com.bit.tak.model.repository.MemberRepo;
+import com.bit.tak.model.repository.P_resultValueRepo;
+import com.bit.tak.model.repository.PaymentRepo;
+import com.bit.tak.model.repository.ProductRepo;
+import com.bit.tak.model.repository.ProductReviewRepo;
+import com.bit.tak.model.vo.admin.P_Review;
+import com.bit.tak.model.vo.member.Muser;
+import com.bit.tak.model.vo.product.Cart;
+import com.bit.tak.model.vo.product.P_payment;
+import com.bit.tak.model.vo.product.P_resultValue;
+import com.bit.tak.model.vo.product.Product;
+
+@Controller
+public class ProductController {
+
+	@Autowired
+	private ProductRepo productRepo;
+	
+	@Autowired
+	private CartRepo cartRepo;
+	
+	@Autowired
+	private ProductReviewRepo productReviewRepo;
+	
+	@Autowired
+	private P_resultValueRepo resultValueRepo; 
+	
+	@Autowired
+	private PaymentRepo paymentRepo;
+//ddd
+	/*
+	 * 강아지를 누르면 강아지 데이터
+	 * 고양이를 누르면 고양이 데이터 불러오기
+	 * ==============================
+	 * 데이터를 어떤 기준으로 불러와야 할까? ,,,,
+	 * 대안1. productRepo.findById (강아지)
+	 *       productRepo.findById (고양이)
+	 *       로 정해서 버튼에 ajax를 써서 버튼에 어떠한 것을 해주어서
+	 *       원하는 데이터를 불러 온다?!?!....
+	 */
+	
+	@RequestMapping("/productMain")
+	public String productMain(Model model,String animalType, String pCode,HttpSession session, String nickname) {
+			
+				session.setAttribute("nickname", nickname);
+			//model.addAttribute("productList", productRepo.findAll());
+				System.err.println(nickname);
+			model.addAttribute("productList", productRepo.findAll());
+			model.addAttribute("bueatyAll", productRepo.bueatyAllList(pCode));
+			model.addAttribute("snackAll", productRepo.snackAllList(pCode));
+			model.addAttribute("feedAll", productRepo.feedAllList(pCode));
+			//session 받을 자리 
+			//섹션에 닉네임 등록하기
+			// 나중에 지워 줄 것! ( 헤더를 만든 후에는 )
+		
+		return "product/productMainPage";
+	}
+	//----------test 맵핑 ------------
+	@RequestMapping("/productMainTest")
+	public String productMainTest(Model model,String animalType, String pCode) {
+		
+			//model.addAttribute("productList", productRepo.findAll());
+				
+			model.addAttribute("productList", productRepo.findAll());
+			model.addAttribute("bueatyAll", productRepo.bueatyAllList(pCode));
+			model.addAttribute("snackAll", productRepo.snackAllList(pCode));
+			model.addAttribute("feedAll", productRepo.feedAllList(pCode));
+			//session 받을 자리 
+			//섹션에 닉네임 등록하기
+			// 나중에 지워 줄 것! ( 헤더를 만든 후에는 )
+		
+		return "product/productMainPageTest";
+	}
+	
+	@RequestMapping("/dogInsert.do")
+	public String dogPage(Model model, String animalType) {
+		
+		model.addAttribute("productListDog1", productRepo.feedList("D"));	
+		//model.addAttribute("productListDog2", productRepo.feedList(animalType));
+		
+		return "product/productMainPageDog";
+	}
+	
+	
+	@RequestMapping("/catInsert.do")
+	public String catPage(Model model, String animalType) {
+		
+		model.addAttribute("productListCat1", productRepo.feedList("C"));	
+		//model.addAttribute("productListCat2", productRepo.feedList(animalType));
+		return "product/productMainPageCat";
+	}
+	
+	//dog snack 에 관한 맵핑
+	@RequestMapping("/productListDog.do")
+	public String dogSnack(Model model, String animalType, String pCode1,String pCode2,String pCode3) {
+		
+		model.addAttribute("productListDog", productRepo.proList(animalType, pCode1,pCode2,pCode3));
+
+		return "product/productMainPageDog";
+	}
+	
+	@RequestMapping("/productListCat.do")
+	public String catSnack(Model model, String animalType, String pCode1,String pCode2,String pCode3) {
+		
+		model.addAttribute("productListCat", productRepo.proList(animalType, pCode1,pCode2,pCode3));
+
+		return "product/productMainPageCat";
+	}
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////	
+	@RequestMapping("/productDetailPage")
+	public String productDetailPage(Model model, String prNo,HttpSession session,String nickname) {
+
+		model.addAttribute("product",productRepo.findById(prNo).get());
+		
+		return "product/P_detail_Page";
+	}
+	
+	
+	
+	@RequestMapping("/insertCart.do")
+	@ResponseBody
+	public String insertCart(Model model, String prNo,Cart cart,Muser nickname) {
+		
+		Product product = productRepo.findById(prNo).get();
+		cart.setProduct(product);
+		cart.setUser(nickname);
+		
+		
+		cartRepo.save(cart);
+		return "success";
+	}
+	
+	
+
+	@RequestMapping("/deleteList.do")
+	@ResponseBody
+	public String deleteList(Cart cart, @RequestParam List<Integer> cartNo) {
+		
+		
+		cartRepo.deleteById(cart.getCartNo());
+
+		return "success";
+	}
+	@RequestMapping("/deleteListAll.do")
+	@ResponseBody
+	public String deleteListAll(Cart cart, @RequestParam List<Integer> cartNo) {
+		
+		
+		cartRepo.deleteAll();
+
+		return "/payment";
+	}
+
+	@RequestMapping("/deletePaymentList.do")
+	@ResponseBody
+	public String deletePaymentList(P_resultValue result, @RequestParam List<Integer> resultValue) {
+		
+		
+		resultValueRepo.deleteById(result.getResultValue());
+
+		return "/payment";
+	}
+	
+	/*
+	 * cart 안에 cartVo data 들어 있음
+	 * 장바구니에 넣으면 뷰 에 표현 된게 하고 싶음
+	 * 기존에 받은 cartAmount 의 개수를 장바구니  내에서 수정하고싶음
+	 * 수량 변경 후 '수량변경' 버튼을 누르면 수량 변경됨
+	 * cartAmount 를 바꾸는 순간 가격도 실시간으로 변경 하게 하고 싶음
+	 * 장바구니에서 결제 하고  싶음
+	 * 결제 하고 나면 장바구니에 있는 데이터들을 삭제 시킴
+	 * 
+	 */
+	@RequestMapping("/productCartPage")
+
+	public String CartPage(Model model,Cart cart,Muser user, String nickname) {
+
+		
+		model.addAttribute("cartList",cartRepo.findAll());
+
+		
+		List<Cart> list = cartRepo.listCart(user);
+		
+		int sumMoney = cartRepo.sumMoney(user);
+		
+		int fee = 100;
+		if (sumMoney >= 40000) {
+			fee = 0;
+		}
+		
+		model.addAttribute("sumMoney", sumMoney);
+		model.addAttribute("fee", fee);
+		model.addAttribute("sum", sumMoney + fee);
+		model.addAttribute("list", list);
+		model.addAttribute("count", list.size());
+
+		return "product/Cart";
+	}
+
+	
+	/*
+	 *  이 맵핑은 내가 넣은 물품을 합치는 과정
+	 *  특히 cartAmount 개수를 합쳐서 디비로 보내주어
+	 *  cart table에 cartNo, nickname, sumCartAmount 가 재 정의 되어 담겨져 있다.
+	 *  
+	 */
+	@RequestMapping("/cartUpdate.do")
+	@ResponseBody
+	public String update( Muser user,String nickname,HttpSession session,Cart cart, @RequestParam List<Integer> cartAmount, @RequestParam List<Integer> cartNo) {
+		
+/////////////////////////////////////////////////////////////////////////////		 
+		 if (nickname != null) {
+				for (int i = 0; i < cartNo.size(); i++) {
+					if (cartAmount.get(i) == 0) {
+						cartRepo.deleteById(cartNo.get(i));
+					} else {
+						
+						cart.setCartNo(cartNo.get(i));
+						cart.setCartAmount(cartAmount.get(i));
+						Cart cartList = cartRepo.findById (cart.getCartNo()).get();
+						cartList.setCartAmount(((Cart) cart).getCartAmount());
+						cartRepo.save(cartList);
+						
+					}
+				}
+			}
+		
+		return "redirect:productCartPage";
+	}
+	
+	// 상품 후기 insert 
+	@RequestMapping("/reviewInsert.do")
+	@ResponseBody
+	public String reviewInsert(Model model,Muser nickname,Product prNo,P_Review review) {
+		
+		review.setProduct(prNo);
+		review.setUser(nickname);
+		System.err.println(review);
+		productReviewRepo.save(review);
+
+		return "success";
+	}
+	
+	@RequestMapping("/test")
+	public String testPage() {
+		
+		
+		return "product/test";
+	}
+// 문의글 맵핑	
+	@RequestMapping("/productEnrollment")
+	public String enrollment() {
+		
+		return "product/productEnrollment";
+	}
+	
+	@RequestMapping("/productEnrollmentInsert.do")
+	public String productEnrollmentInsert() {
+		
+		
+		
+		return "rediect:productMainPage";
+	}
+//결제 페이지 맵핑	
+	@RequestMapping("/payment")
+
+	public String cash(Model model,P_payment payment,Product prNo,Muser user) {
+		
+		
+		int sumMoney = resultValueRepo.sumAllMoney(user);
+		
+			model.addAttribute("allSumMoney", sumMoney);
+
+		
+			model.addAttribute("info",resultValueRepo.findAll());
+//			model.addAttribute("imgInfo", resultValueRepo.findByPrNo(prNo));
+			
+
+		
+		return "product/payment";
+	}
+
+	
+// 장바구니에서 결제 페이지로 넘어갈떄 필요한 데이터	
+	@RequestMapping("/paymentInsert.do")
+	@ResponseBody
+	public String paymentInsert(Model model,P_resultValue result) {
+		
+		System.out.println(result);
+		resultValueRepo.save(result);
+		System.err.println(result);
+		cartRepo.deleteAll();
+		
+		
+		return "success";
+	}
+// 결제 내역 insert 하는 부분	
+	@ResponseBody
+	@RequestMapping("/paymentInsert2.do")
+	public String resultValue(Model model,P_payment payment,Product prNo) {
+		
+		System.err.println(payment);
+		paymentRepo.save(payment);
+
+		return "product/productMain";
+	}
+
+// 구매 내역
+
+	@RequestMapping("/paymentList")
+	public String paymentList(Model model,String nickname) {
+		
+		model.addAttribute("paymentList", paymentRepo.findAll());
+		
+		
+		return "product/paymentList";
+	}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

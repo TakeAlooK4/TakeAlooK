@@ -1,0 +1,43 @@
+package com.bit.tak.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.bit.tak.model.repository.HostRepo;
+import com.bit.tak.model.vo.host.Host;
+
+@Controller
+public class HostController {
+
+	@Autowired
+	HostRepo hostRepo;
+	
+	@GetMapping("/hostMain")
+	public String hostMain(Model model) {
+		return "host/hostMain";
+	}
+
+	@GetMapping("/hostWriting")
+	public String hostWriting(Model model) {
+		
+		return "host/hostWrite";
+	}
+	
+	@GetMapping("/hostDetail")
+	public String hostDetail(Model model) {
+		
+		return "host/hostDetail";
+	}
+	
+	@PostMapping("/hostInsert")
+	public String hostInsert(Host host) {
+		
+		hostRepo.save(host);
+		
+		
+		return "host/hostMain";
+	}
+}

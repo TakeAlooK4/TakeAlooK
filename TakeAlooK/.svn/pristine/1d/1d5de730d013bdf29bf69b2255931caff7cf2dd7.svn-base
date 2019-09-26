@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>일반 유저 아이디 받는 곳</title>
+<style type="text/css">
+	.h2suc{
+		color: #808080;
+	}
+	
+	.confirmbtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 10px 115px;
+	}
+</style>
+</head>
+
+<body>
+<br><br><br>
+	<h2 align="center" class="h2suc">아이디 찾기</h2>
+	<div align="center">
+		회원님의 아이디 정보는 <span th:text="${searchUserId}"></span>입니다.
+	</div>
+	<br>
+	<div align="center"><button onclick="window.close();" class="confirmbtn">확인</button></div>
+</body>
+</html>

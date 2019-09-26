@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+var num = "[[${data.commNo}]]";
+/*]]>*/
+
+/*<![CDATA[*/
+var num2= "[[${data2.commNo.commNo}]]";
+/*]]>*/
+console.log(num2)
+$(function() {
+	$("#commCorrect").click(function() {
+		document.form1.action = "/community/cw/" + num;
+		document.form1.submit();
+	})
+});
+$(function() {
+	$("#commDelete").click(function() {
+		if(confirm("삭제하시겠습니까?")){
+			document.form1.action = "/community/" + num;
+			document.form1.submit();
+		}
+	})
+});
+
+//댓글 목록 
+function commentList(){
+	console.log(num)
+    $.ajax({
+        url : '/community/ment',
+        type : 'get',
+        data : {num:num},
+        success : function(data){
+        	var sessionNick = [[${session['user']}]];
+        	console.log(sessionNick)
+            var a =''; 
+          	  $.each(data, function(key, value){ 
+                a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+                a += '<div class="commentInfo'+value.cmentNo+'">'+'댓글번호 : '+value.cmentNo+' / 작성자 : '+value.nickname.nickname+'/ '+value.cmentDate;
+               if(sessionNick != null){
+            	   if(sessionNick.nickname == value.nickname.nickname){
+                a += '<a onclick="commentUpdate('+value.cmentNo+',\''+value.cmentContents+'\');"> 수정 </a>';
+                a += '<a onclick="commentDelete('+value.cmentNo+');"> 삭제 </a> </div>';
+            	   }
+               }
+                a += '<div class="commentContent'+value.cmentNo+'"> <p> 내용 : '+value.cmentContents +'</p>';
+                a += '</div></div>';
+                console.log(value)
+            });
+
+            $(".commentList").html(a);
+        }
+    });
+}
+
+function commentInsert(insertData){
+    $.ajax({
+        url : '/community/insert',
+        type : 'post',
+        data : insertData,
+        success : function(data){
+
+                commentList(); //댓글 작성 후 댓글 목록 reload
+                $('[name=cmentContents]').val('');
+          
+        }
+    });
+}
+
+function commentUpdate(cmentNo, cmentContents){
+    var a ='';
+    
+    a += '<div class="input-group">';
+    a += '<input type="text" class="form-control" name="content_'+cmentNo+'" value="'+cmentContents+'"/>';
+    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+cmentNo+');">수정</button> </span>';
+    a += '</div>';
+    
+    $('.commentContent'+cmentNo).html(a);
+    
+}
+
+function commentUpdateProc(cmentNo){
+    var updateContent = $('[name=content_'+cmentNo+']').val();
+    console.log(updateContent)
+    $.ajax({
+        url : '/community/update',
+        type : 'post',
+        data : {cmentContents : updateContent, cmentNo : cmentNo},
+        success : function(data){
+        	console.log(data)
+        	console.log(cmentContents)
+           commentList(num); //댓글 수정후 목록 출력 
+        }
+    });
+}
+
+function commentDelete(cmentNo){
+    $.ajax({
+        url : '/community/delete/'+cmentNo,
+        type : 'post',
+        success : function(data){
+            commentList(num); //댓글 삭제후 목록 출력 
+        }
+    });
+}
+
+$(document).ready(function(){
+    commentList(); //페이지 로딩시 댓글 목록 출력
+    $('[name=commentInsertBtn]').click(function(){ //댓글 등록 버튼 클릭시 
+        var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
+        commentInsert(insertData); //Insert 함수호출(아래)
+    });
+});
+
+//좋아요 기능
+
+
+</script>
+
+</head>
+<body>
+<form th:name="form1" method="post">
+	<table>
+	<tr>
+		<td>제목:</td><td th:text="${data.commTitle}"></td>
+		<td>작성일:</td><td th:text="${#dates.format(data.commDate, 'yyyy-MM-dd')}"></td>
+	</tr>
+	<tr>
+		<td>내용:</td><td th:text="${data.commContents}"></td>
+	</tr>
+	</table>
+	<div  th:utext="${data.commContents}" id="summernote"></div>
+	<th:block th:if="${session['user'] != null}">
+		<th:block th:if="${session['user'].nickname} == ${data.nickname.nickname}">
+			<button id="commCorrect">글 수정</button>
+			<button id="commDelete">글 삭제</button>
+		</th:block>
+	</th:block>
+	<a th:href="@{/community/cl}">목록</a>
+	</form>
+	<!-- <a th:href="@{'/community/'+${data.commNo}}">글 삭제</a> -->
+
+ <!--  댓글  -->
+    <div class="container">
+        <label for="content">comment</label>
+        <form name="commentInsertForm">
+            <div class="input-group">
+               <input type="hidden" name="commNo" th:value="${data.commNo}"/>
+               <input type="text" th:id="nickname" th:name="nickname">
+               <input type="text" class="form-control" id="cmentContents" name="cmentContents" placeholder="내용을 입력하세요.">
+               <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
+               </span>
+              </div>
+        </form>
+    </div>
+    
+    <div class="container">
+        <div class="commentList"></div>
+    </div>
+
+</body>
+
+<!-- <th:block th:include="community/comment.html"></th:block> -->
+</html>

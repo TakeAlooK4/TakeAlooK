@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<title>메인 페이지</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<style type="text/css">
+  
+  	.productMain li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+	
+	  	.snack li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+		  	.bueaty li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+		#mainPage{
+		    padding-top: 243px;
+		padding-left: 10px;
+	}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var user = "[[${session['muser']}]]";
+/*]]>*/
+ console.log(user)
+	$(function(){
+		$("#petCare").click(function(){
+				if(user == ""){
+					alert("로그인후 작성 가능합니다")
+					location.href = "/memberLogin";
+				}else location.href = "/petCare";
+			});
+		}); 
+</script>
+</head>
+<body>
+<header class="headerMenu"> 
+<div class="wrapper"> 
+<h1 class="pageName"><a href="/">Take A looK</a></h1> 
+
+<th:block th:if="${session['muser'] == null} and ${session['company'] == null} "> 
+<ul class="menu"> 
+<li><a th:href="memberLogin">로그인 |</a></li> 
+<li><a th:href="memberSignUp">회원가입 |</a></li> 
+<li><a th:href="myPage">마이페이지 |</a></li> 
+<li><a th:href="productCartPage">장바구니 |</a></li> 
+<li><a th:href="payment">구매내역</a></li> 
+</ul> 
+</th:block> 
+
+<th:block th:if="${session['muser'] != null}"> 
+<ul class="menu"> 
+<li th:text="|${session['muser'].nickname}님 입장 /|"></li>	
+<li><a href="/userLogOut">로그아웃 /</a></li> 
+<li><a th:href="myPage">마이페이지 /</a></li> 
+<li><a th:href="productCartPage">장바구니 /</a></li> 
+<li><a th:href="payment">구매내역</a></li> 
+</ul> 
+</th:block> 
+
+<th:block th:if="${session['company'] != null}"> 
+<ul class="menu"> 
+<li th:text="|${session['company'].cName}님 입장 /|"></li> 
+<li><a href="/companyLogOut">로그아웃 /</a></li> 
+<li><a th:href="myPage">마이페이지 /</a></li> 
+<li><a th:href="productCartPage">장바구니 /</a></li> 
+<li><a th:href="payment">구매내역</a></li> 
+</ul> 
+</th:block> 
+</div> 
+
+<div id="mainMenu_Wrap"> 
+<ul id="mainMenu"> 
+<li><a href="/productMain"  style="text-decoration: none">상품</a></li> 
+<li><a href="" style="text-decoration: none">병원</a></li> 
+<li><a href="" style="text-decoration: none">커뮤니티</a></li> 
+<li><a href="" style="text-decoration: none">펫 케어</a></li> 
+
+</ul> 
+
+</div> 
+
+</header> 
+
+
+<div id="mainMenu_Wrap">
+	<ul id="mainMenu">
+		<li><a href="/productMain"  style="text-decoration: none">상품</a></li>
+		<li><a href="" style="text-decoration: none">병원</a></li>
+		<li><a href="/community/cl" style="text-decoration: none">커뮤니티</a></li>
+		<li><a href="#" style="text-decoration: none" id="petCare">펫 케어</a></li>
+	
+	</ul>
+	
+</div>
+	
+
+	<ul class="productMain" style="padding-top: 300px">
+		<li th:each="product:${main}">
+			<div><input type=hidden th:value="${product.prNo}" ></div>
+			<div><input type=hidden id="animalType" class="animalType" th:value="${product.animalType}"></div>
+			<div><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${product.prNo})}"  >
+			 					<img th:src="${product.mainImg01}"  style="width: 50%; height: 30%"></a></div>
+			<div  th:text ="${product.prName}" ></div>
+			<div  th:text="${product.prCost}+원"></div>
+		</li>
+	
+	</ul>
+</body>
+</html>

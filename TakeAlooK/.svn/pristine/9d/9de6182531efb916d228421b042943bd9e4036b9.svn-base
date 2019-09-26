@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>메인 페이지</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<style type="text/css">
+  
+  	.productMain li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+	
+	  	.snack li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+		  	.bueaty li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+		#mainPage{
+		    padding-top: 243px;
+		padding-left: 10px;
+	}
+	
+		#title1{
+			padding-top:300px;
+		}
+</style>
+
+</head>
+<body>
+<header class="headerMenu"> 
+<div class="wrapper"> 
+<h1 class="pageName"><a href="/">Take A looK</a></h1> 
+
+<th:block th:if="${session['muser'] == null} and ${session['company'] == null} "> 
+<ul class="menu"> 
+<li><a th:href="memberLogin">로그인 |</a></li> 
+<li><a th:href="memberSignUp">회원가입 |</a></li> 
+<li><a th:href="myPage">마이페이지 |</a></li> 
+<li><a th:href="productCartPage">장바구니 |</a></li> 
+<li><a th:href="orderList">구매내역</a></li> 
+</ul> 
+</th:block> 
+
+<th:block th:if="${session['muser'] != null}"> 
+<ul class="menu"> 
+<li th:text="|${session['muser'].nickname}님 입장 /|"></li>	
+<li><a href="userLogOut">로그아웃 /</a></li> 
+<li><a th:href="myPage">마이페이지 /</a></li> 
+<li><a th:href="productCartPage">장바구니 /</a></li> 
+<li><a th:href="orderList">구매내역</a></li> 
+</ul> 
+</th:block> 
+
+<th:block th:if="${session['company'] != null}"> 
+<ul class="menu"> 
+<li th:text="|${session['company'].cName}님 입장 /|"></li> 
+<li><a href="companyLogOut">로그아웃 /</a></li> 
+<li><a th:href="myPage">마이페이지 /</a></li> 
+<li><a th:href="productCartPage">장바구니 /</a></li> 
+<li><a th:href="orderList">구매내역</a></li> 
+</ul> 
+</th:block> 
+</div> 
+<div id="mainMenu_Wrap">
+	<ul id="mainMenu">
+		<li><a href="/productMain"  style="text-decoration: none">상품</a></li>
+		<li><a href="" style="text-decoration: none">병원</a></li>
+		<li><a href="" style="text-decoration: none">커뮤니티</a></li>
+		<li><a href="" style="text-decoration: none">펫 케어</a></li>
+	
+	</ul>
+
+</div>
+</header> 
+
+<h1 id="title1">●구매 내역●</h1>
+
+<div th:each="paymentList:${paymentList}">
+	
+		<h2>고객 이름 :</h2><div><h2><span th:text="${paymentList.muser.name}"></span></h2></div>
+	
+	
+		<div><img th:src="${paymentList.product.mainImg01}">
+		<h2><span th:text="${paymentList.product.prName}"></span></h2></div>
+	
+	
+		<h2>○배송 주소 :</h2><div><h2><span th:text="${paymentList.address}"></span></h2></div>
+	
+		<h2>○연락처 :</h2><div><h2><span  th:text="${paymentList.cellphone}"></span></h2></div>
+	
+		
+
+</div>
+
+
+
+
+</body>
+</html>

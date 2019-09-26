@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<title>메인 페이지</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<style type="text/css">
+  
+  	.productMain li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+	
+	  	.snack li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+		  	.bueaty li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+		#mainPage{
+		    padding-top: 243px;
+		padding-left: 10px;
+	}
+</style>
+<script type="text/javascript">
+/*<![CDATA[*/
+var user = "[[${session['muser']}]]";
+/*]]>*/
+ console.log(user)
+	$(function(){
+		$("#petCare").click(function(){
+				if(user == ""){
+					alert("로그인 후 작성 가능합니다")
+					location.href = "/memberLogin";
+				}else location.href = "/petCare";
+			});
+		}); 
+</script>
+</head>
+<body>
+
+
+<th:block th:include="header.html"/>
+
+
+</body>
+</html>

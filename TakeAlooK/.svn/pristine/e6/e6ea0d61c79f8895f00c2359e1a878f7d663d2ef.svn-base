@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="/royal/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/royal/css/animate.css">
+    
+    <link rel="stylesheet" href="/royal/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/royal/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/royal/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/royal/css/aos.css">
+
+    <link rel="stylesheet" href="/royal/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/royal/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/royal/css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="/royal/css/flaticon.css">
+    <link rel="stylesheet" href="/royal/css/icomoon.css">
+    <link rel="stylesheet" href="/royal/css/style.css">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script type="text/javascript">
+
+	$(function(){
+		
+		$("#resultBtn").click(function(){
+			var IMP = window.IMP; // 생략가능
+			var allSumMoney =$("#allSumMoney").val();
+			var prName =$("#prName").val();
+			var userName =$("#userName").val();
+			var userId = $("#userId").val();
+			var cellPhone= $('#cellphone1').val() + $('#cellPhone2').val() + $('#cellPhone3').val();
+			var address =$('#addressMain').val() + $('#addressDetail').val();
+			IMP.init('imp12160241'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+			
+			IMP.request_pay({
+			    pg : 'html5_inicis', // version 1.1.0부터 지원.
+			    pay_method : 'card',
+			    merchant_uid : 'merchant_' + new Date().getTime(),
+			    name : prName,
+			    amount : allSumMoney,
+			    buyer_email : userId,
+			    buyer_name : userName,
+			    buyer_tel :cellPhone ,
+			    buyer_addr : address,
+			  //  buyer_postcode : '123-456',
+			    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+			}, function(rsp) {
+			    if ( rsp.success ) {
+			        var msg = '결제가 완료되었습니다.';
+			        msg += '고유ID : ' + rsp.imp_uid;
+			        msg += '상점 거래ID : ' + rsp.merchant_uid;
+			        msg += '결제 금액 : ' + rsp.paid_amount;
+			        msg += '카드 승인번호 : ' + rsp.apply_num;
+					var allSumMoney =$("#allSumMoney").val();
+					var prNo =$("#prNoList").val();
+					var nickname=$("#nickname").val();
+					var cellPhone= $('#cellphone1').val() + $('#cellPhone2').val() + $('#cellPhone3').val();
+					var address =$('#addressMain').val() + $('#addressDetail').val();	
+					var prNoList=$("#prNoList").val();
+					alert(allSumMoney);
+					alert(prNo);					
+					alert(cellPhone);
+					alert(address);
+					$.ajax({
+						url:"/paymentInsert2.do",
+						data:{
+							product:prNo,
+							muser:nickname,
+							sumvalue:allSumMoney,
+							cellphone:cellPhone,
+							address:address
+						},
+						datatype:"json",
+						success:function(data){
+							
+							var cartNo = $("#cartNo").val();
+							alert(cartNo);
+							$.ajax({
+								url:"/deletePaymentList.do",
+								data:{
+									Cart:cartNo
+								},
+								datatype:"json",
+								success:function(data){
+									location.href="/productMain";
+								}
+					});
+			
+			}
+		});
+			    } else {
+			        var msg = '결제에 실패하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+			    }
+			    alert(msg);
+	});
+		});
+	});		
+			
+	$(function(){
+		
+		$(".deleteBtn").click(function(){
+			var check = confirm("지우시겠습니까?");
+			var nickname = $("#nickname").val();
+			var num = $(this).attr("id");
+			var result = "#cartNo"+num;
+			if(check==true && nickname!= null ){
+				
+			var resultNo = $(result).val();
+			$.ajax({
+				url:"deletePaymentList.do",
+				data:{
+					resultValue:resultNo
+				},
+				datatype:"json",
+				success:function(data){
+						location.href="/payment";
+						
+				}
+		
+		});
+			}else{
+				alert("삭제를 할 수 없습니다.")
+			}
+
+		
+	});
+	});		
+		
+	</script>
+	<style type="text/css">
+	#mainList{
+				display: inline-block;  
+  				width : 24%; 
+  				text-align: center; 
+  				margin-right: 1%;
+	}
+	#mainList:nth-child(4n){margin-right:0;}
+	#deleteBtn{
+			margin-left: 81%;
+			
+	}
+	#AllListWrite{
+		padding-left: 5%;
+    	margin: 5%;
+	}		
+	</style>
+</head>
+<body>
+<th:block th:include="header.html">
+</th:block>
+<section class="petSection">
+<h2 class="titlej">PET PAYMENT</h2>
+<hr>
+
+
+<div id="mainPage">
+<div id="allText">
+<h2>상품 정보</h2>
+
+<!-- 	<div th:each="cartInfo:${info}"> -->
+<!-- 		<div th:value="${cartInfo.cart.product.mainImg01}" ></div> -->
+<!-- 	</div> -->
+
+
+		<div class="feed">	
+	<div class="properties">
+		<div th:each="cartInfo:${cartList1}" id="mainList">
+		<div><input type="hidden" th:value="${cartInfo.cartNo}" id="cartNo"></div>
+		<div><input type="hidden" th:value="${cartInfo.product.prNo}" id="prNoList"></div>
+    				 <img th:src="${cartInfo.product.mainImg01}"  style="width: 50%; height: 30%;">
+    					<div class="text p-3">
+    						
+    						<div class="d-flex">
+    							<div class="one">
+    								<div><input type="hidden" id="prName" th:value ="${cartInfo.product.prName}" ></div>
+									<div  th:text ="${cartInfo.product.prName}" ></div>
+	    						</div>
+	    						<div class="two" id="costValue">
+	    							<div  th:text="${cartInfo.cartAmount}"+개></div>
+    							</div>
+    						</div>
+    						
+    						<hr>
+    					</div>
+    				</div>
+    			</div> 
+			</div>
+		
+		
+		
+		<HR>
+		<input type="hidden" th:value="${sumInfo}" id="allSumMoney">
+		
+		<h2 style="padding-left: 70%;">총 결제 금액 : <label type="text" th:text="${sumInfo}"></label></h2>
+<div id="AllListWrite">
+<h2>고객 정보</h2>
+<hr>
+<div><input type="hidden" id="userId" th:value="${session['muser'].id}"></div>
+<div><input type="hidden" id="nickname" th:value="${session['muser'].nickname}"></div>
+<div><input type="hidden" id="userName"th:value="${session['muser'].name}"></div>
+<div >고객 이름 : <span id="userNameTitle"><font style="color: black;" th:text="${session['muser'].name}"></font></span></div>
+<div >고객 닉네임 : <span id="userNicknameTitle"><font style="color: black;" th:text="${session['muser'].nickname}"></font></span></div>
+<hr>
+<br>
+<h2>받을 주소 입력란</h2>
+<hr>
+<div>주소 입력 :<span id="userAddressTitle"><input type="text" id="addressMain" style="width: 300px;"></span></div><br>
+<div>상세 주소 입력 :<span id="userCellPhoneTitle"><input type="text" id="addressDetail" style="width: 200px;"></span></div><br>
+핸드폰 번호 : <span><select id="cellphone1" name="cellphoneValue">
+		<option value="010">010</option>
+		<option value="016">016</option>
+		<option value="018">018</option>
+		<option value="011">011</option>
+		</select> 
+		<input type="text" id="cellPhone2" style="width: 50px;">
+		<input type="text" id="cellPhone3" style="width: 50px;"></span><br><br>
+		<hr>
+<button id="resultBtn">결제 하기</button>
+</div>	
+
+
+</div>
+</div>
+</section>
+</body>
+</html>

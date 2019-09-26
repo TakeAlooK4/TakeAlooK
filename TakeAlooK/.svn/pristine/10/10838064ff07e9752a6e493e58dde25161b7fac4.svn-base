@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>비밀번호 찾기</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<script type="text/javascript">
+	//비밀번호 찾기 회원정보 유,무 체크
+	$(function(){
+		var cSearchPw = $("#cSearchPw").val();
+		if(cSearchPw) {
+			alert(cSearchPw);
+		}
+	});
+		
+	// 이름 정규식 체크
+	$(function(){
+		$("#namePw_check").css("color", "red")
+		$("#name").blur(function(){
+			var name = $("#name").val();
+			var nameRule = /^[가-힣]{2,5}$/;
+			var nameCheck = name.match(nameRule);
+			
+			if(!nameCheck) {
+				$("#namePw_check").html("본인 이름을 정확히 입력해주세요.")
+			} else {
+				$("#namePw_check").html("");
+			} 
+			if(!name) {
+				$("#namePw_check").html("");
+			}
+			
+		});
+	});
+	
+	// 이메일(아이디) 정규식 체크
+	$(function(){
+		$("#emailPw_check").css("color", "red")
+		$("#id").blur(function(){
+			var email = $("#id").val();
+			var emailRule = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			var emailCheck = email.match(emailRule);
+			
+			if(!emailCheck) {
+				$("#emailPw_check").html("이메일 작성을 정확하게 입력해주세요.")
+			} else {
+				$("#emailPw_check").html("");
+			} 
+			if(!email) {
+				$("#emailPw_check").html("");
+			}
+			
+		});
+	}); 
+</script>
+</head>
+<header>
+	<h2 align="center">유저 비밀번호 찾기</h2>
+</header>
+<body>
+	<input type="hidden" th:value="${msg}" id="cSearchPw">
+	<form action="memberSearchPwSuc" method="post">
+		<div align="center">
+			<br><a href="memberSearchId"><input type="button" value="아이디 찾기"></a> | <input type="button" value="비밀번호 찾기"><br>
+		</div>
+		<br><div align="center">
+				<label for="name">이름 : </label><input type="text" name="name" id="name" placeholder="이름 입력">
+				<div class="namePw_check_font" id="namePw_check"></div>
+				
+				<br><label for="id">아이디 : </label><input type="text" name="id" id="id" placeholder="가입한 이메일 입력">
+				<div class="emailPw_check_font" id="emailPw_check"></div>
+			</div>
+			<br><div align="center">
+				<br><input type="submit" value="비밀번호 찾기">
+			</div>
+	</form>		
+</body>
+</html>

@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 고양이</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script type="text/javascript">
+//ss
+</script>
+
+<style type="text/css">
+	 
+	 
+	 	.catList li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  		
+  	}
+		#mainPage{
+		        padding-top: 230px;
+		    padding-left: 10px;
+	}
+</style>
+<title>상품 페이지</title>
+</head>
+<body>
+<th:block th:include="/header"></th:block>
+<form id="mainPage" >	
+
+	<h1>
+ 	
+ 	<div align="left" >
+			<a href="/productListDog.do" th:href="@{productListDog.do(animalType=C,pCode1=Dfc01,pCode2=Dfc02,pCode3=Dfc03)}" style="text-decoration: none">강아지
+			</a> |  
+ 			<a href="/productListCat.do" th:href="@{/productListCat.do(animalType=C,pCode1=Cfc01,pCode2=Cfc02,pCode3=Cfc03)}"  style="text-decoration: none">고양이</a>
+ 	</div> 
+
+
+	</h1>
+
+<div class="catMenu">	
+	<h2>| <a href="/productListCat.do" th:href="@{/productListCat.do(animalType=C,pCode1=Cfc01,pCode2=Cfc02,pCode3=Cfc03)}"  style="text-decoration: none">사료</a> 
+	| <a href="/productListCat.do" th:href="@{productListCat.do(animalType=c,pCode1=csn01,pCode2=csn02,pCode3=csn03)}" style="text-decoration: none">간식</a> 
+	| <a href="/productListCat.do" th:href="@{productListCat.do(animalType=c,pCode1=BAPc01,pCode2=BAPc02,pCode3=BAPc03)}" style="text-decoration: none">목욕/미용</a> 
+	| <a href="/productListCat.do" th:href="@{productListCat.do(animalType=c,pCode1=OPc01,pCode2=OPc02,pCode3=OPc03)}" style="text-decoration: none">기타 용품</a>
+	 |</h2>
+</div>	
+
+  	<hr>
+
+		<ul class="catList">
+		<li th:each="product2:${productListCat}">
+			<div><input type=hidden th:value="${product2.prNo}"  ></div>
+			<div><input type=hidden id="animalType" class="animalType" th:value="${product2.animalType}"></div>
+			<div><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${product2.prNo})}" >
+			 					<img th:src="|/upload/displayFile?fileName=${product2.mainImg01}|" style="width: 50%; height: 30%"></a></div>
+			<div th:text ="${product2.prName}"  ></div>
+			<div th:text="${product2.prCost}+원"></div>
+		</li>
+	
+	</ul>
+
+</div>
+</form>	
+</body>
+</html>
+

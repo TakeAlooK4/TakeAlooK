@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+
+// 	$(document).read(function(){
+// 		$(".catMenu2").hide(); 
+// 		$(".dogMenu1").show();
+		
+// 	$(".dog").click(function(){
+// 	 	var dogData =
+		
+// 		$.ajax({
+// 			url:"foodList.do",
+// 			data:{
+// 				dogData:dogData
+// 			},
+// 			datatype:"json",
+// 			success:function(data){
+			
+// 				$(".menu2").hide();
+// 				$(".menu1").show();	
+// 				location.href="/productMain";
+// 			}
+// 		});
+// 	});
+	
+// 	$(".cat").click(function(){
+// 		var catData =
+		
+// 		$.ajax({
+// 			url:"foodList.do",
+// 			data:{
+// 				catData:catData
+// 			},
+// 			datatype:"json",
+// 			success:function(data){
+		
+// 				$(".menu1").hide();	
+// 				$(".menu2").show();
+// 				location.href="/productMain";
+// 				}
+// 			});
+// 		});
+// 	});
+
+					
+
+
+</script>
+<title>상품 페이지</title>
+</head>
+<body>
+<form name="mainPage" >	
+
+		<button class="tablink" onclick="openPage('사료',prNo)">사료</button>
+		<button class="tablink" onclick="openPage('간식', this, 'green')" id="defaultOpen">간식</button>
+		<button class="tablink" onclick="openPage('목욕/미용', this, 'blue')">목욕/미용</button>
+		<button class="tablink" onclick="openPage('기타용품', this, 'orange')">기타용품</button>
+	
+	
+		<div id="사료" class="tabcontent">
+ 		<table>
+			<tr th:each="product:${productList}">
+				<td><input type=hidden th:value="${product.prNo}" ></td>
+				<td><input type=hidden id="animalType" class="animalType" th:value="${product.animalType}"></td>
+				<th style="border: solid"><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${product.prNo})}" >
+					 <img th:src="${product.mainImg01}"></a>
+			 </th>
+		
+		 		<td style="border: solid" th:text ="${product.prName}" ></td>
+		
+		  	  <td style="border: solid" th:text="${product.prCost}"></td>
+			</tr>
+	
+		</table>		
+		</div>
+
+		<div id="간식" class="tabcontent">
+		<table>
+			<tr th:each="product:${productList}">
+				<td><input type=hidden th:value="${product.prNo}" ></td>
+				<td><input type=hidden id="animalType" class="animalType" th:value="${product.animalType}"></td>
+				<th style="border: solid"><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${product.prNo})}" >
+				 <img th:src="${product.mainImg01}"></a>
+				 </th>
+		
+		 		<td style="border: solid" th:text ="${product.prName}" ></td>
+	
+		  	  <td style="border: solid" th:text="${product.prCost}"></td>
+			</tr>
+	
+	</table>
+		</div>
+
+		<div id="목욕/미용" class="tabcontent">
+		<table>
+			<tr th:each="product:${productList}">
+				<td><input type=hidden th:value="${product.prNo}" ></td>
+				<td><input type=hidden id="animalType" class="animalType" th:value="${product.animalType}"></td>
+				<th style="border: solid"><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${product.prNo})}" >
+				 <img th:src="${product.mainImg01}"></a>
+			 </th>
+		
+		 	<td style="border: solid" th:text ="${product.prName}" ></td>
+	
+		    <td style="border: solid" th:text="${product.prCost}"></td>
+		</tr>
+	
+	</table>
+		</div>
+
+			<div id="기타용품" class="tabcontent">
+		<table>
+			<tr th:each="product:${productList}">
+				<td><input type=hidden th:value="${product.prNo}" ></td>
+				<td><input type=hidden id="animalType" class="animalType" th:value="${product.animalType}"></td>
+				<th style="border: solid"><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${product.prNo})}" >
+				 <img th:src="${product.mainImg01}"></a>
+			 </th>
+		
+		 	<td style="border: solid" th:text ="${product.prName}" ></td>
+	
+		    <td style="border: solid" th:text="${product.prCost}"></td>
+		</tr>
+	
+	</table>
+		</div>
+	
+	
+	
+	
+	
+	
+
+
+</div>
+</form>	
+</body>
+</html>

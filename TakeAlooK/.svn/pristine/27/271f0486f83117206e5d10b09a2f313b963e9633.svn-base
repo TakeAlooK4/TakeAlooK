@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>회원 로그인 페이지</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<script type="text/javascript">
+	
+// 아이디 비밀번호 일치 / 불일치 체크	
+	$(function(){
+		var checkId = $("#checkId").val();
+		if(checkId) {
+			alert(checkId);
+		}
+	});
+	
+	// 아이디 비밀번호 찾기 팝업
+	function searchPopUp() {
+		var screenW = screen.availWidth;	// 스크린 가로사이즈
+		var screenH = screen.availHeight;	// 스크린 세로사이즈
+		var popW = 650;	// 띄울창의 가로사이즈
+		var popH = 350; // 띄울창의 세로사이즈
+		var posL = (screenW-popW)/ 2;	// 띄울창의 가로 포지션
+		var posT = (screenH-popH)/ 2;	// 띄울창의 세로 포지션
+		window.open("memberSearchId", "정보찾기", "width="+ popW + ", height="+ popH + ",top="+ posT + ",left=" + posL + ",scrollbars=no, menubar=no, toolbar=no, status=no, location=no, resizable=no");
+	}
+</script>
+<style type="text/css">
+	.userbtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 5px 27px;
+		font-size: 15px;
+		font-weight: bold;
+	}
+	
+	
+	.companybtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 5px 27px;
+		font-size: 15px;
+	}
+	.submitbtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 10px 102px;
+	}
+	.mfindInfo{
+		color: #808080;
+		font-weight: bold;
+	}
+	
+	.mSignUp{
+		color: #808080;
+		font-weight: bold;
+	}
+	
+	
+	
+	input[type="text"],select, input[type="password"] {
+   /*  display: block; */
+    width: 13%;
+    height: 34px;
+   /*  padding: 6px 12px; */
+    font-size: 14px;
+    /* line-height: 1.42857143; */
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+ }
+</style>
+</head>
+
+<!-- bootstrap include header 적용코드 -->
+<th:block th:include="/header"></th:block>
+
+<!-- <header class="headerMenu">
+	<div class="wrapper">
+		<h1 class="pageName"><a href="/">Take A looK</a></h1>
+				<ul class="menu">
+					<li><a th:href="memberLogin">로그인 |</a></li>
+					<li><a th:href="memberSignUp">회원가입 |</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCart">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</div>
+</header> -->
+
+<body th:align="center">
+	<br><br><br><br>
+	<input type="hidden" th:value="${msg}" id="checkId">
+	<h1 align="center">User Login</h1><br>
+	<form action="/memberLogin.Do" method="post">
+		<div align="center"><br>
+			<p><input type="button" value="개인회원" class="userbtn"> | <a href="companyLogin"><input type="button" value="기업회원" class="companybtn"></a></p><br>
+			<input type="text" name="id" placeholder="ID" required="required"><br>
+			<input type="password" name="password" placeholder="PASSWORD" required="required"><br>
+			<p>
+				<br><input type="submit" value="Login" class="submitbtn">
+			</p><br>
+			<p><a href="/memberLogin" onclick="javascript:searchPopUp();" class="mfindInfo">아이디 / 비밀번호 찾기 | </a><a href="memberSignUp" class="mSignUp">회원가입</a></p>
+		</div><br>
+	</form>
+		
+		<!-- 네이버 로그인 창 -->
+			<div id="naver_id_login" align="center">
+			<a th:href="${url}">
+				<img width="223"
+					src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png" />
+			</a>			
+			</div>
+</body>
+</html>

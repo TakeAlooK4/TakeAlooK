@@ -1,0 +1,20 @@
+package com.bit.tak.model.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.bit.tak.model.vo.member.User;
+import com.bit.tak.model.vo.pet.Medical;
+import com.bit.tak.model.vo.pet.Pet;
+
+
+@Repository
+public interface MedicalRepo extends JpaRepository<Medical, Integer>{
+	
+	//@Query(value = "SELECT * FROM medical WHERE pet_id =?1",nativeQuery=true)
+	@Query(value = "SELECT * FROM medical INNER JOIN pet ON medical.pet_id = pet.pet_id AND pet.nickname =?1 AND pet.pet_id=?2 order by medical_date asc",nativeQuery=true)
+	List<Medical> findByPetId(User nickname,int petId);
+}

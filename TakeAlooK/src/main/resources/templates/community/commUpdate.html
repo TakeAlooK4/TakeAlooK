@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i%7CRajdhani:400,600,700"
+    rel="stylesheet">
+<!-- Plugins Stylesheets -->
+<link rel="stylesheet" href="/assets/css/loader/loaders.css">
+<link rel="stylesheet" href="/assets/css/font-awesome/font-awesome.css">
+<link rel="stylesheet" href="/assets/css/aos/aos.css">
+<link rel="stylesheet" href="/assets/css/swiper/swiper.css">
+<link rel="stylesheet" href="/assets/css/lightgallery.min.css">
+<!-- Template Stylesheet -->
+<link rel="stylesheet" href="/assets/css/style.css">
+<!-- Responsive Stylesheet -->
+<link rel="stylesheet" href="/assets/css/responsive.css">
+<!-- include libraries(jQuery, bootstrap) -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+	
+<script type="text/javascript">
+/*<![CDATA[*/
+var num = "[[${comm.commNo}]]";
+/*]]>*/
+
+$(document).ready(function() {
+    $('#summernote').summernote({
+    		width:1110,
+            height: 500,                 // set editor height
+            minHeight: 500,             // set minimum height of editor
+            maxHeight: 500,             // set maximum height of editor
+            focus: false,	                 // set focus to editable area after initializing summernote
+            popover : false,
+            toolbar: [
+			    ['style', ['bold', 'italic', 'underline', 'clear']],
+			    ['fontname',['fontname']],
+			    ['font', ['strikethrough', 'superscript', 'subscript']],
+			    ['fontsize', ['fontsize']],
+			    ['color', ['color']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['insert', ['link', 'picture', 'video']],
+			    ['view', ['help']]
+			  ],
+			  lang : 'ko-KR',
+			  callbacks: {
+					onImageUpload: function(files, editor, welEditable) {
+			            for (var i = files.length - 1; i >= 0; i--) {
+			            	sendFile(files[i], this);
+			            }
+			        }
+				}
+    });
+   
+    
+    function sendFile(file, el) {
+		var form_data = new FormData();
+      	form_data.append('file', file);
+      	$.ajax({
+        	data: form_data,
+        	type: "POST",
+        	url:  '/community/image',
+        	cache: false,
+        	contentType: false,
+        	enctype: 'multipart/form-data',
+        	processData: false,
+        	success: function(img_name) {
+          		$(el).summernote('editor.insertImage', img_name);
+        	}
+      	});
+    }    
+});
+
+
+$(function() {
+	$("#cancle").click(function() {
+		if(confirm("취소하시겠습니까?")){
+			document.form1.action = "/community/cv/" + num;
+			document.form1.submit();
+		}
+	})
+});
+</script>
+<style type="text/css">
+.btnj {
+	padding: 3px 10px;
+    display: inline-block;
+   font-family: "Rajdhani", sans-serif;
+   font-weight: 600;
+   color: #777;
+   text-align: center;
+   vertical-align: middle;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   background-color: transparent;
+   border: 1px solid transparent;
+   /* padding: 0.6875rem 3.5625rem; */
+   font-size: 20px;
+   line-height: 1.5;
+   border-top-right-radius: 1.5625rem;
+   border-top-left-radius: 1.5625rem;
+   border-bottom-left-radius: 1.5625rem;
+   border-bottom-right-radius: 1.5625rem;
+   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+   text-transform: uppercase;
+   position: relative;
+   z-index: 1;
+   box-sizing: border-box;
+   padding: 3px 10px;
+   
+   
+}
+.btnj::after {
+  content: "";
+  width: calc(100% + 2px);
+  height: 100%;
+  background-color: rgba(200, 200, 200, 200);
+  border-top-right-radius: 1.5625rem;
+  border-top-left-radius: 1.5625rem;
+  border-bottom-left-radius: 1.5625rem;
+  border-bottom-right-radius: 1.5625rem;
+  position: absolute;
+  top: 0;
+  left: -1px;
+  border: 1px solid transparent;
+  z-index: -1;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+.btnj:hover {
+  color: #777;
+  text-decoration: none;
+}
+
+.btnj:hover::after {
+ 
+  opacity: 1;
+}
+
+.btnj:focus, .btn.focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(238, 21, 21, 0.25);
+}
+
+.btnj.disabled, .btn:disabled {
+  opacity: 0.65;
+}
+
+
+</style>
+<title>Insert title here</title>
+</head>
+<body>
+<!-- <th:block th:include="header.html"/> -->
+ <header class="position-static w-100">
+       <th:block th:if="${session['muser'] != null}"> 
+        <div class="container">
+            <div class="top-header d-none d-sm-flex justify-content-between align-items-center">
+                <div class="contact">
+                    
+                </div>
+                <nav class="d-flex aic">
+                    <span href="#" class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i><span th:text="|${session['muser'].nickname}님 입장 |"></span></span>
+                    <a href="/userLogOut" class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i>logout</a>
+                    <a th:href="myPage" class="login" style="margin-right: 0px;"><i  aria-hidden="true"></i>MyPage</a>
+                    <a th:href="payment" class="login" style="margin-right: 0px;"><i  aria-hidden="true"></i>order list</a>
+                </nav>
+            </div>
+            <nav class="navbar navbar-expand-md navbar-light">
+            <!-- 사진부분 :로고-->
+                <a class="navbar-brand" href="/" style="float: left;"><img src="/image/logo.png" alt="Multipurpose"></a>
+                <div class="group d-flex align-items-center">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"><span
+                            class="navbar-toggler-icon"></span></button>
+                    <a class="login-icon d-sm-none" href="#"><i class="fa fa-user"></i></a>
+                    <a class="cart" href="productCartPage"><i class="fa fa-shopping-cart"></i></a>
+                </div>
+                
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="/productMain">pet Product</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/community/cl">pet Community</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" id="petCareLogin">pet Pet Care</a></li>
+
+                    </ul>
+                   
+                </div>
+            </nav>
+        </div>
+        </th:block> 
+        </header>
+<div class="container">
+<form name="form1" action="/community/commUp">
+	<input type="hidden" id="commNo" name="commNo" th:value="${comm.commNo}">
+	<input type="hidden" th:id="nickname" th:name="nickname" th:value="${comm.nickname.nickname}"><br>
+	<input class="form-control" type="text" th:id="commTitle" th:name="commTitle" th:value="${comm.commTitle}" style="color: black; border: 1px solid"><br>
+	<textarea th:name="commContents" id="summernote" th:text="${comm.commContents}"></textarea>
+	<!-- <input class="btnj" type="submit" value="등록"> -->
+	<div style="text-align: center;">
+	<button class="btnj" type="submit" style="cursor: pointer;">등록</button>
+	<button class="btnj" id="cancle" style="cursor: pointer;">취소</button>
+	</div>
+	</form>
+	</div>
+</body>
+<th:block th:include="/footer"></th:block>
+</html>

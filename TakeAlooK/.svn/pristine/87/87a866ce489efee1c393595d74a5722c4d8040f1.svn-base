@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<title>Insert title here</title>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$('#checkAll').click(function(){
+		if($('#checkAll').prop("checked")){
+			$('input[name=check]').prop('checked',true);
+		}else{
+			$('input[name=check]').prop('checked',false);
+		}
+		
+	});
+	$('.check').click(function(){
+		//var check = $(this).val();
+		if($('.check').prop('checked')){
+			$('input[name=checkAll]').prop('checked',false);
+		}
+	
+	});
+	
+	$('#myContentDelete').click(function(){
+		var checkArray = new Array();
+		$("input[name=check]:checked").each(function(){
+			checkArray.push($(this).val());
+		});
+		jQuery.ajaxSettings.traditional = true;
+		console.log(checkArray)
+		$.ajax({
+			url : "/md",
+			datatype : "json",
+			data :{commNo : checkArray},
+			success:function(data){
+				console.log(data)
+				location.href = "/mw";
+			}
+		})
+	})
+});
+</script>
+</head>
+<body>
+<th:block th:include="header.html"/>	
+	<table class="table">
+		<tr>	
+			<th><input name="checkAll" id="checkAll" type="checkbox"></th><th>글번호</th><th>닉네임</th><th>제목</th><th>작성일</th><th>조회수</th><th>추천수</th>
+		</tr>
+		<tr th:each="content,index : ${content}">
+			<td><input type="checkbox" class="check" id="check" name="check" th:value="${content.commNo}"></td>
+			<td th:value="${content.commNo}" th:text="${content.commNo}"></td>
+			<td th:text="${content.nickname.nickname}"></td>
+			<td> <a th:href="@{'/community/cv/' + ${content.commNo}}" th:text="${content.commTitle}"></a></td>
+			<td th:if="${#dates.format(content.commDate, 'yyyy-MM-dd')} == ${today}" th:text="${#dates.format(content.commDate, 'HH:mm')}"></td>
+			<td th:unless="${#dates.format(content.commDate, 'yyyy-MM-dd')} == ${today}" th:text="${#dates.format(content.commDate, 'yyyy-MM-dd')}"></td>
+			<td th:text="${content.commHit}"></td>
+			<td th:text="${content.commLike}"></td>
+		</tr>
+	</table>
+	<button id="myContentDelete">삭제</button>
+</body>
+</html>

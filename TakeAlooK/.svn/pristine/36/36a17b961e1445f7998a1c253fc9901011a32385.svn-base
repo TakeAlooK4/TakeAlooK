@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>일반 유저 회원가입 페이지</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<script type="text/javascript">
+	function memberCheck() {
+		var userIdCheck = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/);	// Id 체크
+		var passwordCheck = RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^*()\-_=+\\\|\[\]{};:\'",.<>\/?]).{8,15}$/);	// 비밀번호 체크
+		var nameCheck = RegExp(/^[가-힣]{2,6}$/);
+		var nicknameCheck = RegExp(/^[가-힣a-zA-Z0-9]{2,10}$/);
+		var phoneNumberCheck = RegExp(/^010-[1-9]{4}-[1-9]{4}$/);
+	}
+</script>
+<script type="text/javascript">
+	
+	// 아이디 유효성 검사 (1 = 중복 / 0 != 중복)
+	$("#id").blur(function() {
+		var id = $('#id').val();
+		$.ajax({
+			
+		});
+	});
+	
+	// 회원가입 알림창
+	$(function(){
+		$("#signUpSuccess").click(function(){
+		alert("회원가입이 완료되었습니다.");		
+		});
+	});
+	
+	
+	
+	// 비밀번호 일치 불일치 검사
+	$(function(){
+		$("#alert-success").hide();
+		$("#alert-danger").hide();
+		$("#alert-success").css("color", "blue")
+		$("#alert-danger").css("color", "red")
+		$("input").keyup(function(){
+			var pw1=$("#pw1").val();
+			var pw2=$("#pw2").val();
+			if(pw1 != "" || pw2 != ""){
+				if(pw1 == pw2){
+					$("#alert-success").show();
+					$("#alert-danger").hide();
+					
+					$("#signUpSuccess").removeAttr("disabled");
+				} else if(pw1 == "" || pw2 == ""){
+					$("#alert-success").hide();
+					$("#alert-danger").hide();
+				}
+				else{
+					$("#alert-success").hide();
+					$("#alert-danger").show();
+					$("#signUpSuccess").attr("disabled", "disabled");
+				}
+			}
+		});
+	});
+	
+</script>
+</head>
+<body>
+<th:block th:include="header.html"/>
+	<h2 align="center">Take A looK 유저 회원가입</h2><br>
+	<form th:action="@{/memberSignUp.do}" method="post">
+		<div align="center">
+			<input type="button" value="개인회원"> | <a href="companySignUp"><input type="button" value="기업회원"></a>
+				<p><br>
+					<label for="id">아이디</label>
+					<input type="email" id="id" name="id" placeholder="아이디(이메일입력)" required>
+				</p><br>
+				<div class="check_font" id="id_check"></div>
+				
+				<label for="password">비밀번호</label>
+				<input type="password" id="pw1" name="password" class="form-control" placeholder="비밀번호(영문, 숫자, 특수문자 2가지 이상 8~15이내)" size="41" required /><br>
+				
+				<br><label for="password2">비밀번호 확인</label>
+				<input type="password" id="pw2" name="password2" class="form-control" placeholder="비밀번호 확인" required />
+					<div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
+					<div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div>
+				
+				<p><br><label for="name">이름</label>
+					<input type="text" id="name" name="name" placeholder="이름(휴대폰 가입자명으로 정확하게 입력)" size="32" required><br>
+				</p>
+				
+				<p><br><label for="nickname">닉네임</label>
+					<input type="text" id="nickname" name="nickname" placeholder="닉네임 입력란" size="9" required><br>
+				</p>
+				
+				
+				<p><br><label for="contact">휴대폰 번호</label>
+					<input type="text" id="contact" name="contact" placeholder="휴대폰번호 입력란" required><br>
+				</p>
+				
+				<p><br><input type="submit" id="signUpSuccess" value="회원가입"></p>
+		</div>
+	</form>
+	
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+
+package com.bit.tak.model.repository;
+
+
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.bit.tak.model.vo.admin.P_Review;
+
+public interface ProductReviewRepo extends JpaRepository<P_Review, Integer> {
+
+	@Query(value="select * from team4.p_review where pr_no=?1 and nickname=?2",nativeQuery=true)
+	List<P_Review> findByReviewId(String prNo,String nickname);
+}
+//sssss
+//

@@ -1,0 +1,18 @@
+package com.bit.tak.model.service;
+
+import java.util.List;
+
+import com.bit.tak.model.vo.member.User;
+import com.bit.tak.model.vo.pet.Breed;
+import com.bit.tak.model.vo.pet.Pet;
+
+public interface PetCareService {
+
+	List<Breed> getBreedList();
+	List<Pet> findByNickname(User nickname);
+	//진단명 - >어떻게 service 가공이나 동적쿼리로 최적화 안될까?
+	//List<String> getClinic();
+	//List<String> getMclinic(String lclinic);
+	//List<Clinic> getSclinic(String mclinic);
+	
+}

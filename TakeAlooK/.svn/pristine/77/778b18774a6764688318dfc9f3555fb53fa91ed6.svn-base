@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+	<script type="text/javascript">
+$(function(){
+	$("#resultBtn").click(function(){
+		var IMP = window.IMP; // 생략가능
+		var imgInfo = $("#imgInfo").val();
+		var prAllValue = $("#prAllValue").val();
+		alert(prAllValue);
+		IMP.init('imp12160241'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+		
+		IMP.request_pay({
+		    pg : 'html5_inicis', // version 1.1.0부터 지원.
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : '주문명:결제테스트',
+		    amount : 15555,
+		    buyer_email : 'cjj105301@naver.com',
+		    buyer_name : '구매자이름',
+		    buyer_tel : '010-1234-5678',
+		    buyer_addr : '서울특별시 강남구 삼성동',
+		    buyer_postcode : '123-456',
+		    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+		}, function(rsp) {
+		    if ( rsp.success ) {
+		        var msg = '결제가 완료되었습니다.';
+		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		    } else {
+		        var msg = '결제에 실패하였습니다.';
+		        msg += '에러내용 : ' + rsp.error_msg;
+		    }
+		    alert(msg);
+		});
+	});
+});
+	
+// 	$(document).ready(function(){
+// 		var check = confirm("결제 하시겠습니까?");
+		
+// 		$("#resultBtn").on('click',function(){
+// 			var prNo =$("#prNo").val();
+// 			var sumvalue = $("#prAllValue").val();
+// 			var mainImg = $("#imgInfo").val();
+// 			var nickname=$('#userNickname').val();
+// 			var address =$('#addressMain').val() + $('#addressDetail').val(); 
+// 			var cellPhone= $('#cellphone1').val() + $('#cellPhone2').val() + $('#cellPhone3').val();
+// 			if(check==true){
+// 			$.ajax({
+// 				url:"paymentInsert2.do",
+// 				data:{
+				
+// 				},
+// 				datatype:"json",
+// 				success:function(data){
+						
+// 							location.href="/productCartPage";	
+// 						}
+// 				}
+// 			}else{
+// 				location.href="/payment";
+// 			}
+// 			});
+// 		});	
+// 	});
+	$(function(){
+		
+		$(".deleteBtn").click(function(){
+			var check = confirm("지우시겠습니까?");
+			
+			var resultNo = $("#resultValue").val();
+			if(check==true){
+			$.ajax({
+				url:"deletePaymentList.do",
+				data:{
+					resultValue:resultNo
+				},
+				datatype:"json",
+				success:function(data){
+										
+							location.href="/payment";
+						}
+					
+		});
+			}else{
+				location.href="/payment";
+			}
+
+		
+	});
+	});		
+	 function sample6_execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
+	                    document.getElementById("sample6_extraAddress").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("sample6_extraAddress").value = '';
+	                }
+
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('sample6_postcode').value = data.zonecode;
+	                document.getElementById("sample6_address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("sample6_detailAddress").focus();
+	                console.log("jjjjjj  "+$('#sample6_address').val());
+	            }
+	        }).open();
+	        
+	    };
+	     $(document).ready(function(){
+ 	 $('#cSignUpSuccess').click(function(e) {
+ 			e.preventDefault();
+ 			var addr = $('#sample6_postcode').val() + " ";
+ 	    	addr += $('#sample6_address').val() + " ";
+ 	    	addr += $('#sample6_detailAddress').val() + " ";
+ 	    	addr += $('#sample6_extraAddress').val();
+ 	    	 $('input[name=cAddress]').val(addr);
+ 			$('#companySignUp').submit();
+ 		});
+ 	
+ 	
+ });	
+	</script>
+	<style type="text/css">
+		#allText{
+			padding-top: 300px;
+		}
+		#pic {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: left;
+  		
+  	}
+		
+	</style>
+</head>
+<body>
+<header class="headerMenu"> 
+<div class="wrapper"> 
+<h1 class="pageName"><a href="/">Take A looK</a></h1> 
+
+<th:block th:if="${session['muser'] == null} and ${session['company'] == null} "> 
+<ul class="menu"> 
+<li><a th:href="memberLogin">로그인 |</a></li> 
+<li><a th:href="memberSignUp">회원가입 |</a></li> 
+<li><a th:href="myPage">마이페이지 |</a></li> 
+<li><a th:href="productCartPage">장바구니 |</a></li> 
+<li><a th:href="orderList">구매내역</a></li> 
+</ul> 
+</th:block> 
+
+<th:block th:if="${session['muser'] != null}"> 
+<ul class="menu"> 
+<li th:text="|${session['muser'].nickname}님 입장 /|"></li>	
+<li><a href="/userLogOut">로그아웃 /</a></li> 
+<li><a th:href="myPage">마이페이지 /</a></li> 
+<li><a th:href="productCartPage">장바구니 /</a></li> 
+<li><a th:href="orderList">구매내역</a></li> 
+</ul> 
+</th:block> 
+
+<th:block th:if="${session['company'] != null}"> 
+<ul class="menu"> 
+<li th:text="|${session['company'].cName}님 입장 /|"></li> 
+<li><a href="/companyLogOut">로그아웃 /</a></li> 
+<li><a th:href="myPage">마이페이지 /</a></li> 
+<li><a th:href="productCartPage">장바구니 /</a></li> 
+<li><a th:href="orderList">구매내역</a></li> 
+</ul> 
+</th:block> 
+</div> 
+</header> 
+
+<div id="mainMenu_Wrap"> 
+<ul id="mainMenu"> 
+<li><a href="/productMain"  style="text-decoration: none">상품</a></li> 
+<li><a href="" style="text-decoration: none">병원</a></li> 
+<li><a href="" style="text-decoration: none">커뮤니티</a></li> 
+<li><a href="" style="text-decoration: none">펫 케어</a></li> 
+
+</ul> 
+
+</div> 
+
+
+<div id="mainMenu_Wrap">
+	<ul id="mainMenu">
+		<li><a href="/productMain"  style="text-decoration: none">상품</a></li>
+		<li><a href="" style="text-decoration: none">병원</a></li>
+		<li><a href="" style="text-decoration: none">커뮤니티</a></li>
+		<li><a href="" style="text-decoration: none">펫 케어</a></li>
+	
+	</ul>
+
+</div>
+<!-- <div th:each=""> -->
+
+</div>
+
+
+<div id="allText">
+<h2>●상품 정보</h2>
+<div id="pic">
+	<div th:each="cart:${info}">
+				
+				<div><input type="hidden" class="prNo" id="prNo" name="prNo" th:value="${cart.prNo.prNo}"></div>
+				<div class="imgId"><img th:src="${cart.prNo.mainImg01}" style="width: 20%; height: 30%" id="imgInfo" >
+					<div class="prNameId" id="prNmae" th:text="${cart.prNo.prName}"></div>
+					<div class="prNameId" id="prAllValue" th:text="${cart.sumValue}"></div>
+					<div><input type="button" class="deleteBtn" value="삭제"  ></div>
+				</div>
+				<div><input type="hidden" th:value="${cart.resultValue}" id="resultValue"></div>
+
+	</div>
+</div>		
+		<h2>총 금액 : <input type="text" th:value="${allSumMoney}"></h2>
+<h2>●고객 정보</h2>
+<hr>
+<div id="userName"><h3>고객 이름 : <font style="color: black;" th:text="${session['muser'].name}"></font></h3></div>
+<div id="userNickname"><h3>고객 닉네임 : <font style="color: black;" th:text="${session['muser'].nickname}"></font></h3></div>
+<h2>●받을 주소 입력란</h2>
+<hr>
+<div>주소 입력 :<label for="cAddress">주소</label>
+			<input type="text" id="sample6_postcode" name="cAddress1" placeholder="우편번호">
+			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+			<input type="text" id="sample6_address" name="cAddress2" placeholder="주소"><br>
+			<input type="text" id="sample6_detailAddress" name="cAddress3" placeholder="상세주소">
+			<input type="text" id="sample6_extraAddress" name="cAddress4" placeholder="참고항목">
+<div>상세 주소 입력 :<input type="text" id="addressDetail" style="width: 200px;"></div><br>
+핸드폰 번호 : <select id="cellphone1" name="cellphoneValue">
+		<option value="010">010</option>
+		<option value="016">016</option>
+		<option value="018">018</option>
+		<option value="011">011</option>
+		</select> 
+		<input type="text" id="cellPhone2" style="width: 50px;">
+		<input type="text" id="cellPhone3" style="width: 50px;"><br><br>
+<button id="resultBtn">결제 하기</button>
+</div>	
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+package com.bit.tak.model.repository;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import com.bit.tak.model.vo.member.Company;
+
+@Repository
+public interface CompanyRepo extends CrudRepository<Company, String>{
+	@Query("SELECT c FROM Company c WHERE c.cNo = ?1 AND c.cPassword = ?2")
+	Company findByCompany(String cNo, String cPassword);
+}

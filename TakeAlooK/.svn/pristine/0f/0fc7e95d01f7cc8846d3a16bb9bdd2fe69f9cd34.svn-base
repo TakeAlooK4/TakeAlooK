@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+var num = "[[${data.commNo}]]";
+/*]]>*/
+
+/*<![CDATA[*/
+var id= [[${session['muser']}]];
+/*]]>*/
+
+/*<![CDATA[*/
+var checkNick= [[${no}]];
+/*]]>*/
+console.log("check:" + checkNick);
+$(function() {
+	$("#commCorrect").click(function() {
+		document.form1.action = "/community/cw/" + num;
+		document.form1.submit();
+	})
+});
+$(function() {
+	$("#commDelete").click(function() {
+		if(confirm("삭제하시겠습니까?")){
+			document.form1.action = "/community/" + num;
+			document.form1.submit();
+		}
+	})
+});
+$(function(){
+	$("#newLogin").click(function(){
+		alert("로그인 후 이용 가능합니다.")
+	})
+})
+//댓글 목록 
+function commentList(){
+	//console.log(num)
+    $.ajax({
+        url : '/community/ment',
+        type : 'get',
+        data : {num:num},
+        success : function(data){
+        	var sessionNick = [[${session['muser']}]];
+        	//console.log(sessionNick)
+            var a =''; 
+          	  $.each(data, function(key, value){ 
+          		var commTime = value.cmentDate.substring(0,10);
+               
+                a += '<div class="commentInfo'+value.cmentNo+'">'+'댓글번호 : '+value.cmentNo+' / 작성자 : '+value.nickname.nickname+'/ '+commTime;
+               if(sessionNick != null){
+            	   if(sessionNick.nickname == value.nickname.nickname){
+                a += '<a onclick="commentUpdate('+value.cmentNo+',\''+value.cmentContents+'\');"> 수정 </a>';
+                a += '<a onclick="commentDelete('+value.cmentNo+');"> 삭제 </a> </div>';
+            	   }
+               }
+                a += '<div class="commentContent'+value.cmentNo+'"style="border-bottom:1px solid darkgray; margin-bottom: 15px;"> <p> 내용 : '+value.cmentContents +'</p>';
+                a += '</div>';
+               console.log("key :" + key)
+               console.log("value :" + value)
+            });
+
+            $(".commentList").html(a);
+        }
+    });
+}
+
+function commentInsert(insertData){
+    $.ajax({
+        url : '/community/insert',
+        type : 'post',
+        data : insertData,
+        success : function(data){
+				console.log(insertData);
+                commentList(); //댓글 작성 후 댓글 목록 reload
+                $('[name=cmentContents]').val('');
+          
+        }
+    });
+}
+
+function commentUpdate(cmentNo, cmentContents){
+    var a ='';
+    
+    a += '<div class="input-group">';
+    a += '<input type="text" class="form-control" name="content_'+cmentNo+'" value="'+cmentContents+'"/>';
+    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+cmentNo+');">수정</button> </span>';
+    a += '</div>';
+    
+    $('.commentContent'+cmentNo).html(a);
+    
+}
+
+function commentUpdateProc(cmentNo){
+    var updateContent = $('[name=content_'+cmentNo+']').val();
+    //console.log(updateContent)
+    $.ajax({
+        url : '/community/update',
+        type : 'post',
+        data : {cmentContents : updateContent, cmentNo : cmentNo},
+        success : function(data){
+        	console.log(data)
+        	console.log(cmentContents)
+           commentList(num); //댓글 수정후 목록 출력 
+        }
+    });
+}
+
+function commentDelete(cmentNo){
+    $.ajax({
+        url : '/community/delete/'+cmentNo,
+        type : 'post',
+        success : function(data){
+            commentList(num); //댓글 삭제후 목록 출력 
+        }
+    });
+}
+
+$(document).ready(function(){
+    commentList(); //페이지 로딩시 댓글 목록 출력
+    $('[name=commentInsertBtn]').click(function(){ //댓글 등록 버튼 클릭시
+    	//console.log(id.nickname)
+    	if(id != null){	
+       	var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
+        commentInsert(insertData); //Insert 함수호출(아래)
+    	}else alert("로그인후 등록 가능합니다")
+    });
+});
+
+
+
+//좋아요 기능
+$(function(){
+	/*<![CDATA[*/
+	var aa = "[[${aa}]]";
+	/*]]>*/
+	console.log(aa)
+	function likeCheck(){
+		var a = '';
+		if(id != null){
+			if(checkNick != id.nickname){
+			a += '<i id="heart" class="fa fa-heart-o" style="font-size:16px;color:red"></i>';
+			}else if (checkNick == id.nickname){
+			a += '<i id="heart" class="fa fa-heart" style="font-size:16px;color:red"></i>';
+			}
+		}
+		$('.like').html(a);
+	}
+	likeCheck();
+	var nickname = [[${session['muser']}]];
+		// 추천버튼 클릭시(추천 추가 또는 추천 제거)
+		$("#rec_update").click(function(){
+			$.ajax({
+				url: "/community/likeUpdate",
+                type: "POST",                
+                data: {
+                    commNo: num,
+                    nickname: nickname.nickname
+                },
+                success: function () {                         	
+			        recCount();
+			        $('#heart').toggleClass('fa-heart-o').toggleClass('fa-heart');
+			    },
+			})
+		});
+		// 게시글 추천수
+	    function recCount() {
+			$.ajax({
+				url: "/community/likeCount",
+                type: "POST",
+                data: {
+                    commNo: num
+                },
+                success: function (count) {
+                	//console.log(count);
+                	$(".rec_count").html(count);
+                },
+			})
+	    };
+	    recCount()
+	   // 처음 시작했을 때 실행되도록 해당 함수 호출
+});
+</script>
+
+</head>
+<body>
+<th:block th:include="header.html"/>
+<div class="container">
+<form th:name="form1" method="post">
+	
+	<div class="view">
+		<p style="font-size: large; border-bottom: solid; margin-top: 20px; font-weight: bold;" th:text="${data.commTitle}"></p>
+		<span>작성자</span>&nbsp;&nbsp;<span th:text="${data.nickname.nickname}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+		<span>작성일</span>&nbsp;&nbsp;<span th:text="${#dates.format(data.commDate, 'yyyy-MM-dd')}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+		<span>조회</span>&nbsp;&nbsp;<span th:text="${data.commHit}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+		<span>추천</span>&nbsp;&nbsp;<span class="rec_count"></span>
+	</div>
+	
+	<p  style="border-top:1px solid;" th:utext="${data.commContents}"></p>
+	<th:block th:if="${session['muser'] != null}">
+		<th:block th:if="${session['muser'].nickname} == ${data.nickname.nickname}">
+			<button class="btnj" id="commCorrect">글 수정</button>
+			<button class="btnj" id="commDelete">글 삭제</button>
+		</th:block>
+	</th:block>
+	<a class="btnj" th:href="@{/community/cl}">목록</a>
+	</form>
+	<!-- <a th:href="@{'/community/'+${data.commNo}}">글 삭제</a> -->
+
+<!-- 추천 기능 -->
+		<div>
+			<div class="w3-border w3-center w3-padding">
+				<th:block th:if="${session['muser'] == null}">
+					 <button type="button" id="newLogin" style="background-color: transparent; border: 0px;"><i class="fa fa-heart" style="font-size:16px;color:red;"></i></button><br/>	
+				</th:block>
+				<th:block th:if="${session['muser'] != null }">
+					<button  class="likes" id="rec_update" style="cursor: pointer; background-color: transparent; border: 0px;">
+						<!-- <i th:if="${no == null}" class="fa fa-heart-o" style="font-size:16px;color:red"></i>
+						<i th:unless="${no == null}" class="fa fa-heart" style="font-size:16px;color:red"></i> -->
+						<div id="like" class="like"></div>
+					</button>
+					 
+				</th:block>
+			</div>
+		</div>
+
+ <!--  댓글  -->
+	
+		<label for="content">comment</label>
+		<form name="commentInsertForm">
+			<div class="input-group">
+				<th:block th:if="${session['muser'] != null}">
+					<input type="hidden" name="nickname" id="nickname"th:value="${session['muser'].nickname}" />
+				</th:block>
+				<input type="hidden" name="commNo" th:value="${data.commNo}" /> 
+				<input type="text" class="form-control" id="cmentContents"name="cmentContents" placeholder="내용을 입력하세요." style="color: black; border: 1px solid"> 
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button"name="commentInsertBtn">등록</button>
+				</span>
+			</div>
+		</form>
+	
+
+	<div class="container">
+		<div class="commentList"></div>
+	</div>
+
+	
+</div>
+</body>
+<th:block th:include="/footer"></th:block>
+<!-- <th:block th:include="community/comment.html"></th:block> -->
+</html>

@@ -1,0 +1,17 @@
+package com.bit.tak.model.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.bit.tak.model.vo.admin.P_Qna;
+
+import com.bit.tak.model.vo.member.Muser;
+import com.bit.tak.model.vo.product.Product;
+
+public interface P_qnaRepo extends JpaRepository<P_Qna, Integer> {
+
+	@Query(value="select * from team4.p_qna where pr_no=?1 and nickname=?2",nativeQuery=true)
+	List<P_Qna> findByQnaId(Product product,Muser nickname);
+}

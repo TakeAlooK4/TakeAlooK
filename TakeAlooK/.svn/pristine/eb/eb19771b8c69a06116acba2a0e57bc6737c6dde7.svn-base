@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 메인페이지</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="/royal/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/royal/css/animate.css">
+    
+    <link rel="stylesheet" href="/royal/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/royal/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/royal/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/royal/css/aos.css">
+
+    <link rel="stylesheet" href="/royal/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/royal/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/royal/css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="/royal/css/flaticon.css">
+    <link rel="stylesheet" href="/royal/css/icomoon.css">
+    <link rel="stylesheet" href="/royal/css/style.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function(){
+//ss	
+	$("#enroll").ready(function(){
+		var cName= $("#writer1").val();
+		var nickname= $("#writer2").val();
+		
+		
+		if(cName == null && nickname != null ){
+			$("#enroll").hide();
+		}if(cName!=null && nickname == null){
+			$("#enroll").show();
+		}else{
+			$("#enroll").hide();
+		}
+		
+	});
+});		
+
+
+</script>
+<style type="text/css"> 
+	#costValue{
+		color: yellowgreen;
+	}
+	#mainList{
+		display: inline-block;  
+  		width : 24%; 
+  		text-align: center; 
+  		margin-right: 1%;
+	}
+
+
+	}
+	#mainPage{ 
+  		padding-top: 50px;
+  
+} 
+	#titleHeight{
+		height: 153px;
+	}
+#mainList:nth-child(4n){margin-right:0;}
+</style> 
+
+</head> 
+<body> 
+
+<th:block th:include="header.html">
+</th:block>
+<section class="petSection">
+<h2 class="titlej">PET PRODUCT</h2>
+<hr>
+
+<form id="mainPage">	
+					<label  for="name"  th:if="${session['company'] != null}">
+ 					<input type="hidden" th:value="${session['company'].cName}" id="writer1" name="writer1">
+ 					</label>
+ 					<label  for="name"  th:if="${session['user'] != null}">
+ 					<input type="hidden" th:value="${session['user'].nickname}" id="writer2" name="writer2">
+ 					</label>
+<div id="menuList">
+	<h1>
+	<div>
+			<a href="/productListDog.do" th:href="@{productListDog.do(animalType=D,pCode1=Dfc01,pCode2=Dfc02,pCode3=Dfc03)}" style="text-decoration: none;color: burlywood;">강아지
+			</a> |  
+ 			<a href="/productListCat.do" th:href="@{/productListCat.do(animalType=C,pCode1=Cfc01,pCode2=Cfc02,pCode3=Cfc03)}"  style="text-decoration: none;color: burlywood;">고양이</a>
+ 	</div> 
+
+	</h1>
+
+
+	<div class="dogMenu">
+	<h2>| <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=Dfc01,pCode2=Dfc02,pCode3=Dfc03)}" style="text-decoration: none;color: burlywood;">사료</a>
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=dsn01,pCode2=dsn02,pCode3=dsn03)}" style="text-decoration: none;color: burlywood;">간식</a> 
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=BAPD01,pCode2=BAPD02,pCode3=BAPD03)}" style="text-decoration: none;color: burlywood;">목욕/미용</a> 
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=OPD01,pCode2=OPD02,pCode3=OPD03)}" style="text-decoration: none;color: burlywood;">기타 용품</a> 
+	 |</h2>
+	</div>	
+
+
+  	<hr>
+ </div> 	
+
+	<h1>사료 </h1>
+
+<div class="feed">	
+	<div class="properties">
+		<div th:each="feed:${feedAll}" id="mainList">
+    					<a href="property-single.html"  th:href="@{productDetailPage(prNo=${feed.prNo})}" >
+    					 <img th:src="|/upload/displayFile?fileName=/${feed.mainImg01}|"  style="width: 50%; height: 30%"></a>
+    					<div class="text p-3">
+    						
+    						<div class="d-flex">
+    							<div class="one">
+		    							<h3><a href="property-single.html" th:href="@{productDetailPage(prNo=${feed.prNo})}"><div  th:text ="${feed.prName}" ></div></a></h3>
+		    						
+	    						</div>
+	    						<div class="two" id="costValue">
+	    							<div  th:text="${feed.prCost}+원"></div>
+    							</div>
+    						</div>
+    						
+    						<hr>
+    					</div>
+    				</div>
+    			</div> 
+			</div>
+	
+	<h1>간식</h1>
+
+	<div class="snack">	
+	<div class="properties">
+		<div th:each="snack:${snackAll}" id="mainList">
+    					<a href="property-single.html"  th:href="@{productDetailPage(prNo=${snack.prNo})}" >
+    					 <img th:src="|/upload/displayFile?fileName=/${snack.mainImg01}|"  style="width: 50%; height: 30%"></a>
+    					<div class="text p-3" id="titleHeight">
+    						<div class="d-flex">
+    							<div class="one">
+		    							<h3><a href="property-single.html" th:href="@{productDetailPage(prNo=${snack.prNo})}"><div  th:text ="${snack.prName}" ></div></a></h3>
+		    						
+	    						</div>
+	    						<div class="two" id="costValue">
+	    							<div  th:text="${snack.prCost}+원"></div>
+    							</div>
+    						</div>
+    						
+    						<hr>
+    					</div>
+    				</div>
+    			</div> 
+			</div>
+	
+	<h1>목욕/미용</h1>
+
+	<div class="bueaty">	
+	<div class="properties">
+		<div th:each="bueaty:${bueatyAll}" id="mainList">
+    					<a href="property-single.html"  th:href="@{productDetailPage(prNo=${bueaty.prNo})}" >
+    					 <img th:src="|/upload/displayFile?fileName=/${bueaty.mainImg01}|"  style="width: 50%; height: 30%"></a>
+    					<div class="text p-3" id="titleHeight">
+    						<div class="d-flex">
+    							<div class="one">
+		    							<h3><a href="property-single.html" th:href="@{productDetailPage(prNo=${bueaty.prNo})}"><div  th:text ="${bueaty.prName}" ></div></a></h3>
+		    					
+	    						</div>
+	    						<div class="two" id="costValue">
+	    							<div  th:text="${bueaty.prCost}+원"></div>
+    							</div>
+    						</div>
+    						
+    						<hr>
+    					</div>
+    				</div>
+    			</div> 
+			</div>
+	<h1>기타 용품</h1>
+	
+	<div class="order">	
+	<div class="properties">
+		<div th:each="order:${orderAll}" id="mainList">
+    					<a href="property-single.html"  th:href="@{productDetailPage(prNo=${order.prNo})}" >
+    					 <img th:src="|/upload/displayFile?fileName=/${order.mainImg01}|"  style="width: 50%; height: 30%"></a>
+    					<div class="text p-3" id="titleHeight">
+    						<div class="d-flex">
+    							<div class="one">
+		    							<h3><a href="property-single.html" th:href="@{productDetailPage(prNo=${order.prNo})}"><div  th:text ="${order.prName}" ></div></a></h3>
+		    					
+	    						</div>
+	    						<div class="two" id="costValue">
+	    							<div  th:text="${order.prCost}+원"></div>
+    							</div>
+    						</div>
+    						
+    						<hr>
+    					</div>
+    				</div>
+    			</div> 
+			</div>
+</form>	
+</section>
+</body>
+<th:block th:include="/footer"></th:block>
+</html>
+

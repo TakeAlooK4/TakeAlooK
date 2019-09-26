@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 페이지</title>
+</head>
+<body>
+
+	<div align="center"><a href="" style="text-decoration: none">강아지</a> | <a href="" style="text-decoration: none">고양이</a></div>
+
+	<hr>
+	
+	
+	
+  	<hr>
+
+	
+	<table>
+		<tr th:each="product:${productList}">
+			<th style="border: solid"><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${product.prNo})}" >
+			 <img th:src="${product.mainImg01}"></a>
+			 </th>
+		
+		 	<td style="border: solid" th:text ="${product.prName}" ></td>
+	
+		    <td style="border: solid" th:text="${product.prCost}"></td>
+		</tr>
+	
+	</table>
+
+	
+	
+
+
+
+
+
+  	
+</body>
+</html>

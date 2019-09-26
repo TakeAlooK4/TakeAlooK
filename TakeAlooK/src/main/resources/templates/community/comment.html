@@ -1,0 +1,65 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+var commNo = "[[${data.commNo}]]";
+/*]]>*/
+console.log(commNo)
+
+//댓글 목록 
+function commentList(){
+    $.ajax({
+        url : '/community/ment',
+        type : 'get',
+        data : {commNo:commNo},
+        success : function(data){
+            var a =''; 
+            $.each(data, function(key, value){ 
+                a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+                a += '<div class="commentInfo'+value.cmentNo+'">'+'댓글번호 : '+value.cmentNo+' / 작성자 : '+value.nickname.nickname;
+                a += '<a onclick="commentUpdate('+value.cmentNo+',\''+value.cmentContents+'\');"> 수정 </a>';
+                a += '<a onclick="commentDelete('+value.cmentNo+');"> 삭제 </a> </div>';
+                a += '<div class="commentContent'+value.cmentNo+'"> <p> 내용 : '+value.cmentContents +'</p>';
+                a += '</div></div>';
+            });
+            
+            $(".commentList").html(a);
+        }
+    });
+}
+
+function commentInsert(insertData){
+    $.ajax({
+        url : '/community/insert',
+        type : 'post',
+        data : insertData,
+        success : function(data){
+            if(data == 1) {
+                commentList(); //댓글 작성 후 댓글 목록 reload
+                $('[name=cmentContents]').val('');
+            }
+        }
+    });
+}
+$(document).ready(function(){
+    commentList(); //페이지 로딩시 댓글 목록 출력 
+    $('[name=commentInsertBtn]').click(function(){ //댓글 등록 버튼 클릭시 
+        var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
+        commentInsert(insertData); //Insert 함수호출(아래)
+    });
+});
+
+
+</script>
+</head>
+<body>
+	
+	
+	
+	
+</body>
+</html> -->

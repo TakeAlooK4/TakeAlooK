@@ -1,0 +1,97 @@
+package com.bit.tak.model.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+
+import com.bit.tak.model.repository.CcommentRepo;
+import com.bit.tak.model.repository.CommunityRepo;
+import com.bit.tak.model.vo.community.Ccomment;
+import com.bit.tak.model.vo.community.Community;
+import com.bit.tak.model.vo.community.Search;
+
+@Repository
+@Service("CommunityService")
+public class CommunityServiceImpl implements CommunityService {
+
+	@Autowired
+	CommunityRepo communityRepo;
+	
+	@Autowired
+	CcommentRepo ccommentRepo;
+
+	@Override
+	public Page<Community> commList(Pageable pageable, Search search) {
+		//pageable = PageRequest.of(1, 5, Sort.Direction.DESC,"commNo");
+		//List<Community> commList = communityRepo.findAllList();
+		
+		return communityRepo.findAllList(pageable);
+	}
+
+	@Override
+	public Community commView(Community community) {
+		return communityRepo.findById(community.getCommNo()).get();
+	}
+
+	@Override
+	public void commWrite(Community community) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void commUpdate(Community community) {
+		Community findList = communityRepo.findById(community.getCommNo()).get();
+		findList.setCommTitle(community.getCommTitle());
+		findList.setCommContents(community.getCommContents());
+		communityRepo.save(findList);
+		/*
+		 * Community commUp = communityRepo.fi;
+		 * commUp.setCommTitle(community.getCommTitle());
+		 * commUp.setCommContents(community.getCommContents());
+		 * communityRepo.save(commUp);
+		 */
+	}
+
+	@Override
+	public void contentView(Community community) {
+		Community viewCount = communityRepo.findById(community.getCommNo()).get();
+		viewCount.setCommHit(community.getCommHit()+1);
+		communityRepo.save(viewCount);
+	}
+	
+	//댓글
+	@Override
+	public List<Ccomment> commentLi(int commNo) {
+		// TODO Auto-generated method stub
+		return ccommentRepo.findByCommNo(commNo);
+	}
+
+	@Override
+	public void commentWrite(Ccomment ccomment) {
+		ccommentRepo.save(ccomment);
+	}
+
+	@Override
+	public void commentUpdate(Ccomment ccomment) {
+		Ccomment findComment = ccommentRepo.findById(ccomment.getCmentNo()).get();
+		findComment.setCmentContents(ccomment.getCmentContents());
+		ccommentRepo.save(findComment);
+		
+	}
+
+	@Override
+	public void commentDelete(int cmentNo) {
+		
+		
+	}
+
+	
+
+}

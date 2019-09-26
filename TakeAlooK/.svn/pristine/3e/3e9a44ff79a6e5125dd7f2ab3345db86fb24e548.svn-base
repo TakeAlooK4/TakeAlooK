@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>상품 등록 페이지 페이지</title>
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+<!-- include summernote css/js-->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<script>
+$(function(){
+	//
+});
+
+</script>
+</head>
+<body>
+<form name="enrollment" action="/productEnrollmentInsert.do" enctype="multipart/form-data">
+<h1>상품 등록</h1>
+<hr>
+	<label>상품 이름:
+	<input type="text" id="prName" name="prName">
+	</label><br>
+	<label>상품 가격 :
+	<input type="text" id="prCost" name="prCost" >원
+	</label><br>
+	<label> 상품 등록 개수 :
+	<input type="text" id="prAmount" name="prAmount" >개
+	</label><br>
+	<label> 상품 코드 :
+<select  id="prCode" name="prCode" >
+		<option>---미용/목욕---</option>
+		<option value="BAFA01">공용 발케어상품</option>
+		<option value="BAFA02">공용 미용 타월 상품</option>
+		<option value="BAFA03">공용 털 관리 상품</option>
+		<option value="BAPC02">고양이 목욕 용품</option>
+		<option value="BAPD01">강아지 목욕 용품</option>
+		<option>---고양이 사료---</option>
+		<option value="CFC01">건식</option>
+		<option value="CFC02">습식</option>
+		<option value="CFC03">분유</option>
+		<option>---고양이 간식---</option>
+		<option value="CSN01">스낵</option>
+		<option value="CSN02">캣닢</option>
+		<option value="CSN03">캔</option>
+		<option>---강아지 사료---</option>
+		<option value="DFC01">건식</option>
+		<option value="DFC02">습식</option>
+		<option value="DFC03">분유</option>
+		<option>---강아지 간식---</option>
+		<option value="DSN01">껌</option>
+		<option value="DSN02">사사미</option>
+		<option value="DSN03">캔</option>
+		<option>---기타 애완용품---</option>
+		<option value="OPA01">애완동물 식기</option>
+		<option value="OPA02">옷</option>
+		<option value="OPA03">이동식 케이지</option>
+		<option value="OPC01">고양이 목줄</option>
+		<option value="OPC02">고양이 모레</option>
+		<option value="OPD01">강아지 목줄</option>
+</select>
+</label><br>
+<label> 연령 코드 :
+<select id="ageCode" name="ageCode">
+		<option value="AGE00">전연령</option>
+		<option value="AGE01">0개월~12개월</option>
+		<option value="AGE02">1년~7년</option>
+		<option value="AGE03">7년이상</option>
+</select>
+	</label><br>
+<label> 주재료 코드 :
+<select id="mrmCode" name="mrmCode">
+		<option value="MRM00">선택 안함</option>
+		<option value="MRM01">소고기</option>
+		<option value="MRM02">돼지고기</option>
+		<option value="MRM03">양고기</option>
+		<option value="MRM04">칠면조</option>
+		<option value="MRM05">오리고기</option>
+</select>
+	</label><br>
+<label>  상품 타입:
+<select id="fpCode" name="fpCode">
+		<option>---목용 상품 타입---</option>
+		<option value="FP05">선택 안함</option>
+		<option value="FP00">비듬관리</option>
+		<option value="FP01">해충방지</option>
+		<option value="FP02">민감피부</option>
+		<option>---장모/단모 타입---</option>	
+		<option value="FP03">긴털</option>
+		<option value="FP04">짧은 털</option>
+</select>
+	</label><br>	
+	<label>상품 이미지:
+	<input type="file" id="mainImg" name="mainImg">
+	</label><br>
+	<label>설명 이미지:
+	<input type="file" id="detailImg" name="detailImg">
+	</label><br>
+<!-- 	<label>추가 내용 : -->
+<!-- 	<textarea name="content" id="summernote" value=""> -->
+<!-- 	상품설명: -->
+<!-- 	<br><br> -->
+
+<!-- 	권장급여방법: -->
+<!-- 	<br><br> -->
+
+<!-- 	원산지: -->
+<!-- 	<br><br> -->
+
+<!-- 	제조사/수입사: -->
+<!-- 	<br><br> -->
+
+<!-- 	유통기한: -->
+<!-- 	<br><br> -->
+	
+<!-- 	권장연령: -->
+<!-- 	<br><br> -->
+
+<!-- 	용량/중량: -->
+<!-- 	<br><br> -->
+<!-- 	원료구성: -->
+<!-- 	<br><br> -->
+<!-- 	성분구성: -->
+<!-- 	<br><br> -->
+<!-- 	소비자상담전화번호: -->
+<!-- 	<br><br> -->
+<!-- 	</textarea> -->
+<!-- 	</label> -->
+	<br><br>
+	<div><input type="submit" value="글 등록 하기">   <input type="button" id="cencelBtn" value="cencel"></div>
+</form>
+
+
+
+
+
+
+</body>
+</html>

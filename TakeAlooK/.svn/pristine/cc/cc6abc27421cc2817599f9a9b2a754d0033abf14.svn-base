@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>메인 페이지</title>
+
+<style type="text/css">
+  
+  	.productMain li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+	
+
+</style>
+<th:block th:include="/header.html"></th:block>
+</head>
+
+<body>
+
+	<ul class="productMain" style="padding-top: 200px">
+		<li th:each="product:${main}">
+			<div><input type=hidden th:value="${product.prNo}" ></div>
+			<div><input type=hidden id="animalType" class="animalType" th:value="${product.animalType}"></div>
+			<div><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${product.prNo})}"  >
+			 					<img th:src="${product.mainImg01}"  style="width: 50%; height: 30%"></a></div>
+			<div  th:text ="${product.prName}" ></div>
+			<div  th:text="${product.prCost}+원"></div>
+		</li>
+	
+	</ul>
+</body>
+</html>

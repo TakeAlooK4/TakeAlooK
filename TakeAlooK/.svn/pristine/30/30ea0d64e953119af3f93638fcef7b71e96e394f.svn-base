@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>회원 로그인 페이지</title>
+<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<script type="text/javascript">
+	$(function(){
+		
+	});
+</script>
+</head>
+<header class="headerMenu">
+	<div class="wrapper">
+		<h1 class="pageName"><a href="/">Take A looK</a></h1>
+				<ul class="menu">
+					<li><a th:href="memberLogin">로그인 |</a></li>
+					<li><a th:href="memberSignUp">회원가입 |</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCart">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</div>
+</header>
+
+<body th:align="center">
+	
+	<h2>Take A looK 로그인</h2>
+	<form action="/memberLogin.Do" method="post">
+		<div align="center"><br>
+			<p><input type="button" value="개인회원"> | <a href="companyLogin"><input type="button" value="기업회원"></a></p><br>
+			<label for="id">ID :</label> <input type="text" name="id" placeholder="이메일을 입력해주세요."><br>
+			<label for="pw">PASSWORD :</label> <input type="password" name="password" placeholder="비밀번호를 입력해주세요."><br>
+			<p>
+				<br><input type="submit" value="로그인">
+			</p><br>
+			<p><a href="#">아이디 / 비밀번호 찾기 | </a><a href="memberSignUp">회원가입</a></p>
+		</div><br>
+		
+		<!-- 네이버 로그인 창 -->
+			<div align="center">
+			<a href="#">
+				<img width="223"
+					src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png" />
+			</a>			
+			</div>
+			
+			<!-- 카카오톡 로그인 창 -->
+			<div align="center">
+			<a href="#">
+				<img width="223" src="http://kafain.kr/theme/kafain_10/mobile/img/kakao_img.png">
+			</a>
+			</div>
+
+	</form>
+</body>
+</html>

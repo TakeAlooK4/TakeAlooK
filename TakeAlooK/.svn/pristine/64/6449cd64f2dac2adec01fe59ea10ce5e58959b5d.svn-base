@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/
+var user = "[[${session['muser']}]]";
+/*]]>*/
+ console.log(user)
+	$(function(){
+		$("#write").click(function(){
+				if(user == ""){
+					alert("로그인 후 작성 가능합니다.")
+					document.form1.action = "/memberLogin";
+					document.form1.submit();
+				}
+			});
+		}); 
+</script>
+
+<style type="text/css">
+input[type=text] {
+  width: 50%;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+}
+</style>
+</head>
+<body>
+<th:block th:include="header.html"/>
+	<div class="container">
+	<h2 class="titlej ">PET COMMUNITY</h2>
+	<form name="form1" action="/community/cw">
+	<table class="table table-hover">
+		<tr>	
+			<th>글번호</th><th>닉네임</th><th>제목</th><th>작성일</th><th>조회수</th><th>추천수</th>
+		</tr>
+		<tr th:each="comm : ${comm}">
+			<td th:text="${comm.commNo}"></td>
+			<td th:text="${comm.nickname.nickname}"></td>
+			<td> <a th:href="@{'/community/cv/' + ${comm.commNo}}" th:text="${comm.commTitle}"></a></td>
+			<td th:if="${#dates.format(comm.commDate, 'yyyy-MM-dd')} == ${today}" th:text="${#dates.format(comm.commDate, 'HH:mm')}"></td>
+			<td th:unless="${#dates.format(comm.commDate, 'yyyy-MM-dd')} == ${today}" th:text="${#dates.format(comm.commDate, 'yyyy-MM-dd')}"></td>
+			<td th:text="${comm.commHit}"></td>
+			<td th:text="${comm.commLike}"></td>
+		</tr>
+	</table>
+	<button class="btn pull-right" id="write">글쓰기</button>
+	</form>
+	<nav style="text-align: center; margin-left: 500px;">
+		<ul class="pagination"
+        th:with="start=${T(Math).floor(comm.number/10)*10 + 1},
+                    last=(${start + 9 < comm.totalPages ? start + 9 : comm.totalPages})">
+			<li>
+				<a th:href="@{/community/cl(page=1)}" aria-label="First">
+					<span aria-hidden="true">First</span>
+				</a>
+			</li>
+			<li th:class="${comm.first} ? 'disabled'">
+				<a th:href="${comm.first} ? '#' :@{/community/cl(page=${comm.number})}" aria-label="Previous">
+					<span aria-hidden="true">&lt;</span>
+				</a>
+			</li>
+			<li th:each="page:${#numbers.sequence(start, last)}" th:class="${page == comm.number+1} ? 'active'">
+				<a th:text="${page}" th:href="@{/community/cl(page=${page})}"></a>
+			</li>
+			<li th:class="${comm.last} ? 'disabled'">
+				<a th:href="${comm.last} ? '#' : @{/community/cl(page=${comm.number + 2})}"aria-label="Next"> 
+					<span aria-hidden="true">&gt;</span>
+				</a>
+			</li>
+			<li>
+				<a th:href="@{/community/cl(page=${comm.totalPages})}"aria-label="Last"> 
+					<span aria-hidden="true">Last</span>
+				</a>
+			</li>
+		</ul>
+	</nav>
+	
+	<!-- 검색 -->
+	<form action="/community/cl" method="post">
+		<table th:align="center" th:cellpadding="0" th:cellspacing="0" th:width="400">
+			<tr>
+				<td align="right">
+					<input name="searchKeyword" type="text"/>
+					<select name="searchCondition" class="selectpicker">
+						<option th:value="TITLE">제목</option>
+						<option th:value="CONTENT">내용</option>
+						<option th:value="NICKNAME">작성자</option>
+					</select>
+					<button name="search" class="btnj" type="submit">검색</button>
+					
+				</td>
+			</tr>
+		</table>
+	</form>
+	<!-- 종료 -->
+	<table th:align="center" border="1" th:cellpadding="0" th:cellspacing="0" th:width="700"></table>
+	</div>
+<script type="text/javascript">
+
+
+</script>
+<th:block th:include="footer.html"></th:block>
+</body>
+</html>
+
+<!-- @{/community/cv(commNo=${comm.commNo})} -->

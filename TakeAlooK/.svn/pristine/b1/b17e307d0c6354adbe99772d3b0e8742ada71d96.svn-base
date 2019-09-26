@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <interface id="1" language="java" name="com.bit.tak.model.repository.MedicalRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/MedicalRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2659" y="1056"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="2" language="java" name="com.bit.tak.controller.UserMemberController" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/controller/UserMemberController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5889" y="815"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.bit.tak.controller.MainController" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/controller/MainController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="153" width="146" x="1173" y="-113"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="4" language="java" name="com.bit.tak.model.service.PetCareService" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/service/PetCareService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2898" y="1119"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="5" language="java" name="com.bit.tak.model.vo.clinic.Sclinic" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/vo/clinic/Sclinic.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5862" y="1580"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.bit.tak.model.vo.community.Ccomment" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/vo/community/Ccomment.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="351" width="173" x="734" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="7" language="java" name="com.bit.tak.model.service.MemberService" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/service/MemberService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4785" y="1170"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="8" language="java" name="com.bit.tak.model.repository.SclinicRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/SclinicRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1484" y="1038"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="9" language="java" name="com.bit.tak.model.service.ProductService" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/service/ProductService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="133" x="947" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="10" language="java" name="com.bit.tak.model.repository.CcommentRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/CcommentRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4709" y="-11"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="11" language="java" name="com.bit.tak.model.vo.community.CommLike" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/vo/community/CommLike.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="243" width="166" x="528" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="12" language="java" name="com.bit.tak.model.repository.BreedRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/BreedRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2163" y="1038"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="13" language="java" name="com.bit.tak.model.repository.LikeRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/LikeRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4710" y="178"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="14" language="java" name="com.bit.tak.controller.NaverLoginApi" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/controller/NaverLoginApi.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="135" width="187" x="1924" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="com.bit.tak.controller.NaverLoginBO" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/controller/NaverLoginBO.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4796" y="935"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="16" language="java" name="com.bit.tak.model.repository.FclinicRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/FclinicRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3331" y="1029"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="17" language="java" name="com.bit.tak.model.repository.CommunityRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/CommunityRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4756" y="702"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="18" language="java" name="com.bit.tak.model.service.CommunityService" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/service/CommunityService.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4771" y="452"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="19" language="java" name="com.bit.tak.model.repository.PetRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/PetRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="3132" y="1065"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="20" language="java" name="com.bit.tak.model.vo.clinic.Fclinic" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/vo/clinic/Fclinic.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4788" y="1755"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="21" language="java" name="com.bit.tak.model.repository.TclinicRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/TclinicRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1693" y="1038"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="22" language="java" name="com.bit.tak.controller.NaverLoginApi.InstanceHolder" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/controller/NaverLoginApi.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2023" y="793"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" name="com.bit.tak.model.service.CommunityServiceImpl" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/service/CommunityServiceImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5799" y="86"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="com.bit.tak.model.service.PetCareServiceImpl" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/service/PetCareServiceImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2486" y="785"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="25" language="java" name="com.bit.tak.model.repository.P_mrmRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/P_mrmRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="141" x="2151" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="26" language="java" name="com.bit.tak.controller.CommunityController" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/controller/CommunityController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5856" y="431"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="27" language="java" name="com.bit.tak.model.repository.Pet_cycleRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/Pet_cycleRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1903" y="1101"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="28" language="java" name="com.bit.tak.model.repository.CompanyRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/CompanyRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4799" y="1543"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="29" language="java" name="com.bit.tak.model.vo.clinic.Tclinic" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/vo/clinic/Tclinic.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="6083" y="1565"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="30" language="java" name="com.bit.tak.model.repository.P_fpRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/P_fpRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="130" x="2332" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="31" language="java" name="com.bit.tak.controller.ProductController" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/controller/ProductController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="603" width="372" x="2693" y="-113"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="32" language="java" name="com.bit.tak.model.service.MemberServiceImpl" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/service/MemberServiceImpl.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5861" y="1364"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="33" language="java" name="com.bit.tak.model.repository.PaymentRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/PaymentRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="151" x="2502" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="34" language="java" name="com.bit.tak.model.repository.Life_cycleRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/Life_cycleRepo.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="2428" y="1065"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="35" language="java" name="com.bit.tak.model.vo.member.Company" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/vo/member/Company.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="423" width="157" x="2693" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="36" language="java" name="com.bit.tak.model.repository.CartRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/CartRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="149" x="1735" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="37" language="java" name="com.bit.tak.model.repository.P_resultValueRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/P_resultValueRepo.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="117" width="231" x="3129" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="38" language="java" name="com.bit.tak.controller.CompanyMemberController" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/controller/CompanyMemberController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="5884" y="1141"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="39" language="java" name="com.bit.tak.model.repository.ProductRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/ProductRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="279" width="257" x="1120" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="40" language="java" name="com.bit.tak.model.repository.P_codeRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/P_codeRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="210" x="3400" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="41" language="java" name="com.bit.tak.model.repository.P_ageRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/P_ageRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="141" x="3650" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="42" language="java" name="com.bit.tak.model.repository.P_qnaRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/P_qnaRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="81" width="168" x="3831" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="43" language="java" name="com.bit.tak.controller.ImageUploadUtils" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/controller/ImageUploadUtils.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="800" y="-23"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="44" language="java" name="com.bit.tak.model.vo.member.Muser" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/vo/member/Muser.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="813" y="1151"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="45" language="java" name="com.bit.tak.controller.MediaUtils" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/controller/MediaUtils.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="117" width="194" x="939" y="-113"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="46" language="java" name="com.bit.tak.model.repository.ProductReviewRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/ProductReviewRepo.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="81" width="202" x="4039" y="530"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="47" language="java" name="com.bit.tak.model.repository.MemberRepo" project="TakeAlooK" 
+    file="/TakeAlooK/src/main/java/com/bit/tak/model/repository/MemberRepo.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="4771" y="1363"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <association id="48">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="49" name="companyRepository"/>      
+      <multiplicity id="50" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="51">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="52" name="naverLoginBO"/>      
+      <multiplicity id="53" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="54">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="55" name="memberService"/>      
+      <multiplicity id="56" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="57">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="58" name="ccommentRepo"/>      
+      <multiplicity id="59" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="60">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="61" name="company"/>      
+      <multiplicity id="62" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="35" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="63">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="64" name="memberRepo"/>      
+      <multiplicity id="65" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="66">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="67" name="nickname"/>      
+      <multiplicity id="68" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="44" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="69">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="70" name="productReviewRepo"/>      
+      <multiplicity id="71" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="46" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="72">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="73" name="memberRepository"/>      
+      <multiplicity id="74" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="75">    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="76" name="companyRepo"/>      
+      <multiplicity id="77" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="28" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="78">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="79" name="productRepo"/>      
+      <multiplicity id="80" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="81">    
+    <end type="SOURCE" refId="38" navigable="false">      
+      <attribute id="82" name="memberService"/>      
+      <multiplicity id="83" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="84">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="85" name="qnaRepo"/>      
+      <multiplicity id="86" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="42" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="87">    
+    <end type="SOURCE" refId="29" navigable="false">      
+      <attribute id="88" name="sCode"/>      
+      <multiplicity id="89" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="90">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="91" name="fclinicRepo"/>      
+      <multiplicity id="92" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="93">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="94" name="communityRepo"/>      
+      <multiplicity id="95" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="96">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="97" name="pCodeRepo"/>      
+      <multiplicity id="98" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="40" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="99">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="100" name="ccommentRepo"/>      
+      <multiplicity id="101" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="102">    
+    <end type="SOURCE" refId="32"/>    
+    <end type="TARGET" refId="7"/>  
+  </realization>  
+  <association id="103">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="104" name="nickname"/>      
+      <multiplicity id="105" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="44" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="106">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="107" name="pet_cycleRepo"/>      
+      <multiplicity id="108" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="27" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="109">    
+    <end type="SOURCE" refId="23"/>    
+    <end type="TARGET" refId="18"/>  
+  </realization>  
+  <association id="110">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="111" name="pMrmRepo"/>      
+      <multiplicity id="112" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="25" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="113">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="114" name="medicalRepo"/>      
+      <multiplicity id="115" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="116">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="117" name="petRepo"/>      
+      <multiplicity id="118" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="119">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="120" name="fCode"/>      
+      <multiplicity id="121" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="20" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="122">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="123" name="breedRepo"/>      
+      <multiplicity id="124" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="125">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="126" name="pAgeRepo"/>      
+      <multiplicity id="127" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="41" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="128">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="129" name="productRepo"/>      
+      <multiplicity id="130" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="39" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="131">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="132" name="likeRepo"/>      
+      <multiplicity id="133" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="134">    
+    <end type="SOURCE" refId="32" navigable="false">      
+      <attribute id="135" name="memberRepository"/>      
+      <multiplicity id="136" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="47" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="137">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="138" name="memberService"/>      
+      <multiplicity id="139" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="140">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="141" name="communityRepo"/>      
+      <multiplicity id="142" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="143">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="144" name="resultValueRepo"/>      
+      <multiplicity id="145" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="37" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="146">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="147" name="pfpRepo"/>      
+      <multiplicity id="148" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="30" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="149">    
+    <end type="SOURCE" refId="24"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <nesting id="150">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="22"/>  
+  </nesting>  
+  <association id="151">    
+    <end type="SOURCE" refId="22" navigable="false">      
+      <attribute id="152" name="INSTANCE"/>      
+      <multiplicity id="153" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="154">    
+    <end type="SOURCE" refId="23" navigable="false">      
+      <attribute id="155" name="likeRepo"/>      
+      <multiplicity id="156" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="157">    
+    <end type="SOURCE" refId="26" navigable="false">      
+      <attribute id="158" name="communityService"/>      
+      <multiplicity id="159" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="160">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="161" name="paymentRepo"/>      
+      <multiplicity id="162" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="33" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="163">    
+    <end type="SOURCE" refId="24" navigable="false">      
+      <attribute id="164" name="life_cycleRepo"/>      
+      <multiplicity id="165" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="34" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="166">    
+    <end type="SOURCE" refId="31" navigable="false">      
+      <attribute id="167" name="cartRepo"/>      
+      <multiplicity id="168" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="36" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

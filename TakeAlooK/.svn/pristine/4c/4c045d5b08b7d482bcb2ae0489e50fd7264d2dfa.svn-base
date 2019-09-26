@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test scroll</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function(){
+    //$("#dialog").dialog();
+    $("#content").dialog({
+    	title:'글쓰기',
+    	width: '700',
+    	height:'450',
+        autoOpen:false, //자동으로 열리지않게
+        position:[100,200], //x,y  값을 지정
+        //"center", "left", "right", "top", "bottom"
+        modal:true, //모달대화상자
+        resizable:false, //크기 조절 못하게
+		buttons: [
+			{
+				text: "OK",
+				click: function() {
+					var prNo = $("#prNo").val();
+			    	var content = $("#reviewContent").val();
+					$.ajax({
+						url:"/insertCart.do",
+						data:{
+							prNo:prNo,
+							content:content
+						},
+						datatype:"json",
+							success:function(data){
+								var check = confirm("장바구니에 상품이 담겼습니다. 장바구니로 이동하시겠습니까?");
+								if(check){
+									location.href="/productCartPage";
+								}
+						}
+					});
+			
+					$(this).dialog("close");
+				}
+			},
+			{
+				text: "Cancel",
+				click: function() {
+					console.log("You pressed Cancel!");
+					$(this).dialog("close");
+				}
+			}
+		]
+
+});
+
+    //창 열기 버튼을 클릭했을경우
+    $("#btn").on("click",function(){
+        $("#content").dialog("open"); //다이얼로그창 오픈                
+        
+       	
+    });
+	//후기 등록 하는 jquery
+
+    
+    
+
+});
+
+
+</script>
+<style type="text/css">
+#btn{
+margin-top: 270px;
+    margin-left: -162px;
+}
+      #content {
+			
+            background:#ededed;
+            padding:10px;
+            margin:10px;
+}
+</style>
+</head>
+<body>
+<header id="headerMenu">
+	
+
+	<th:block th:if="${session['user'] == null}" id="wrapper">
+		<h1 id="pageName"><a href="/">Take A looK</a></h1>
+				<ul id="menu">
+					<li><a th:href="memberLogin">로그인 |</a></li>
+					<li><a th:href="memberSignUp">회원가입 |</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCart">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</th:block>
+
+
+
+	<th:block th:if="${session['user'] != null}" id="wrapper">
+	<h1 id="pageName"><a href="/">Take A looK</a></h1>
+				<ul id="menu">
+					<li><h3 class="loginText" align="left"><font style="color: black;" th:text="${session['user'].nickname}"></font>님 게시판 입장을 환영합니다.</h3></li>
+					<li><a href="/userLogOut">로그아웃</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCart">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</th:block>
+
+</header>
+
+<div id="mainMenu_Wrap">
+	<ul id="mainMenu">
+		<li><a href="/productMain"  style="text-decoration: none">상품</a></li>
+		<li><a href="" style="text-decoration: none">병원</a></li>
+		<li><a href="" style="text-decoration: none">커뮤니티</a></li>
+		<li><a href="" style="text-decoration: none">펫 케어</a></li>
+	
+	</ul>
+
+</div>
+
+
+<button id="btn" >구매후기 쓰기</button>
+<div id="content">
+	<table >
+		<tbody>
+			<tr>
+				<th>
+					이름 :
+ 				</th>
+ 				<td>
+ 					<label id="writer" for="name"  th:if="${session['user'] != null}">
+ 					<span style="color: black;" th:text="${session['user'].nickname}" id="writer2"></span>
+ 					</label>
+ 				</td>
+			</tr>
+						<tr>
+				<th>
+					내용 입력 :
+ 				</th>
+ 				<td>
+ 					<textarea rows="10px" cols="50px" id="reviewContent"></textarea>
+ 				</td>
+			</tr>
+	
+			
+		</tbody>
+	</table>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+
+</script>
+<title>상품 페이지</title>
+</head>
+<body>
+<form name="mainPage" >	
+
+	<h1>
+ 	
+ 	<div align="center" >
+			<a href="/productListDog.do" th:href="@{productListDog.do(animalType=C,pCode1=Dfc01,pCode2=Dfc02,pCode3=Dfc03)}" style="text-decoration: none">강아지
+			</a> |  
+ 			<a href="/productListCat.do" th:href="@{/productListCat.do(animalType=C,pCode1=Cfc01,pCode2=Cfc02,pCode3=Cfc03)}"  style="text-decoration: none">고양이</a>
+ 	</div> 
+
+	</h1>
+	<div class="dogMenu">
+	<h2>| <a href="/productListDog.do" th:href="@{productListDog.do(animalType=C,pCode1=Dfc01,pCode2=Dfc02,pCode3=Dfc03)}" style="text-decoration: none">사료</a>
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=dsn01,pCode2=dsn02,pCode3=dsn03)}" style="text-decoration: none">간식</a> 
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=BAPD01,pCode2=BAPD02,pCode3=BAPD03)}" style="text-decoration: none">목욕/미용</a> 
+	 | <a href="/productListDog.do" th:href="@{productListDog.do(animalType=d,pCode1=OPD01,pCode2=OPD02,pCode3=OPD03)}" style="text-decoration: none">기타 용품</a> 
+	 |</h2>
+	</div>	
+
+
+  	<hr>
+
+	
+	<table>
+		<tr th:each="product1:${productListDog}">
+			<td><input type=hidden th:value="${product1.prNo}" ></td>
+			<td><input type=hidden id="animalType" class="animalType" th:value="${product1.animalType}"></td>
+			<th style="border: solid"><a href="/productDetailPage" th:href="@{productDetailPage(prNo=${product1.prNo})}" >
+			 <img th:src="${product1.mainImg01}"></a>
+			 </th>
+		
+		 	<td style="border: solid" th:text ="${product1.prName}" ></td>
+	
+		    <td style="border: solid" th:text="${product1.prCost}"></td>
+		</tr>
+	
+	</table>
+
+</div>
+</form>	
+</body>
+</html>
+

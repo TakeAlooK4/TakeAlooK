@@ -1,0 +1,107 @@
+package com.bit.tak.model.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bit.tak.model.repository.BreedRepo;
+import com.bit.tak.model.repository.FclinicRepo;
+import com.bit.tak.model.repository.MedicalRepo;
+import com.bit.tak.model.repository.PetRepo;
+import com.bit.tak.model.vo.clinic.Fclinic;
+import com.bit.tak.model.vo.member.Muser;
+import com.bit.tak.model.vo.pet.Breed;
+import com.bit.tak.model.vo.pet.Medical;
+import com.bit.tak.model.vo.pet.Pet;
+
+@Service("petCareService")
+public class PetCareServiceImpl implements PetCareService {
+
+	@Autowired
+	private BreedRepo breedRepo;
+	@Autowired
+	private PetRepo petRepo;
+	@Autowired
+	private FclinicRepo fclinicRepo;
+	@Autowired
+	private MedicalRepo medicalRepo;
+
+	//품종
+	@Override
+	public List<Breed> getBreedList() {
+
+		return breedRepo.findAll();
+	}
+	
+	//아이디 찾아가기
+	@Override
+	public List<Pet> findByNickname(Muser nickname) {
+
+		return petRepo.findByNickname(nickname);
+	}
+
+	//첫진단명
+	@Override
+	public List<Fclinic> getFclinic() {
+
+		return fclinicRepo.findAll();
+	}
+	
+	//의료기록
+	@Override
+	public List<Medical> findByPetId(Muser nickname,int petId) {
+		
+		return medicalRepo.findByPetId(nickname,petId);
+	}
+	
+	//반려동물 정보수정
+	@Override
+	public void updatePet(Pet pet) {
+		Pet findPet = petRepo.findById(pet.getPetId()).get();
+		
+		
+		System.out.println("아아아아: "+findPet.getBreedCode().getBreedCode());
+		findPet.setPetName(pet.getPetName());
+		if(pet.getPetImg()!=null) {
+			
+			findPet.setPetImg(pet.getPetImg());
+		}
+		//findPet.setPetImg(pet.getPetImg());
+		//System.out.println("????");
+		findPet.setNickname(pet.getNickname());
+		findPet.setPetCode(pet.getPetCode());
+		/*
+		 * if(pet.getBreedCode()!=null) {
+		 * 
+		 * }
+		 */
+		if(pet.getBreedCode()!=null) {
+			findPet.setBreedCode(pet.getBreedCode());
+		}
+		findPet.setBreedCode(findPet.getBreedCode());
+		findPet.setPetGender(pet.getPetGender());
+		findPet.setPetBirth(pet.getPetBirth());
+		
+		//System.out.println("아오 왜 안나와"+ findPet);
+		
+		petRepo.save(findPet);
+	}
+	
+	@Override
+	public void updateMedical(Medical medical) {
+		Medical oldMedical = medicalRepo.findById(medical.getMedicalNo()).get();
+		System.out.println("아아아아: "+oldMedical);
+		oldMedical.setClinicHos(medical.getClinicHos());
+		oldMedical.setMedicalCost(medical.getMedicalCost());
+		oldMedical.setMedicalDate(medical.getMedicalDate());
+		oldMedical.setMedicalMemo(medical.getMedicalMemo());
+		if(medical.getTCode()!=null) {
+			oldMedical.setTCode(medical.getTCode());
+		}
+		oldMedical.setTCode(oldMedical.getTCode());
+		medicalRepo.save(oldMedical);
+		
+	}
+	
+}

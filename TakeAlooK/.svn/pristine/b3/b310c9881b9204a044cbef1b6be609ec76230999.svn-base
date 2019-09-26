@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 로그인 페이지</title>
+</head>
+<body th:align="center">
+	<h1 align="left">
+		<a href="/">Take A looK</a>
+	</h1>
+	<h2>Take A looK 로그인</h2>
+	<form action="/companyLogin.do" method="post">
+		<div align="center">
+			<p><a href="memberLogin"><input type="button" value="개인회원"></a> | <input type="button" value="기업회원"></p><br>
+			<label for="id">COMPANY ID :</label> <input type="text" name="cNo" placeholder="사업자번호를 입력해주세요."><br>
+			<label for="pw">PASSWORD :</label> <input type="password" name="cPassword" placeholder="비밀번호를 입력해주세요."><br>
+		<p align="center">
+			<input type="submit" value="로그인">
+		</p>
+		<p><a href="#">아이디 / 비밀번호 찾기 | </a><a href="companySignUp">회원가입</a></p>
+		</div>
+	</form>
+</body>
+</html>

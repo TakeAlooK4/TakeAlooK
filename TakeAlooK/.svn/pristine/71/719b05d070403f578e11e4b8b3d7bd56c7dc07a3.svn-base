@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>모임 작성</title>
+</head>
+<body>
+<header>
+
+<h3>모임</h3>
+
+</header>
+	<div>
+		<form action="/hostInsert">
+			<table >
+			<tr>
+				<td align="left" >
+					<table border="1">
+						<tr >
+							<td>사진자리</td>
+						</tr>
+						<tr>
+							<th><label for="title">제목 :  </label></th>
+							<td><input id="title" name="hostTitle"></td>
+						</tr>
+					</table>	
+				</td>
+				<td align="right">
+					<table border="1">
+						<tr>
+							<th><label>모집날짜 :  </label></th>
+							<td>
+								<input type="text" value="모집날짜 시작"> 
+								<span> ~ </span>
+								<input type="text" value="모집날짜 마감">
+							</td>
+						</tr>
+						
+						<tr>
+							<th>
+								<label>모임일시 : </label>
+							</th>
+							<td>
+								<input type="text" value="날짜넣을거임">
+							</td>					
+							<td>
+								<input type="checkbox" value="하루이상">
+								<label>하루이상</label>
+							</td>
+						</tr>
+					
+						<tr>
+							<th><label>모임일시 :  </label></th>
+							<td></td>
+						</tr>
+					</table>
+				</td>
+				</tr>
+			</table>
+			<input type="submit" value="모임등록">
+		</form>
+	</div>
+</body>
+</html>

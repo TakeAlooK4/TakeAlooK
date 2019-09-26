@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>기업 아이디 찾기</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<script type="text/javascript">
+	// 아이디찾기 회원정보 유,무 체크
+	$(function(){
+		var cSearchId = $("#cSearchId").val();
+		if(cSearchId) {
+			alert(cSearchId);
+		}
+	});
+	
+	// 기업대표번호 정규식 체크
+	 $(function(){
+		$("#cContactId_check").css("color", "red")
+		$("#contact").blur(function(){
+			var contact = $("#contact").val();
+			var contactRule = /^\d{2,3}-\d{3,4}-\d{4}$/;
+			var contactCheck = contact.match(contactRule);
+			
+			if(!contactCheck) {
+				$("#cContactId_check").html("올바른 휴대폰 번호를 입력해주세요. 숫자, -를 포함한 숫자만 입력하세요.")
+			} else {
+				$("#cContactId_check").html("");
+			} 
+			if(!contact) {
+				$("#cContactId_check").html("");
+			}
+			
+		});
+	});
+</script>
+</head>
+<header>
+	<h2 align="center">기업 아이디 찾기</h2>
+</header>
+<body>
+	<input type="hidden" th:value="${msg}" id="cSearchId">
+	<form th:action="companySearchSuc" method="post">
+		<div align="center">
+			<br> <input type="button" value="아이디 찾기"> | <a href="companySearchPw"><input type="button" value="비밀번호 찾기"></a><br>
+		</div>
+		<br><div align="center">
+			<label for="searchName">회사명 : </label><input type="text" name="cName" id="name" placeholder="이름 입력">
+			
+			<br><label for="searchContact">휴대폰번호 : </label><input type="text" name="cPhone" id="contact" placeholder="휴대폰 번호 입력">
+			<div class="cContactId_check_font" id="cContactId_check"></div>
+		</div>
+		<br><div align="center">
+			<br><input type="submit" th:value="찾기">
+		</div>
+	</form>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>기업 비밀번호 찾기</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<style type="text/css">
+	.findcidbtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 5px 18px;
+		font-size: 15px;
+		font-weight: bold;
+	}
+	
+	
+	.findcpwbtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 5px 18px;
+		font-size: 15px;
+	}
+	
+	.findbtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 10px 85px;
+	}
+	
+	.h2color{
+		color: #808080;
+	}
+	
+	input[type="text"],select {
+   /*  display: block; */
+    width: 40%;
+    height: 34px;
+   /*  padding: 6px 12px; */
+    font-size: 14px;
+    /* line-height: 1.42857143; */
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+ }
+</style>
+<script type="text/javascript">
+	
+	// 사업자번호(아이디) 정규식 체크
+	$(function(){
+		$("#cNo_check").css("color", "red")
+		$("#cid").blur(function(){
+			var cId = $("#cid").val();
+			var cIdRule = /([1-9]{3})-([0-9]{2})-([0-9]{5})/;
+			var cIdCheck = cId.match(cIdRule);
+			
+			if(!cIdCheck) {
+				$("#cNo_check").html("올바른  사업자번호를 입력해주세요. 숫자, -를 포함한 숫자만 입력하세요.")
+			} else {
+				$("#cNo_check").html("");
+			} 
+			if(!cId) {
+				$("#cNo_check").html("");
+			}
+			
+		});
+	}); 
+</script>
+</head>
+<header>
+	<h2 align="center" class="h2color">기업 비밀번호 찾기</h2>
+</header>
+<body>
+	<form action="#" method="post">
+		<div align="center">
+			<br><a href="companySearchId"><input type="button" value="아이디 찾기" class="findcidbtn"></a> | <input type="button" value="비밀번호 찾기" class="findcpwbtn"><br>
+		</div>
+		<br><div align="center">
+				<input type="text" name="cName" id="cname" placeholder="COMPANY NAME">
+				
+				<br><input type="text" name="cNo" id="cid" placeholder="COMPANY NO">
+				<div class="cNo_check_font" id="cNo_check"></div>
+			</div>
+			<br><div align="center">
+				<input type="submit" value="비밀번호 찾기" class="findbtn">
+			</div>
+	</form>		
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script type="text/javascript">
+
+	$(function(){
+		
+		$("#resultBtn").click(function(){
+			var IMP = window.IMP; // 생략가능
+			var allSumMoney =$("#allSumMoney").val();
+			var prName =$("#prName").val();
+			var userName =$("#userName").val();
+			var userId = $("#userId").val();
+			var cellPhone= $('#cellphone1').val() + $('#cellPhone2').val() + $('#cellPhone3').val();
+			var address =$('#addressMain').val() + $('#addressDetail').val();
+			IMP.init('imp12160241'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+			
+			IMP.request_pay({
+			    pg : 'html5_inicis', // version 1.1.0부터 지원.
+			    pay_method : 'card',
+			    merchant_uid : 'merchant_' + new Date().getTime(),
+			    name : prName,
+			    amount : allSumMoney,
+			    buyer_email : userId,
+			    buyer_name : userName,
+			    buyer_tel :cellPhone ,
+			    buyer_addr : address,
+			  //  buyer_postcode : '123-456',
+			    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+			}, function(rsp) {
+			    if ( rsp.success ) {
+			        var msg = '결제가 완료되었습니다.';
+			        msg += '고유ID : ' + rsp.imp_uid;
+			        msg += '상점 거래ID : ' + rsp.merchant_uid;
+			        msg += '결제 금액 : ' + rsp.paid_amount;
+			        msg += '카드 승인번호 : ' + rsp.apply_num;
+					var allSumMoney =$("#allSumMoney").val();
+					var prNo =$("#prNo").val();
+					var nickname =$("#nickname").val();				
+					var cellPhone= $('#cellphone1').val() + $('#cellPhone2').val() + $('#cellPhone3').val();
+					var address =$('#addressMain').val() + $('#addressDetail').val();	
+					alert(allSumMoney);
+					alert(prNo);
+					alert(nickname);
+					alert(cellPhone);
+					alert(address);
+					$.ajax({
+						url:"/paymentInsert2.do",
+						data:{
+							Muser:nickname,
+							sumvalue:allSumMoney,
+							Product:prNo,
+							cellphone:cellPhone,
+							address:address
+							
+						},
+						datatype:"json",
+						success:function(data){
+												
+									location.href="/productMain";
+								}
+							
+				});
+			
+			    } else {
+			        var msg = '결제에 실패하였습니다.';
+			        msg += '에러내용 : ' + rsp.error_msg;
+			    }
+			    alert(msg);
+			});
+		});
+	});
+	
+// 	$(document).ready(function(){
+// 		var check = confirm("결제 하시겠습니까?");
+		
+// 		$("#resultBtn").on('click',function(){
+// 			var prNo =$("#prNo").val();
+// 			var sumvalue = $("#prAllValue").val();
+// 			var mainImg = $("#imgInfo").val();
+// 			var nickname=$('#userNickname').val();
+// 			var address =$('#addressMain').val() + $('#addressDetail').val(); 
+// 			var cellPhone= $('#cellphone1').val() + $('#cellPhone2').val() + $('#cellPhone3').val();
+// 			if(check==true){
+// 			$.ajax({
+// 				url:"paymentInsert2.do",
+// 				data:{
+				
+// 				},
+// 				datatype:"json",
+// 				success:function(data){
+						
+// 							location.href="/productCartPage";	
+// 						}
+// 				}
+// 			}else{
+// 				location.href="/payment";
+// 			}
+// 			});
+// 		});	
+// 	});
+	$(function(){
+		
+		$(".deleteBtn").click(function(){
+			var check = confirm("지우시겠습니까?");
+			
+			var resultNo = $("#resultValue").val();
+			if(check==true){
+			$.ajax({
+				url:"deletePaymentList.do",
+				data:{
+					resultValue:resultNo
+				},
+				datatype:"json",
+				success:function(data){
+										
+							location.href="/payment";
+						}
+					
+		});
+			}else{
+				location.href="/payment";
+			}
+
+		
+	});
+	});		
+		
+	</script>
+	<style type="text/css">
+		#allText{
+			padding-top: 300px;
+		}
+		
+	</style>
+</head>
+<body>
+<th:block th:include="/header"></th:block>
+
+<!-- <div th:each=""> -->
+
+</div>
+
+
+<div id="allText">
+<h2>●상품 정보</h2>
+	<div th:each="cart:${info}">
+				
+				<div><input type="hidden" class="prNo" id="prNo" name="prNo" th:value="${cart.prNo.prNo}"></div>
+				<div><input type="hidden" class="prName" id="prName" name="prName" th:value="${cart.prNo.prName}"></div>
+				<div class="imgId"><img th:src="${cart.prNo.mainImg01}" style="width: 30%; height: 30%" id="imgInfo" >
+					<div class="prNameId" th:text="${cart.prNo.prName}"></div>
+					<div class="prNameId" id="prAllValue" th:text="${cart.sumValue}"></div>
+					<div><input type="button" class="deleteBtn" value="삭제"  ></div>
+				</div>
+				<div><input type="hidden" th:value="${cart.resultValue}" id="resultValue"></div>
+
+		</div>	
+		<h2>총 금액 : <input type="text" th:value="${allSumMoney}" id="allSumMoney"></h2>
+<h2>●고객 정보</h2>
+<hr>
+<div><input type="hidden" id="userId" th:value="${session['muser'].id}"></div>
+<div><input type="hidden" id="nickname" th:value="${session['muser'].nickname}"></div>
+<div><input type="hidden" id="userName"th:value="${session['muser'].name}"></div>
+<div ><h3>고객 이름 : <font style="color: black;" th:text="${session['muser'].name}"></font></h3></div>
+<div ><h3>고객 닉네임 : <font style="color: black;" th:text="${session['muser'].nickname}"></font></h3></div>
+<h2>●받을 주소 입력란</h2>
+<hr>
+<div>주소 입력 :<input type="text" id="addressMain" style="width: 300px;"></div><br>
+<div>상세 주소 입력 :<input type="text" id="addressDetail" style="width: 200px;"></div><br>
+핸드폰 번호 : <select id="cellphone1" name="cellphoneValue">
+		<option value="010">010</option>
+		<option value="016">016</option>
+		<option value="018">018</option>
+		<option value="011">011</option>
+		</select> 
+		<input type="text" id="cellPhone2" style="width: 50px;">
+		<input type="text" id="cellPhone3" style="width: 50px;"><br><br>
+<button id="resultBtn">결제 하기</button>
+</div>	
+
+
+
+
+</body>
+</html>

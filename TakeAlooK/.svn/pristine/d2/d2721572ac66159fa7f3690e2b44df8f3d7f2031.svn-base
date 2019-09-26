@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Test scroll</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function(){
+    //$("#dialog").dialog();
+    $("#content").dialog({
+    	title:'글쓰기',
+    	width: '700',
+    	height:'450',
+        autoOpen:false, //자동으로 열리지않게
+        position:[100,200], //x,y  값을 지정
+        //"center", "left", "right", "top", "bottom"
+        modal:true, //모달대화상자
+        resizable:false, //크기 조절 못하게
+		buttons: [
+			{
+				text: "OK",
+				click: function() {
+					var prNo = $("#prNo").val();
+			    	var content = $("#reviewContent").val();
+					$.ajax({
+						url:"/insertCart.do",
+						data:{
+							prNo:prNo,
+							content:content
+						},
+						datatype:"json",
+							success:function(data){
+								var check = confirm("장바구니에 상품이 담겼습니다. 장바구니로 이동하시겠습니까?");
+								if(check){
+									location.href="/productCartPage";
+								}
+						}
+					});
+			
+					$(this).dialog("close");
+				}
+			},
+			{
+				text: "Cancel",
+				click: function() {
+					console.log("You pressed Cancel!");
+					$(this).dialog("close");
+				}
+			}
+		]
+
+});
+
+    //창 열기 버튼을 클릭했을경우
+    $("#btn").on("click",function(){
+        $("#content").dialog("open"); //다이얼로그창 오픈                
+        
+       	
+    });
+	//후기 등록 하는 jquery
+
+    
+    
+
+});
+$(document). ready(function(){
+	$("#resultBtn").click(function(){
+		var IMP = window.IMP; // 생략가능
+			IMP.init('imp12160241'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+	
+		IMP.request_pay({
+		    pg : 'kakaopay', // version 1.1.0부터 지원.
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : '결제 페이지',
+		    amount : '',
+		    buyer_email : 'cjj105301@naver.com',
+		    buyer_name : '구매자이름',
+		    buyer_tel : '010-1234-5678',
+		    buyer_addr : '서울특별시 강남구 삼성동',
+		    buyer_postcode : '123-456',
+		    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+		}), function(rsp) {
+		    if ( rsp.success ) {
+		        var msg = '결제가 완료되었습니다.';
+		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		    } else {
+		        var msg = '결제에 실패하였습니다.';
+		        msg += '에러내용 : ' + rsp.error_msg;
+		    }
+		    alert(msg);
+		}
+		});
+});	
+
+</script>
+<style type="text/css">
+#btn{
+margin-top: 270px;
+    margin-left: -162px;
+}
+      #content {
+			
+            background:#ededed;
+            padding:10px;
+            margin:10px;
+}
+</style>
+</head>
+<body>
+<th:block th:include="/header"></th:block>
+<button id="ssss">결제</button>
+<script type="text/javascript">
+$("#ssss").click(function(){
+
+	var IMP = window.IMP; // 생략가능
+	IMP.init('imp12160241'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+	
+	IMP.request_pay({
+	    pg : 'html5_inicis', // version 1.1.0부터 지원.
+	    pay_method : 'card',
+	    merchant_uid : 'merchant_' + new Date().getTime(),
+	    name : '주문명:결제테스트',
+	    amount : 14000,
+	    buyer_email : 'cjj105301@naver.com',
+	    buyer_name : '구매자이름',
+	    buyer_tel : '010-1234-5678',
+	    buyer_addr : '서울특별시 강남구 삼성동',
+	    buyer_postcode : '123-456',
+	    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+	}, function(rsp) {
+	    if ( rsp.success ) {
+	        var msg = '결제가 완료되었습니다.';
+	        msg += '고유ID : ' + rsp.imp_uid;
+	        msg += '상점 거래ID : ' + rsp.merchant_uid;
+	        msg += '결제 금액 : ' + rsp.paid_amount;
+	        msg += '카드 승인번호 : ' + rsp.apply_num;
+	    } else {
+	        var msg = '결제에 실패하였습니다.';
+	        msg += '에러내용 : ' + rsp.error_msg;
+	    }
+	    alert(msg);
+	});
+
+});
+		</script>
+</body>
+</html>

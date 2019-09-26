@@ -1,0 +1,18 @@
+package com.bit.tak.model.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.bit.tak.model.vo.member.Muser;
+import com.bit.tak.model.vo.product.P_resultValue;
+import com.bit.tak.model.vo.product.Product;
+
+public interface P_resultValueRepo extends JpaRepository<P_resultValue, Integer> {
+
+
+	@Query(value="select main_Img01 from team4.product where pr_no=?", nativeQuery=true)
+	Product findByPrNo(Product prNo);
+	
+	@Query(value="select  ifnull(sum(sum_value),0) money  from team4.product p, team4.p_result_value r, team4.Muser u  where p.pr_No=r.pr_No and u.nickname=r.nickname",nativeQuery=true)
+ 	public int sumAllMoney(Muser user);
+}

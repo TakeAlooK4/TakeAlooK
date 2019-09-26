@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>메인 페이지</title>
+<link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+<body>
+<header>
+	<div class="wrapper">
+		<h1><a href="/">Take A looK</a></h1>
+			<nav>
+				<ul class="menu">
+					<li><a th:href="memberLogin">로그인 |</a></li>
+					<li><a th:href="memberSignUp">회원가입 |</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCart">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+			</nav>
+	</div>
+</header>
+<footer>
+	<th:block th:if="${session['user'] != null}">
+		<h3 align="left"><font style="color: black;" th:text="${session['user'].nickname}"></font>님 게시판 입장을 환영합니다.</h3>
+		<a href="/userLogOut">로그아웃</a>
+	</th:block>
+	<th:block th:if="${session['company'] != null}">
+		<h3 align="left"><font style="color: black;" th:text="${session['company'].cName}"></font>님 게시판 입장을 환영합니다.</h3>
+		<a href="/companyLogOut">로그아웃</a>
+	</th:block>
+</footer>
+</body>
+</html>

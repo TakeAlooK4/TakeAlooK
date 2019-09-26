@@ -1,0 +1,63 @@
+package com.bit.tak.model.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bit.tak.model.repository.BreedRepo;
+
+import com.bit.tak.model.repository.PetRepo;
+import com.bit.tak.model.vo.member.User;
+import com.bit.tak.model.vo.pet.Breed;
+import com.bit.tak.model.vo.pet.Pet;
+
+@Service("petCareService")
+public class PetCareServiceImpl implements PetCareService {
+
+	@Autowired
+	private BreedRepo breedRepo;
+	
+	@Autowired
+	private PetRepo petRepo;
+	
+	
+	@Override
+	public List<Breed> getBreedList() {
+		
+		return breedRepo.findAll();
+	}
+	/*
+	@Override
+	public Pet getPetCareList(int nickname) {
+		
+		return petRepo.getPetCareList(nickname);
+	}
+	*/
+	@Override
+	public List<Pet> findByNickname(User nickname) {
+		
+		return petRepo.findByNickname(nickname);
+	}
+	
+	
+	//진단명 쿼리
+	
+	/*
+	 * @Override public List<String> getClinic() {
+	 * 
+	 * return clinicrepo.getClinic(); }
+	 */
+	/*
+	 * @Override public List<String> getMclinic(String lclinic) {
+	 * 
+	 * return clinicrepo.getMclinic(lclinic);
+	 * 
+	 * }
+	 */
+	/*
+	 * @Override public List<Clinic> getSclinic(String mclinic) {
+	 * 
+	 * return clinicrepo.getSclinic(mclinic); }
+	 */
+	 }

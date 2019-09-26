@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>아이디 찾기</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<script type="text/javascript">
+	// 아이디찾기 회원정보 유,무 체크
+	$(function(){
+		var searchId = $("#searchId").val();
+		if(searchId) {
+			alert(searchId);
+		}
+	});
+	
+	// 이름 정규식 체크
+	$(function(){
+		$("#nameId_check").css("color", "red")
+		$("#name").blur(function(){
+			var name = $("#name").val();
+			var nameRule = /^[가-힣]{2,5}$/;
+			var nameCheck = name.match(nameRule);
+			
+			if(!nameCheck) {
+				$("#nameId_check").html("본인 이름을 정확히 입력해주세요.")
+			} else {
+				$("#nameId_check").html("");
+			} 
+			if(!name) {
+				$("#nameId_check").html("");
+			}
+			
+		});
+	});
+	
+	// 휴대폰번호 정규식 체크
+	 $(function(){
+		$("#contactId_check").css("color", "red")
+		$("#contact").blur(function(){
+			var contact = $("#contact").val();
+			var contactRule = /^010[.-]?(\d{4})[.-]?(\d{4})$/;
+			var contactCheck = contact.match(contactRule);
+			
+			if(!contactCheck) {
+				$("#contactId_check").html("올바른 휴대폰 번호를 입력해주세요. 숫자, -를 포함한 숫자만 입력하세요.")
+			} else {
+				$("#contactId_check").html("");
+			} 
+			if(!contact) {
+				$("#contactId_check").html("");
+			}
+			
+		});
+	});
+</script>
+</head>
+<header>
+	<h2 align="center">유저 아이디 찾기</h2>
+</header>
+<body>
+	<input type="hidden" th:value="${msg}" id="searchId">
+	<form th:action="memberSearchSuc" method="post">
+		<div align="center">
+			<br> <input type="button" value="아이디 찾기"> | <a href="memberSearchPw"><input type="button" value="비밀번호 찾기"></a><br>
+		</div>
+		<br><div align="center">
+			<label for="searchName">이름 : </label><input type="text" name="name" id="name" placeholder="이름 입력">
+			<div class="nameId_check_font" id="nameId_check"></div>
+			
+			<br><label for="searchContact">휴대폰번호 : </label><input type="text" name="contact" id="contact" placeholder="휴대폰 번호 입력">
+			<div class="contactId_check_font" id="contactId_check"></div>
+		</div>
+		<br><div align="center">
+			<br><input type="submit" th:value="찾기">
+		</div>
+	</form>
+</body>
+</html>

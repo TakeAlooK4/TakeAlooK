@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script type="text/javascript">
+
+// 	$(document).ready(function(){
+// 	$("#resultBtn").click(function(){
+// 		var IMP = window.IMP; // 생략가능
+// 		IMP.init('imp12160241'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+		
+// 		IMP.request_pay({
+// 		    pg : 'html5_inicis', // version 1.1.0부터 지원.
+// 		    pay_method : 'card',
+// 		    merchant_uid : 'merchant_' + new Date().getTime(),
+// 		    name : '주문명:결제테스트',
+// 		    amount : 14000,
+// 		    buyer_email : 'cjj105301@naver.com',
+// 		    buyer_name : '구매자이름',
+// 		    buyer_tel : '010-1234-5678',
+// 		    buyer_addr : '서울특별시 강남구 삼성동',
+// 		    buyer_postcode : '123-456',
+// 		    m_redirect_url : 'https://www.yourdomain.com/payments/complete'
+// 		}, function(rsp) {
+// 		    if ( rsp.success ) {
+// 		        var msg = '결제가 완료되었습니다.';
+// 		        msg += '고유ID : ' + rsp.imp_uid;
+// 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+// 		        msg += '결제 금액 : ' + rsp.paid_amount;
+// 		        msg += '카드 승인번호 : ' + rsp.apply_num;
+// 		    } else {
+// 		        var msg = '결제에 실패하였습니다.';
+// 		        msg += '에러내용 : ' + rsp.error_msg;
+// 		    }
+// 		    alert(msg);
+// 		});
+// 	});
+	
+	$(document).ready(function(){
+		var check = confirm("결제 하시겠습니까?");
+		
+		$("#resultBtn").on('click',function(){
+			var prNo =$("#prNo").val();
+			var sumvalue = $("#prAllValue").val();
+			var mainImg = $("#imgInfo").val();
+			var nickname=$('#userNickname').val();
+			var address =$('#addressMain').val() + $('#addressDetail').val(); 
+			var cellPhone= $('#cellphone1').val() + $('#cellPhone2').val() + $('#cellPhone3').val();
+			if(check==true){
+			$.ajax({
+				url:"paymentInsert2.do",
+				data:{
+				
+				},
+				datatype:"json",
+				success:function(data){
+						
+							location.href="/productCartPage";	
+						}
+				}
+			}else{
+				location.href="/payment";
+			}
+			});
+		});	
+	});
+	
+		
+	</script>
+	<style type="text/css">
+		#allText{
+			padding-top: 300px;
+		}
+		
+	</style>
+</head>
+<body>
+<header id="headerMenu">
+	
+
+	<th:block th:if="${session['user']==null && session['company'] ==null}" id="wrapper">
+		<h1 id="pageName"><a href="/">Take A looK</a></h1>
+				<ul id="menu">
+					<li><a th:href="memberLogin">로그인 |</a></li>
+					<li><a th:href="memberSignUp">회원가입 |</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCartPage">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</th:block>
+
+
+
+	<th:block th:if="${session['user'] != null}" id="wrapper">
+	<h1 id="pageName"><a href="/">Take A looK</a></h1>
+				<ul id="menu">
+					<li><h3 class="loginText" align="left"><font style="color: black;" th:text="${session['user'].nickname}"></font>님 게시판 입장을 환영합니다.</h3></li>
+					<li><a href="/userLogOut">로그아웃</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCartPage">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</th:block>
+
+
+
+	<th:block th:if="${session['company'] != null}" id="wrapper">
+	<h1 id="pageName"><a href="/">Take A looK</a></h1>
+				<ul id="menu">
+					<li><h3 class="loginText" align="left"><font style="color: black;" th:text="${session['company'].cName}"></font>님 게시판 입장을 환영합니다.</h3></li>
+					<li><a href="/companyLogOut">로그아웃</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCartPage">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</th:block>
+
+</header>
+
+<div id="mainMenu_Wrap">
+	<ul id="mainMenu">
+		<li><a href="/productMain"  style="text-decoration: none">상품</a></li>
+		<li><a href="" style="text-decoration: none">병원</a></li>
+		<li><a href="" style="text-decoration: none">커뮤니티</a></li>
+		<li><a href="" style="text-decoration: none">펫 케어</a></li>
+	
+	</ul>
+
+</div>
+<!-- <div th:each=""> -->
+
+</div>
+
+
+<div id="allText">
+<h2>●상품 정보</h2>
+	<tr th:each="cart:${info}">
+
+				<td><input type="hidden" class="prNo" id="prNo" name="prNo" th:value="${cart.prNo.prNo}"></td>
+				<td class="imgId"><img th:src="${cart.prNo.mainImg01}" style="width: 30%; height: 30%" id="imgInfo" >
+					<div class="prNameId" id="prNmae" th:text="${cart.prNo.prName}"></div>
+					<div class="prNameId" id="prAllValue" th:text="${cart.sumValue}"></div>
+				</td>
+
+		</tr>	
+		<h2>총 금액 : <input type="text" th:value="${allSumMoney}"></h2>
+<h2>●고객 정보</h2>
+<hr>
+<div id="userName"><h3>고객 이름 : <font style="color: black;" th:text="${session['user'].name}"></font></h3></div>
+<div id="userNickname"><h3>고객 닉네임 : <font style="color: black;" th:text="${session['user'].nickname}"></font></h3></div>
+<h2>●받을 주소 입력란</h2>
+<hr>
+<div>주소 입력 :<input type="text" id="addressMain" style="width: 300px;"></div><br>
+<div>상세 주소 입력 :<input type="text" id="addressDetail" style="width: 200px;"></div><br>
+핸드폰 번호 : <select id="cellphone1" name="cellphoneValue">
+		<option value="010">010</option>
+		<option value="016">016</option>
+		<option value="018">018</option>
+		<option value="011">011</option>
+		</select> 
+		<input type="text" id="cellPhone2" style="width: 50px;">
+		<input type="text" id="cellPhone3" style="width: 50px;"><br><br>
+<button id="resultBtn">결제 하기</button>
+</div>	
+
+
+
+
+</body>
+</html>

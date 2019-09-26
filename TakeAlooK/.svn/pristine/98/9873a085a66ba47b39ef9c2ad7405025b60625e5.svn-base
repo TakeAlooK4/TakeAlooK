@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<!-- include libraries(jQuery, bootstrap) -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+	
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#summernote').summernote({
+    		width:1000,
+            height: 300,                 // set editor height
+            minHeight: 300,             // set minimum height of editor
+            maxHeight: 300,             // set maximum height of editor
+            focus: false,	                 // set focus to editable area after initializing summernote
+            popover : false,
+            toolbar: [
+			    ['style', ['bold', 'italic', 'underline', 'clear']],
+			    ['fontname',['fontname']],
+			    ['font', ['strikethrough', 'superscript', 'subscript']],
+			    ['fontsize', ['fontsize']],
+			    ['color', ['color']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['insert', ['link', 'picture', 'video']],
+			    ['view', ['help']]
+			  ],
+			  lang : 'ko-KR',
+			  callbacks: {
+					onImageUpload: function(files, editor, welEditable) {
+			            for (var i = files.length - 1; i >= 0; i--) {
+			            	sendFile(files[i], this);
+			            }
+			        }
+				}
+    });
+   
+    
+    
+    function sendFile(file, el) {
+		var form_data = new FormData();
+      	form_data.append('file', file);
+      	$.ajax({
+        	data: form_data,
+        	type: "POST",
+        	url: '/community/image',
+        	cache: false,
+        	contentType: false,
+        	enctype: 'multipart/form-data',
+        	processData: false,
+        	success: function(img_name) {
+        		alert(img_name)
+          		$(el).summernote('editor.insertImage', img_name);
+        	}
+      	});
+    }
+    
+});
+
+</script>
+<!-- include summernote-ko-KR -->
+<!-- <script src="lang/summernote-ko-KR.js"></script> -->
+
+<title>Insert title here</title>
+</head>
+<body>
+<th:block th:include="header.html"/>
+<form action="commRegister">
+	<input type="hidden" id="commNo" name="commNo">
+	<input type="hidden" th:id="nickname" th:name="nickname" th:value="${session['muser'].nickname}"><br>
+	<label for="commTitle">제목:</label>
+	<input type="text" th:id="commTitle" th:name="commTitle"><br>
+	<label for="commContents">내용:</label>
+	<textarea th:name="commContents" id="summernote"></textarea>
+	<input type="submit" value="등록">
+	<a th:href="@{/community/cl}">목록</a>
+	</form>
+	
+</body>
+
+</html>

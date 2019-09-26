@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>비밀번호 찾기</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<style type="text/css">
+	.findidbtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 5px 27px;
+		font-size: 15px;
+		
+	}
+	
+	
+	.findpwbtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 5px 27px;
+		font-size: 15px;
+		font-weight: bold;
+	}
+	.findbtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 10px 115px;
+	}
+	
+	.h2color{
+		color: #808080;
+	}
+	
+	input[type="text"],select {
+   /*  display: block; */
+    width: 40%;
+    height: 34px;
+   /*  padding: 6px 12px; */
+    font-size: 14px;
+    /* line-height: 1.42857143; */
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+ }
+</style>
+<script type="text/javascript">
+	//비밀번호 찾기 회원정보 유,무 체크
+	$(function(){
+		var cSearchPw = $("#cSearchPw").val();
+		if(cSearchPw) {
+			alert(cSearchPw);
+		}
+	});
+		
+	// 이름 정규식 체크
+	$(function(){
+		$("#namePw_check").css("color", "red")
+		$("#name").blur(function(){
+			var name = $("#name").val();
+			var nameRule = /^[가-힣]{2,5}$/;
+			var nameCheck = name.match(nameRule);
+			
+			if(!nameCheck) {
+				$("#namePw_check").html("본인 이름을 정확히 입력해주세요.")
+			} else {
+				$("#namePw_check").html("");
+			} 
+			if(!name) {
+				$("#namePw_check").html("");
+			}
+			
+		});
+	});
+	
+	// 이메일(아이디) 정규식 체크
+	$(function(){
+		$("#emailPw_check").css("color", "red")
+		$("#id").blur(function(){
+			var email = $("#id").val();
+			var emailRule = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			var emailCheck = email.match(emailRule);
+			
+			if(!emailCheck) {
+				$("#emailPw_check").html("이메일 작성을 정확하게 입력해주세요.")
+			} else {
+				$("#emailPw_check").html("");
+			} 
+			if(!email) {
+				$("#emailPw_check").html("");
+			}
+			
+		});
+	}); 
+</script>
+</head>
+<header>
+	<h2 align="center" class="h2color">유저 비밀번호 찾기</h2>
+</header>
+<body>
+	<input type="hidden" th:value="${msg}" id="cSearchPw">
+	<form action="memberSearchPwSuc" method="post">
+		<div align="center">
+			<br><a href="memberSearchId"><input type="button" value="아이디 찾기" class="findidbtn"></a> | <input type="button" value="비밀번호 찾기" class="findpwbtn"><br>
+		</div>
+		<br><div align="center">
+				<input type="text" name="name" id="name" placeholder="이름 입력">
+				<div class="namePw_check_font" id="namePw_check"></div>
+				
+				<br><input type="text" name="id" id="id" placeholder="가입한 이메일 입력">
+				<div class="emailPw_check_font" id="emailPw_check"></div>
+			</div>
+			<br><div align="center">
+				<input type="submit" value="찾기" class="findbtn">
+			</div>
+	</form>		
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>모임 메인</title>
+<style type="text/css">
+.menu button {
+	cursor: pointer;
+}
+
+.menu .hide {
+	display: none;
+}
+
+ul {
+	list-style: none;
+}
+
+li {
+	list-style: none;
+}
+
+.check_value {
+	width: 150px;
+	height: 30px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 0 10px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	display: block;
+	border: solid 1px #cccccc;
+	border-right: none;
+	background-color: #ffffff;
+	line-height: 28px;
+}
+section {
+    display: block;
+}
+
+.keyword_search_area fieldset {
+    position: relative;
+    float: left;
+    margin-right: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+/* fieldset, legend {
+    margin: 0;
+    border: 0;
+    padding: 0;
+} */
+.check_area {
+    position: absolute;
+    top: 29px;
+    left: 0;
+    padding: 20px;
+    display: none;
+    width: 558px;
+    min-height: 144px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #4195f5;
+    background-color: #ffffff;
+}
+</style>
+<script src="//code.jquery.com/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script type="text/javascript">
+
+ $(document).ready(function(){
+       // memu 클래스 바로 하위에 있는 a 태그를 클릭했을때
+       $(".btn_open").click(function(){
+           // 현재 클릭한 태그가 a 이기 때문에
+           // a 옆의 태그중 ul 태그에 hide 클래스 태그를 넣던지 빼던지 한다.
+           //$(this).next("ul").toggleClass("hide");
+          $(this).next("ul").toggleClass("hide");
+       });
+   });
+
+$(document).ready(function(){	
+	   $( "input[name=moveButton]" ).on( "click", function() {
+		alert("만들러 함갈까?");
+		var move = $(event.target).attr("id");
+		
+		if(move=="writing"){
+			location.href = "/hostWriting";
+		}else if(move=="detail"){
+			location.href = "/hostDetail";
+		}
+		
+	});
+	
+	
+});
+</script>
+</head>
+<body>
+	<header> 머리입니다 자라나라 머리머리 </header>
+
+	<!-- select 공간 : 좀 자세히 적어야 겠지 -->
+	<section class="keyword_search_area">
+	<form>
+		<fieldset class="category_area">
+			<button type="button" class="btn_open">지역</button>
+			<div class="check_area">
+				<ul class="hide">
+						
+							<li><input type="checkbox" name="select1" value="서울">서울</li>
+							<li><input type="checkbox" name="select1">인천/경기</li>
+							<li><input type="checkbox" name="select1">대전/충청/세종</li>
+							<li><input type="checkbox" name="select1">광주/전라</li>
+							<li><input type="checkbox" name="select1">강원</li>
+							<li><input type="checkbox" name="select1">대구/경북</li>
+							<li><input type="checkbox" name="select1">제주</li>
+
+				</ul>
+
+			</div>
+			<div>
+				<button>적용</button>
+			</div>
+		</fieldset>
+		<fieldset class="category_area">
+			<div>
+				<ul>
+					<li class="menu"><input type="button" value="시간/비용">
+						<ul class="hide">
+							<li><input type="checkbox" name="select2">무료</li>
+							<li><input type="checkbox" name="select2">유료</li>
+							<li><input type="checkbox" name="select2">오전</li>
+							<li><input type="checkbox" name="select2">오후</li>
+							<li><input type="checkbox" name="select2">주중</li>
+							<li><input type="checkbox" name="select2">주말</li>
+						</ul></li>
+				</ul>
+			</div>
+		</fieldset>
+		<fieldset>
+			<div>
+				<ul>
+					<li class="menu"><input type="button" value="크기">
+						<ul class="hide">
+							<li><input type="checkbox" name="select3" value="크기">대형견</li>
+							<li><input type="checkbox" name="select3">대형견</li>
+							<li><input type="checkbox" name="select3">중형견</li>
+							<li><input type="checkbox" name="select3">소형견</li>
+							<li><input type="checkbox" name="select3">오후</li>
+							<li><input type="checkbox" name="select3">주중</li>
+							<li><input type="checkbox" name="select3">주말</li>
+						</ul></li>
+				</ul>
+			</div>
+		</fieldset>
+		<fieldset>
+			<div>
+				<ul>
+					<li class="menu"><input type="button" value="모임기간">
+						<ul class="hide">
+							<li><input type="checkbox" name="select3" value="모임기간">모임기간</li>
+						</ul></li>
+
+				</ul>
+			</div>
+		</fieldset>
+	</form>
+</section>
+
+
+	<input type='button' id="writing" value='모임 만들기' name="moveButton" />
+
+
+	<!-- 모임 ---------------------------------------------------------------------------->
+	<div>
+		<table title="host">
+			<thead>
+				<tr valign="top">사진부분
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr>
+					<th>제목</th>
+					<th>얍</th>
+				</tr>
+				<tr>
+					<td>날짜</td>
+					<td>얍</td>
+				</tr>
+				<tr>
+					<td>장소</td>
+					<td>얍</td>
+				</tr>
+				<tr>
+					<td>유형</td>
+					<td>얍</td>
+				</tr>
+				<tr>
+					<td>참가비</td>
+					<td>얍</td>
+				</tr>
+				<tr>
+					<td><input type="button" id="detail" value="자세히"
+						name="moveButton"></td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+	<footer> 발입니다 아 그랬냐~ 발발이 치와와 </footer>
+</body>
+</html>

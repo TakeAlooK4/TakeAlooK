@@ -1,0 +1,33 @@
+package com.bit.tak.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class MainController {
+	// 메인페이지 뷰
+	@RequestMapping("/")
+	public String mainPage() {
+		return "index";
+	}
+	
+	// 마이페이지 뷰
+	@RequestMapping("/myPage")
+	public String myPage() {
+		return "mypage/myPage";
+	}
+	
+	// 구매내역 페이지 뷰
+	@RequestMapping("/orderList")
+	public String orderListPage() {
+		return "mypage/orderList";
+	}
+	
+	// 장바구니 페이지 뷰
+	@RequestMapping("/productCart")
+	public String productCartPage() {
+		return "product/productCart";
+	}
+	
+	
+}

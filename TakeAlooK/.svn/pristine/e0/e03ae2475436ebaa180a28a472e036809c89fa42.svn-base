@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>상품 detail 페이지</title>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+
+$(function(){	
+	
+	function comit(sub){
+		
+		if(sub==1){
+				document.detail.action="/productMainPage"
+				document.detail.submit();	
+		}
+	}
+	
+	$("#cartBtn").click(function(){
+		var prNo= $("#prNo").val();
+		var cartAmount = $("#cartAmount").val();
+		$.ajax({
+			url:"/insertCart.do",
+			data:{
+				prNo:prNo,
+				cartAmount:cartAmount
+			},
+			datatype:"json",
+			success:function(data){
+					var check = confirm("장바구니에 상품이 담겼습니다. 장바구니로 이동하시겠습니까?");
+					if(check){
+						location.href="/productCartPage";
+					}
+			}
+			
+		});
+	});
+});	
+
+
+</script>
+
+
+
+</head>
+<body>
+  
+	<form name="detail" class="detail">
+
+		<input type="hidden" id="prNo" name="prNo" th:value="${product.prNo}">
+	
+	<table border="1">
+	
+		<tr>
+			<td>
+				<img th:src="${product.mainImg01}" width="720" height="400">
+			</td>
+			<td>
+				<table border="1" height="300">
+												
+					 <tr>
+						 <td>상품명 </td>
+						<td th:text="${product.prName}"></td>
+					 </tr>
+					 
+					 <tr>
+					 	<td>가격 </td>
+						 <td th:text="${product.prCost}"></td>
+					 </tr>
+					
+					<tr align="center">
+						<td colspan="2">
+							<input type="number" id="cartAmount" name="cartAmount">&nbsp; 개
+						</td>
+					</tr>	
+				</table>
+
+				<input type="button" value="구매 하기" onclick="comit(1)"> 
+				<input type="button" id="cartBtn" value="장바구니"  >
+
+			</td>
+		</tr>
+
+	</table>	
+
+		<table  border="1">
+			<tr>
+			 	<td><img th:src="${product.detailImg01}"></td>
+		 	</tr>
+		
+		</table>
+</form>
+</body>
+</html>

@@ -1,0 +1,5 @@
+package com.bit.tak.model.repository;
+
+public interface HostRepo {
+
+}

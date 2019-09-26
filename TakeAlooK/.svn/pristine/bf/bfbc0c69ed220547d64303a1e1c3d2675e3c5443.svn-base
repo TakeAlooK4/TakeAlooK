@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i%7CRajdhani:400,600,700"
+    rel="stylesheet">
+<!-- Plugins Stylesheets -->
+<link rel="stylesheet" href="/assets/css/loader/loaders.css">
+<link rel="stylesheet" href="/assets/css/font-awesome/font-awesome.css">
+<link rel="stylesheet" href="/assets/css/bootstrap.css">
+<link rel="stylesheet" href="/assets/css/aos/aos.css">
+<link rel="stylesheet" href="/assets/css/swiper/swiper.css">
+<link rel="stylesheet" href="/assets/css/lightgallery.min.css">
+<!-- Template Stylesheet -->
+<link rel="stylesheet" href="/assets/css/style.css">
+<!-- Responsive Stylesheet -->
+<link rel="stylesheet" href="/assets/css/responsive.css">
+<script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+/* /<![CDATA[/ */
+var user = "[[${session['muser']}]]";
+/* /]]>/ */
+ console.log(user)
+	$(function(){
+		$("#petCareLogin").click(function(){
+				if(user == ""){
+					alert("로그인 후 가능합니다")
+					location.href = "/memberLogin";
+				}else location.href = "/petCare";
+			});
+		}); 
+</script>
+</head>
+<body>
+<!-- Header Start -->
+    <header class="w-100">
+    <th:block th:if="${session['muser'] == null} and ${session['company'] == null} "> 
+        <div class="container">
+            <div class="top-header d-none d-sm-flex justify-content-between align-items-center">
+                <div class="contact">
+                    
+                </div>
+                <nav class="d-flex aic">
+                    <a th:href="memberLogin" class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i>Login</a>
+                    <a th:href="memberSignUp" class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i>SignUp</a>
+                    
+                </nav>
+            </div>
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a class="navbar-brand" href="/"><img src="assets/images/logo.png" alt="Take A looK"></a>
+                <div class="group d-flex align-items-center">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation"><span
+                            class="navbar-toggler-icon"></span></button>
+                    <a class="login-icon d-sm-none" href="#"><i class="fa fa-user"></i></a>
+                   
+                </div>
+               
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link" href="/productMain">pet Product</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/community/cl">pet Community</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" id="petCareLogin">Pet Care</a></li>
+
+                    </ul>
+                    
+                </div>
+            </nav>
+        </div>
+        </th:block> 
+        
+       <th:block th:if="${session['muser'] != null}"> 
+        <div class="container">
+            <div class="top-header d-none d-sm-flex justify-content-between align-items-center">
+                <div class="contact">
+                </div> 
+                <nav class="d-flex aic">
+                <th:block th:if="${session['muser'].nickname == null}">
+                	<a href="/memberLogin" class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i>Login</a>
+                	<a href="/memberSignUp" class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i>SignUp</a>
+                </th:block>
+                <th:block th:unless="${session['muser'].nickname == null}">
+                    <span class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i><span th:text="|${session['muser'].nickname}님 입장 |"></span></span> 
+                    <a href="/userLogOut" class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i>logout</a> 
+                    <a th:href="myPage" class="login" style="margin-right: 0px;"><i  aria-hidden="true"></i>MyPage</a> 
+                    <a th:href="payment" class="login" style="margin-right: 0px;"><i  aria-hidden="true"></i>order list</a> 
+                </th:block>
+                </nav> 
+            </div> 
+            <nav class="navbar navbar-expand-md navbar-light"> 
+            <!-- 사진부분 :로고--> 
+                <a class="navbar-brand" href="/"><img src="assets/images/logo.png" alt="Multipurpose"></a> 
+                <div class="group d-flex align-items-center"> 
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+                        aria-expanded="false" aria-label="Toggle navigation"><span 
+                            class="navbar-toggler-icon"></span></button> 
+                    <a class="login-icon d-sm-none" href="#"><i class="fa fa-user"></i></a> 
+                    <a class="cart" href="productCartPage"><i class="fa fa-shopping-cart"></i></a> 
+                </div> 
+                 
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent"> 
+                    <ul class="navbar-nav"> 
+                        <li class="nav-item"><a class="nav-link" href="/productMain">pet Product</a></li> 
+                        <li class="nav-item"><a class="nav-link" href="/community/cl">pet Community</a></li> 
+                        <li class="nav-item"><a class="nav-link" href="#" id="petCareLogin">Pet Care</a></li> 
+
+                    </ul> 
+                </div> 
+            </nav> 
+        </div> 
+        </th:block>  
+        <th:block th:if="${session['company'] != null}">  
+        <div class="container"> 
+            <div class="top-header d-none d-sm-flex justify-content-between align-items-center"> 
+                <div class="contact"> 
+                </div> 
+                <nav class="d-flex aic">
+                <th:block th:if="${session['company'].cName == null}">
+                	<a href="/memberLogin" class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i>Login</a>
+                	<a href="/memberSignUp" class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i>SignUp</a>
+                </th:block>
+                <th:block th:unless="${session['company'].cName == null}">
+                    <span class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i><span th:text="|${session['company'].cName}님 입장 |"></span></span> 
+                    <a href="/companyLogOut" class="login" style="margin-right: 0px;"><i class="fa fa-user" aria-hidden="true"></i>logout</a> 
+                    <a href="#" class="login" style="margin-right: 0px;"><i  aria-hidden="true"></i>CompanyPage</a> 
+                </th:block>
+                </nav> 
+            </div> 
+            <nav class="navbar navbar-expand-md navbar-light"> 
+                <a class="navbar-brand" href="/"><img src="assets/images/logo.png" alt="Multipurpose"></a> 
+                <div class="group d-flex align-items-center"> 
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+                        aria-expanded="false" aria-label="Toggle navigation"><span 
+                            class="navbar-toggler-icon"></span></button> 
+                    <a class="login-icon d-sm-none" href="/"><i class="fa fa-user"></i></a> 
+                     
+                </div> 
+                
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent"> 
+                    <ul class="navbar-nav"> 
+                        <li class="nav-item"><a class="nav-link" href="/productMain">pet Product</a></li> 
+                        <li class="nav-item"><a class="nav-link" href="/community/cl">pet Community</a></li> 
+                        <li class="nav-item"><a class="nav-link" href="/productEnrollment" >product registration</a></li> 
+
+                    </ul> 
+                     
+                </div> 
+            </nav> 
+        </div> 
+        </th:block>  
+    </header> 
+</body> 
+</html>

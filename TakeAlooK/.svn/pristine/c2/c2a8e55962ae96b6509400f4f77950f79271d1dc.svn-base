@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>상품 detail 페이지</title>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+
+$(function(){	
+	
+	function comit(sub){
+		
+		if(sub==1){
+				document.detail.action="/productMainPage"
+				document.detail.submit();	
+		}
+	}
+	
+	$("#cartBtn").click(function(){
+		var prNo= $("#prNo").val();
+		var cartAmount = $("#cartAmount").val();
+		$.ajax({
+			url:"/insertCart.do",
+			data:{
+				prNo:prNo,
+				cartAmount:cartAmount
+			},
+			datatype:"json",
+			success:function(data){
+					var check = confirm("장바구니에 상품이 담겼습니다. 장바구니로 이동하시겠습니까?");
+					if(check){
+						location.href="/productCartPage";
+					}
+			}
+			
+		});
+	});
+});	
+
+
+</script>
+
+
+
+</head>
+<body>
+  
+	<form name="detail" class="detail">
+
+		<input type="hidden" id="prNo" name="prNo" th:value="${product.prNo}">
+	
+	<table border="1">
+	
+		<tr>
+			<td>
+				<img th:src="${product.mainImg01}" width="720" height="400">
+			</td>
+			<td>
+				<table border="1" height="300">
+												
+					 <tr>
+						 <td>상품명 </td>
+						<td th:text="${product.prName}"></td>
+					 </tr>
+					 
+					 <tr>
+					 	<td>가격 </td>
+						 <td th:text="${product.prCost}"></td>
+					 </tr>
+					
+					<tr align="center">
+						<td colspan="2">
+							<input type="number" id="cartAmount" name="cartAmount">&nbsp; 개
+						</td>
+					</tr>	
+				</table>
+
+				<input type="button" value="구매 하기" onclick="comit(1)"> 
+				<input type="button" id="cartBtn" value="장바구니"  >
+
+			</td>
+		</tr>
+
+	</table>	
+
+		<table  border="1">
+			<tr>
+			 	<td><img th:src="${product.detailImg01}"></td>
+		 	</tr>
+		
+		</table>
+	<hr>	
+		<table border = "1">
+			<tr>
+				<td><label>서비스 상품</label></td>
+			</tr>
+			<tr>
+				<td>
+				<p>동물병원의 모든 상품의 경우에는 고객변심, 수술불가 또는 보류로 인한 모든 사유의 환불 요청시 구매 후 30일 이내에 100% 전액 환불이 가능합니다.<br>
+				동물병원 외의 카페,호텔링,교육,미용,목욕 그 외의 서비스의 경우에는 구매 후 7일 이내에 100% 전액 환불이 가능합니다.<br>
+				식품,용품의 경우에는 해당 업체의 환불 및 교환 정책에 따릅니다.<br>
+				이미 사용하였거나 카테고리별 구매 이후 해당 기간이 지난 상품은 본 환불규정에서 제외됩니다.<br>
+				유효기간이 따로 정해진 이벤트성 상품의 경우, 유효기간 지난 이후 70% 환불가능합니다.(병원상품 포함)결제일로부터 7일이 지난 동물병원 이외의 상품의 단순변심/개인사정으로 인한 환불은 70% 환불가능합니다.<br>
+				결제일로부터 1년이 경과한 상품은 소멸되어 환불이 불가합니다.<br>
+				</p>
+				</td>
+			</tr>
+		
+	
+					<tr>
+					
+				<td><label>배송 상품</label></td>
+			</tr>
+			
+			<tr>
+				<td >
+				<p>배송 상품의 경우, 해당업체들이 정한 교환 및 환불 정책에 따릅니다.<br>
+				구매하신 해당상품의 상세페이지 하단 내용을 참고하여 주시기 바랍니다.<br>상품이 훼손되었거나 상품가치가 떨어진 경우에는 환불 및 교환 불가 합니다.<br>
+				제품의 하자가 있는 경우에 한하여 상품 수령일로부터 7일 이내에 1:1 문의로 교환 및 환불 진행을 신청하실 수 있으며,<br>
+				비회원 구매고객께서는 고객센터로 연락을 주셔서 환불 신청을 하실 수 있습니다.
+				<br>
+				</p>
+				</td>
+			</tr>
+
+			
+		</table>
+		
+		
+		
+		
+</form>
+</body>
+</html>

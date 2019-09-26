@@ -1,0 +1,22 @@
+package com.bit.tak.model.vo.community;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+
+import com.bit.tak.model.vo.member.User;
+
+public class CommLike {
+
+	/*
+	 * @Id
+	 * 
+	 * @Column(name = "like_no") private int likeNo;
+	 * 
+	 * 
+	 * private Community commNo;
+	 * 
+	 * private User nickname;
+	 * 
+	 * private int likeCheck;
+	 */
+}

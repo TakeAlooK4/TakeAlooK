@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>장바구니 페이지</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="/royal/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/royal/css/animate.css">
+    
+    <link rel="stylesheet" href="/royal/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/royal/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/royal/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/royal/css/aos.css">
+
+    <link rel="stylesheet" href="/royal/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/royal/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/royal/css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="/royal/css/flaticon.css">
+    <link rel="stylesheet" href="/royal/css/icomoon.css">
+    <link rel="stylesheet" href="/royal/css/style.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		
+    		$("#delete").on('click',function(){
+    			var check = confirm("지우시겠습니까?");
+    			if(check==true){
+    				var paymentno = $("#paymentno").val();
+    				
+    				$.ajax({
+    					url:"deletePayment.do",
+    					data:{
+    						paymentno:paymentno
+    					},
+    					datatype:"json",
+    					success:function(data){
+    											
+    								location.href="/paymentList";
+    							}
+    						
+    			});
+    				}else{
+    					alert("삭제에 실패 했습니다");
+    				}
+    				
+    			});
+    		});
+  
+    	
+    </script>
+
+<style type="text/css">
+  
+  	.productMain li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+	
+	  	.snack li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+		  	.bueaty li {
+  		display: inline-block; 
+  		width : 29.33%;
+  		text-align: center;
+  	}
+		#mainPage{
+		    padding-top: 243px;
+		padding-left: 10px;
+	}
+	
+		#title1{
+			padding-top:80px;
+		}
+		#all{
+			margin-left: 9%;
+   		    margin-right: 9%;
+		}
+		#all_2{
+			margin: 5%;
+		}
+</style>
+
+</head>
+<body>
+<th:block th:include="/header"></th:block>
+<div id="all">
+<h1 id="title1">구매 내역</h1>
+<div id="all_2">
+<div th:each="paymentList:${paymentList}">
+		<input type="hidden" id="paymentno" th:value=${paymentList.paymentno}>
+		<h5>고객 이름 :<span th:text="${paymentList.muser.name}"></span></h5>
+	
+	
+		<div><img th:src="|/upload/displayFile?fileName=${paymentList.product.mainImg01}|">
+		<span th:text="${paymentList.product.prName}"></span></div>
+	
+	
+		<h6>○배송 주소 :<span th:text="${paymentList.address}"></span></h6>
+	
+		<h6>○연락처 :<span  th:text="${paymentList.cellphone}"></span></h6>
+		
+		<button id="delete">삭제</button>
+	<hr>	
+
+</div>
+</div>
+
+
+
+</body>
+</html>

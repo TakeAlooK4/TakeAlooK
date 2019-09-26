@@ -1,0 +1,9 @@
+package com.bit.tak.model.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.bit.tak.model.vo.host.Host;
+
+public interface HostRepo extends JpaRepository<Host, Integer>{
+
+}

@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>장바구니 페이지</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="/royal/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/royal/css/animate.css">
+    
+    <link rel="stylesheet" href="/royal/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/royal/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/royal/css/magnific-popup.css">
+
+    <link rel="stylesheet" href="/royal/css/aos.css">
+
+    <link rel="stylesheet" href="/royal/css/ionicons.min.css">
+
+    <link rel="stylesheet" href="/royal/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="/royal/css/jquery.timepicker.css">
+
+    
+    <link rel="stylesheet" href="/royal/css/flaticon.css">
+    <link rel="stylesheet" href="/royal/css/icomoon.css">
+    <link rel="stylesheet" href="/royal/css/style.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	
+	$(".sum").on('click',function(){
+
+		var cartArr = new Array();
+		var sum = $(this);
+		
+		var tr = sum.parent().parent();
+		var td = tr.children();
+		
+		var cartNo = td.eq(0).find('input').val();
+		var cartAmount = td.eq(3).find('input').val();
+		var nickname = $("#writer").val();
+	
+		$.ajax({
+			url:"cartUpdate.do",
+			data:{
+				cartNo:cartNo,
+				nickname:nickname,
+				cartAmount:cartAmount	
+			},
+			datatype:"json",
+			success:function(data){
+					var check = confirm("수량을 변경 하시겠습니까?");
+					if(check){
+						location.href="/productCartPage";
+					}
+			}
+		//
+		});
+	});
+	
+});	
+
+
+$(function(){
+	
+	$(".deleteBtn").on('click',function(){
+		var check = confirm("지우시겠습니까?");
+		
+		var cartArr1 = new Array();
+		var deleteBtn = $(this);
+		
+		var tr = deleteBtn.parent().parent();
+		var td = tr.children();
+		
+		var cartNo = td.eq(0).find('input').val();
+		if(check==true){
+		$.ajax({
+			url:"deleteList.do",
+			data:{
+				cartNo:cartNo
+			},
+			datatype:"json",
+			success:function(data){
+									
+						location.href="/productCartPage";
+					}
+				
+	});
+		}else{
+			location.href="/productCartPage";
+		}
+
+	
+});
+});	
+
+
+$(document).ready(function(){
+	
+	$("#backBtn").click(function(){
+		location.href="/productMain";
+	});
+});
+
+
+
+$(function(){
+	
+	 $("#resultBtnnn").on('click',function(){
+		var check = confirm("결제 하시겠 습니까?");
+	console.log(check);
+		if(check===true){
+			var cartNo =$("#cartNo").val();
+			var cartAmount=$("#cartAmount").val();
+			var sumValue=$("#sumValue").val();
+			alert(cartNo);
+		$.ajax({
+			url:"paymentInsert.do",
+			data:{
+				Cart:cartNo,
+				cartAmount:cartAmount,
+				sumValue:sumValue
+			},
+			datatype:"json",
+			success:function(data){
+				
+				location.href="/payment";
+			},
+			error:function(data){
+				console.log("aaaaaa");
+			}
+				
+	});
+		}else if(check===false){
+			
+			location.href="/productCartPage";
+		}
+
+	
+}); 
+});	
+</script>
+
+<style type="text/css">
+#cartAll{
+	    margin-left: 21%;
+}
+
+	#null {
+		    padding-top: 300px;
+	}
+	#imgId{
+		
+			text-align: center;
+		}
+	
+	#result{
+			border : solid; 
+			width: 61%;
+   		    padding-left: -3%;
+  	        margin-left: 13%;
+            margin-top: 8%;
+            font-size: 34px;
+	}
+	#sumMoneyFont{
+			    padding-left: 77.7%;
+	}
+	#feeFont{padding-left: 65.5%;}
+	#sumFont{padding-left: 66.7%;}
+	#resultBtnnn{    
+	margin-left: 66.6%;
+    margin-top: 2%;
+    }
+</style>
+
+</head>
+<body>
+<th:block th:include="header.html">
+</th:block>
+<section class="petSection">
+<h2 class="titlej">PET CART</h2>
+<hr>
+<!-- main 내용 -->
+<div id="cartAll">
+<div id="null" th:if="${count == 0}">
+장바구니가 비었습니다.
+<button id="backBtn" name="backBtn">뒤로 가기</button>
+</div>
+	<div id="cartPage" name="cartPgae" >
+
+
+<div th:if="${count != 0}">
+					<label  for="name"  th:if="${session['muser'] != null}"></label>
+
+ 					<input type="hidden" th:value="${session['muser'].nickname}" id="writer" name="writer">
+
+	
+	<table id="cartTable">
+		
+		<tr th:each="cart:${cartList}">
+				<td><input type="hidden" class="cartNo" id="cartNo" name="cartNo" th:value="${cart.cartNo}"></td>
+				<td><input type="hidden" class="prNo" id="prNo" name="prNo" th:value="${cart.product.prNo}"></td>
+
+				<td class="imgId"><img th:src="|/upload/displayFile?fileName=${cart.product.mainImg01}|" style="width: 30%; height: 30%" >
+
+					<div class="prNameId" th:text="${cart.product.prName}"></div>
+				</td>
+				<td><input type="number" class="cartAmount" id="cartAmount" name="cartAmount" th:value="${cart.cartAmount}"></td>
+				<td><input id="sum"  class="sum"  type="button" value="수량 변경">
+				<input type="button" class="deleteBtn" value="삭제"  ></td>
+		</tr>	
+	</table>
+			
+					<div th:if="count != 0" colspan="5" id="result">
+						<div id="fontColor">
+						금액 :<a th:text="${sumMoney}+원" id="sumMoneyFont"></a><br>
+						배송료 : <a th:text="${fee}+원"  id="feeFont"></a><br>
+						총합계 :<a th:text="${sum}+원"  id="sumFont"></a>
+						<input type="hidden" th:value="${sum}" id="sumValue">
+						</div>					
+					</div>
+		
+		
+			
+</div>
+
+
+<button id="resultBtnnn">결제하기</button>
+</div>
+</div>
+</section>
+</body>
+</html>

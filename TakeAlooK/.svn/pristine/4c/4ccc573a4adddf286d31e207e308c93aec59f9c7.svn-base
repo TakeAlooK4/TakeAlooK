@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test scroll</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script type="text/javascript">
+
+
+</script>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+
+<div>
+<span class="controller minus">
+<button type="button" name="btnMinus">
+▼
+</button>
+</span>
+<span class="currentQuantity">
+	<input type="number" value="1" name="txtOrderNumber" onfocus="this.blur();">
+</span>
+<span class="controller plus">
+	<button type="button" name="btnPlus">
+		▲
+	</button>
+</span>
+</div>
+
+
+</body>
+</html>

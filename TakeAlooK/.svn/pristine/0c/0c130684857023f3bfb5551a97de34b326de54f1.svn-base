@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>장바구니 페이지</title>
+<link rel="stylesheet" href="css/header.css" type="text/css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	$(".sum").on('click',function(){
+
+		var cartArr = new Array();
+		var sum = $(this);
+		
+		var tr = sum.parent().parent();
+		var td = tr.children();
+		
+		var cartNo = td.eq(0).find('input').val();
+		var cartAmount = td.eq(3).find('input').val();
+		var nickname = $("#writer").val();
+	
+		$.ajax({
+			url:"cartUpdate.do",
+			data:{
+				cartNo:cartNo,
+				nickname:nickname,
+				cartAmount:cartAmount	
+			},
+			datatype:"json",
+			success:function(data){
+					var check = confirm("수량을 변경 하시겠습니까?");
+					if(check){
+						location.href="/productCartPage";
+					}
+			}
+		//
+		});
+	});
+	
+// 	$("#resultBtn").on('click',function(){
+		
+// 		var
+// 	});
+	
+	
+	
+	
+	
+	
+});	
+
+
+$(function(){
+	
+	$(".deleteBtn").on('click',function(){
+		var check = confirm("지우시겠습니까?");
+		
+		var cartArr1 = new Array();
+		var deleteBtn = $(this);
+		
+		var tr = deleteBtn.parent().parent();
+		var td = tr.children();
+		
+		var cartNo = td.eq(0).find('input').val();
+		if(check==true){
+		$.ajax({
+			url:"deleteList.do",
+			data:{
+				cartNo:cartNo
+			},
+			datatype:"json",
+			success:function(data){
+									
+						location.href="/productMain";
+					}
+				
+	});
+		}else{
+			location.href="/productCartPage";
+		}
+
+	
+});
+});	
+
+
+$(document).ready(function(){
+	
+	$("#backBtn").click(function(){
+		location.href="/productMain";
+	});
+});
+
+
+
+$(function(){
+	
+	$("#resultBtn").on('click',function(){
+		var check = confirm("결제 하시겠 습니까?");
+		
+		
+		var prNo=$("#prNo").val();
+		var nickname=$("#writer").val();
+		var cartAmount=$("#cartAmount").val();
+		var sumValue=$("#sumValue").val();
+	
+		if(check==true){
+		$.ajax({
+			url:"paymentInsert.do",
+			data:{
+				prNo:prNo,
+				nickname:nickname,
+				cartAmount:cartAmount,
+				sumValue:sumValue
+			},
+			datatype:"json",
+			success:function(data){
+				location.href="/payment";
+			}
+				
+	});
+		}else{
+			location.href="/productCartPage";
+		}
+
+	
+});
+});	
+</script>
+
+<style type="text/css">
+	#null {
+		    padding-top: 300px;
+	}
+	.imgId{
+			border: solid;
+			text-align: center;
+		}
+	
+	.result{
+			border : solid; 
+			text-align: center;
+	}
+	#cartName1{
+		    padding-top: 274px;
+	}
+</style>
+
+</head>
+<body>
+<header id="headerMenu">
+	
+
+	<th:block th:if="${session['user']==null && session['company'] ==null}" id="wrapper">
+		<h1 id="pageName"><a href="/">Take A looK</a></h1>
+				<ul id="menu">
+					<li><a th:href="memberLogin">로그인 |</a></li>
+					<li><a th:href="memberSignUp">회원가입 |</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCartPage">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</th:block>
+
+
+
+	<th:block th:if="${session['user'] != null}" id="wrapper">
+	<h1 id="pageName"><a href="/">Take A looK</a></h1>
+				<ul id="menu">
+					<li><h3 class="loginText" align="left"><font style="color: black;" th:text="${session['user'].nickname}"></font>님 게시판 입장을 환영합니다.</h3></li>
+					<li><a href="/userLogOut">로그아웃</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCartPage">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</th:block>
+
+
+
+	<th:block th:if="${session['company'] != null}" id="wrapper">
+	<h1 id="pageName"><a href="/">Take A looK</a></h1>
+				<ul id="menu">
+					<li><h3 class="loginText" align="left"><font style="color: black;" th:text="${session['company'].cName}"></font>님 게시판 입장을 환영합니다.</h3></li>
+					<li><a href="/companyLogOut">로그아웃</a></li>
+					<li><a th:href="myPage">마이페이지 |</a></li>
+					<li><a th:href="productCartPage">장바구니 |</a></li>
+					<li><a th:href="orderList">구매내역</a></li>
+				</ul>
+	</th:block>
+
+</header>
+
+<div id="mainMenu_Wrap">
+	<ul id="mainMenu">
+		<li><a href="/productMain"  style="text-decoration: none">상품</a></li>
+		<li><a href="" style="text-decoration: none">병원</a></li>
+		<li><a href="" style="text-decoration: none">커뮤니티</a></li>
+		<li><a href="" style="text-decoration: none">펫 케어</a></li>
+	
+	</ul>
+
+</div>
+
+<div id="null" th:if="${count == 0}">
+장바구니가 비었습니다.
+<button id="backBtn" name="backBtn">뒤로 가기</button>
+</div>
+	<form id="cartPage" name="cartPgae" >
+
+
+<div th:if="${count != 0}">
+					<label  for="name"  th:if="${session['user'] != null}">
+ 					<span style="color: black;" th:text="${session['user'].nickname}"></span>
+ 					<input type="hidden" th:value="${session['user'].nickname}" id="writer" name="writer">
+<h1 id="cartName1">장바구니</h1>	
+	
+	<table class="cartTable">
+		
+		<tr th:each="cart:${cartList}">
+				<td><input type="hidden" class="cartNo" id="cartNo" name="cartNo" th:value="${cart.cartNo}"></td>
+				<td><input type="hidden" class="prNo" id="prNo" name="prNo" th:value="${cart.product.prNo}"></td>
+				<td class="imgId"><img th:src="${cart.product.mainImg01}" style="width: 30%; height: 30%" >
+					<div class="prNameId" th:text="${cart.product.prName}"></div>
+				</td>
+				<td><input type="number" class="cartAmount" id="cartAmount" name="cartAmount" th:value="${cart.cartAmount}"></td>
+				<td><input id="sum"  class="sum"  type="button" value="수량 변경">
+				<td><input type="button" class="deleteBtn" value="삭제"  ></td>
+		</tr>	
+		
+		<tr>
+					<td th:if="count != 0" colspan="5" class="result">
+						<span>장바구니 금액 합계 : </span><span th:text="${sumMoney}+원" ></span><br>
+						<span>배송료 : </span><span th:text="${fee}+원"></span><br>
+						<span>총합계 : </span><span th:text="${sum}+원"></span>
+					</td>
+		</tr>
+		<tr>
+			<td><input type="text" th:value="${sum}" id="sumValue"></td>
+		</tr>
+		
+		
+	</table>
+			<button id="resultBtn">결제하기</button>
+</div>
+
+
+
+</form>
+</body>
+</html>

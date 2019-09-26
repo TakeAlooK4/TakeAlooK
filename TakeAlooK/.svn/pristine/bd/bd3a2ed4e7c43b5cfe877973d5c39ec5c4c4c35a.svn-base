@@ -1,0 +1,53 @@
+package com.bit.tak.model.vo.member;
+
+import static com.querydsl.core.types.PathMetadataFactory.*;
+
+import com.querydsl.core.types.dsl.*;
+
+import com.querydsl.core.types.PathMetadata;
+import javax.annotation.Generated;
+import com.querydsl.core.types.Path;
+
+
+/**
+ * QMUser is a Querydsl query type for MUser
+ */
+@Generated("com.querydsl.codegen.EntitySerializer")
+public class QMUser extends EntityPathBase<MUser> {
+
+    private static final long serialVersionUID = 1351363094L;
+
+    public static final QMUser mUser = new QMUser("mUser");
+
+    public final StringPath address = createString("address");
+
+    public final StringPath contact = createString("contact");
+
+    public final StringPath detailAddress = createString("detailAddress");
+
+    public final StringPath id = createString("id");
+
+    public final StringPath name = createString("name");
+
+    public final StringPath nickname = createString("nickname");
+
+    public final StringPath password = createString("password");
+
+    public final NumberPath<Integer> postCodeAddress = createNumber("postCodeAddress", Integer.class);
+
+    public final StringPath referAddress = createString("referAddress");
+
+    public QMUser(String variable) {
+        super(MUser.class, forVariable(variable));
+    }
+
+    public QMUser(Path<? extends MUser> path) {
+        super(path.getType(), path.getMetadata());
+    }
+
+    public QMUser(PathMetadata metadata) {
+        super(MUser.class, metadata);
+    }
+
+}
+

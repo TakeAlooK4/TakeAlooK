@@ -1,0 +1,42 @@
+package com.bit.tak.model.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bit.tak.model.repository.CompanyRepo;
+import com.bit.tak.model.repository.MemberRepo;
+import com.bit.tak.model.vo.member.Company;
+import com.bit.tak.model.vo.member.Muser;
+
+
+@Service
+public class MemberServiceImpl implements MemberService {
+	
+	@Autowired
+	private MemberRepo memberRepo;
+	
+	@Autowired
+	private CompanyRepo companyRepo;
+	
+	@Override
+	public Muser getMember(String user) {
+		
+		return memberRepo.findById(user).get();
+
+	}
+	
+	// 일반유저 회원가입 시켜주기
+	@Override
+	public void memberSignUp(Muser user) {
+		// TODO Auto-generated method stub
+		memberRepo.save(user);
+		
+	}
+	
+	// 기업유저 회원가입 시켜주기
+	@Override
+	public void companySignUp(Company company) {
+		// TODO Auto-generated method stub
+		companyRepo.save(company);
+	}
+}

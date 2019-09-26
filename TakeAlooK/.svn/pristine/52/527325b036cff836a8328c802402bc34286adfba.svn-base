@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>기업 회원가입 페이지</title>
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<!-- css 적용 -->
+<style type="text/css">
+	.userbtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 5px 27px;
+		font-size: 15px;
+		font-weight: bold;
+	}
+	
+	
+	.companybtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 5px 27px;
+		font-size: 15px;
+	}
+	
+	.submitbtn{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 10px 90px;
+	}
+	
+	.findAddress{
+		background-color: #f6e4c4;
+		border: none;
+		color: #808080;
+		text-align: center;
+		padding: 10px 15px;
+	}
+	
+	input[type="text"],select, input[type="password"], input[type="email"] {
+   /*  display: block; */
+    width: 15%;
+    height: 34px;
+   /*  padding: 6px 12px; */
+    font-size: 14px;
+    /* line-height: 1.42857143; */
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+ }
+</style>
+<script type="text/javascript">
+	
+	// 사업자 번호 정규식 체크	/(^[0-9]{3}-[0-9]{2}-[0-9]{5})/;
+	$(function(){
+		$("#cid2_check").css("color", "red")
+		$("#id").blur(function(){
+			var cno = $("#id").val();
+			var cnoRule = /(^[0-9]{3}-[0-9]{2}-[0-9]{5})/;
+			var cnoCheck = cno.match(cnoRule);
+			
+			if(!cnoCheck) {
+				$("#cid2_check").html("올바른  사업자번호를 입력해주세요. 숫자, -를 포함한 숫자만 입력하세요.")
+			} else {
+				$("#cid2_check").html("");
+			} 
+			if(!cno) {
+				$("#cid2_check").html("");
+			}
+			
+		});
+	});
+	
+	// 기업 대표번호 정규식 체크
+	$(function(){
+		$("#cPhone2_check").css("color", "red")
+		$("#contact").blur(function(){
+			var contact = $("#contact").val();
+			var contactRule = /^\d{2,3}-\d{3,4}-\d{4}$/;
+			var contactCheck = contact.match(contactRule);
+			
+			if(!contactCheck) {
+				$("#cPhone2_check").html("올바른 전화번호를 입력해주세요. 숫자, -를 포함한 숫자만 입력하세요.")
+			} else {
+				$("#cPhone2_check").html("");
+			} 
+			if(!contact) {
+				$("#cPhone2_check").html("");
+			}
+			
+		});
+	});
+	
+	// 담당자명 정규식 체크
+	$(function(){
+		$("#cManager_check").css("color", "red")
+		$("#name").blur(function(){
+			var name = $("#name").val();
+			var nameRule = /^[가-힣]{2,5}$/;
+			var nameCheck = name.match(nameRule);
+			
+			if(!nameCheck) {
+				$("#cManager_check").html("본인 이름을 정확히 입력해주세요.")
+			} else {
+				$("#cManager_check").html("");
+			} 
+			if(!name) {
+				$("#cManager_check").html("");
+			}
+			
+		});
+	});
+	
+	// 사업자번호 유효성 검사
+	$(function(){
+	$("#cid_check").css("color", "red")
+	$("#id").blur(function(){
+		var cNo = $('#id').val();
+		$.ajax({
+			url:"/cidCheck",
+			data:{
+				cNo:cNo
+			},
+			success:function(msg){
+				$("#cid_check").html(msg);
+				}
+			});
+		});
+	});
+	
+	// 사업자 전화번호 유효성 검사
+	$(function(){
+	$("#cPhone_check").css("color", "red")
+	$("#contact").blur(function(){
+		var cPhone = $('#contact').val();
+		$.ajax({
+			url:"/cPhoneCheck",
+			data:{
+				cPhone:cPhone
+			},
+			success:function(msg){
+				$("#cPhone_check").html(msg);
+				}
+			});
+		});
+	});
+		
+	
+	// 회원가입폼 작성 미완료시
+	$(function() {
+		$("#cSignUpSuccess").click(function(){
+			var cNo = $("#id").val();
+			var cPassword = $("#pw1").val();
+			var cPassword2 = $("#pw2").val();
+			var cName = $("#cname").val();
+			var cPhone = $("#contact").val();
+			var cManager = $("#name").val();
+			
+			if(cNo == "" || cPassword == "" || cPassword2 == "" || cName == "" || cPhone == "" || cManager == "") {
+				alert("회원가입 작성란을 전부 작성해주세요.");
+			} else {
+				alert("회원가입이 완료되었습니다.");
+				document.getElementById("companySignUp").action="/companySignUp.do";
+				$("#companySignUp").submit();
+			}
+		});
+	});
+
+	// 비밀번호 체크
+	$(function() {
+	$("#pw_check").css("color", "red")	
+		$("#pw1").blur(function(){
+			var pw = $("#pw1").val();
+			var reg = /^(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])(?=.*[0-9]).{8,15}$/;
+			var check = pw.match(reg);
+			
+			if(!check) {
+				$("#pw_check").html("영문+숫자+특수문자 조합 8~15이하까지 입력해주세요.");
+			} else {
+				$("#pw_check").html("");
+			}
+			if(!pw){
+				$("#pw_check").html("");
+			}
+	
+		});
+	});
+	
+	// 비밀번호 일치/불일치 체크
+	$(function(){
+		$("#alert-success").hide();
+		$("#alert-danger").hide();
+		$("#alert-success").css("color", "blue")
+		$("#alert-danger").css("color", "red")
+		$("input").keyup(function(){
+			var pw1=$("#pw1").val();
+			var pw2=$("#pw2").val();
+			if(pw1 != "" || pw2 != ""){
+				if(pw1 == pw2){
+					$("#alert-success").show();
+					$("#alert-danger").hide();
+					$("#csignUpSuccess").removeAttr("disabled");
+				} else if(pw1 == "" || pw2 == ""){
+					$("#alert-success").hide();
+					$("#alert-danger").hide();
+				}
+				else{
+					$("#alert-success").hide();
+					$("#alert-danger").show();
+					$("#csignUpSuccess").attr("disabled", "disabled");
+				}
+			}
+		});
+	});
+</script>
+<script>
+		// 다음 주소 API 
+    	 function sample6_execDaumPostcode() {
+ 	        new daum.Postcode({
+ 	            oncomplete: function(data) {
+ 	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+ 	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+ 	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+ 	                var addr = ''; // 주소 변수
+ 	                var extraAddr = ''; // 참고항목 변수
+
+ 	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+ 	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+ 	                    addr = data.roadAddress;
+ 	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+ 	                    addr = data.jibunAddress;
+ 	                }
+
+ 	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+ 	                if(data.userSelectedType === 'R'){
+ 	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+ 	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+ 	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+ 	                        extraAddr += data.bname;
+ 	                    }
+ 	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+ 	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+ 	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+ 	                    }
+ 	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+ 	                    if(extraAddr !== ''){
+ 	                        extraAddr = ' (' + extraAddr + ')';
+ 	                    }
+ 	                    // 조합된 참고항목을 해당 필드에 넣는다.
+ 	                    document.getElementById("sample6_extraAddress").value = extraAddr;
+ 	                
+ 	                } else {
+ 	                    document.getElementById("sample6_extraAddress").value = '';
+ 	                }
+
+ 	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+ 	                document.getElementById('sample6_postcode').value = data.zonecode;
+ 	                document.getElementById("sample6_address").value = addr;
+ 	                // 커서를 상세주소 필드로 이동한다.
+ 	                document.getElementById("sample6_detailAddress").focus();
+ 	                console.log("jjjjjj  "+$('#sample6_address').val());
+ 	            }
+ 	        }).open();
+ 	        
+ 	    };
+ 	    
+ 	     $(document).ready(function(){
+ 	     $('#cSignUpSuccess').click(function(e) {
+    			e.preventDefault();
+    			var addr = $('#sample6_postcode').val() + " ";
+    	    	addr += $('#sample6_address').val() + " ";
+    	    	addr += $('#sample6_detailAddress').val() + " ";
+    	    	addr += $('#sample6_extraAddress').val();
+    	    	 $('input[name=cAddress]').val(addr);
+    			$('#companySignUp').submit();
+    		});
+    });
+</script>
+
+</head>
+<body>
+
+	<!-- bootstrap include header 적용코드 -->
+	<th:block th:include="/header"></th:block>
+	<br><br><br><br>
+	<h1 align="center">Company SignUp</h1><br>
+	<br>
+	<form method="post" id="companySignUp">
+	<div align="center">
+		<p><a href="memberSignUp"><input type="button" value="개인회원" class="userbtn"></a> | <input type="button" value="기업회원" class="companybtn"></p><br>
+		
+		<div>
+			<input type="text" id="id" name="cNo" placeholder="사업자 번호">
+			<div class="id_check_font" id="cid_check"></div>
+			<div class="id2_check_font" id="cid2_check"></div>
+		</div>
+		
+		<div><br>
+			<input type="password" id="pw1" name="cPassword" placeholder="비밀번호" required>
+			<div class="pw_check_font" id="pw_check"></div>
+		</div>
+		
+		
+		<div><br>
+			<input type="password" id="pw2" name="cPassword2" placeholder="비밀번호 확인" required>
+			<div class="alert alert-success" id="alert-success">비밀번호가 일치합니다.</div>
+			<div class="alert alert-danger" id="alert-danger">비밀번호가 일치하지 않습니다.</div>
+		</div>
+		
+		
+		<div><br>
+			<input type="text" id="cname" name="cName" placeholder="회사명" required>
+		</div>
+			
+		<div>
+			<br><input type="text" hidden="true" name="cAddress">
+			
+			<input type="text" id="sample6_postcode" name="cAddress1" placeholder="우편번호">
+			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="findAddress"><br>
+			<input type="text" id="sample6_address" name="cAddress2" placeholder="주소"><br>
+			<input type="text" id="sample6_detailAddress" name="cAddress3" placeholder="상세주소">
+			<input type="text" id="sample6_extraAddress" name="cAddress4" placeholder="참고항목">
+		</div>	
+		
+		
+		<div><br>
+			<input type="text" id="contact" name="cPhone" placeholder="회사 대표 번호" required>
+			<div class="cPhone_check_font" id="cPhone_check"></div>
+			<div class="cPhone2_check_font" id="cPhone2_check"></div>
+		</div>
+		
+		
+		<div><br>
+			<input type="text" id="name" name="cManager" placeholder="담당자명" required>
+			<div class="cManager_check_font" id="cManager_check"></div>
+		</div><br>
+		
+		
+		<div><input type="button" id="cSignUpSuccess" value="회원가입" class="submitbtn"></div>
+	</div>
+	</form>
+		
+	
+</body>
+</html>

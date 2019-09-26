@@ -1,0 +1,26 @@
+package com.bit.tak.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class HostController {
+
+	@GetMapping("/hostMain")
+	public String hostMain(Model model) {
+		return "host/hostMain";
+	}
+
+	@GetMapping("/hostWriting")
+	public String hostWriting(Model model) {
+		
+		return "host/hostWrite";
+	}
+	
+	@GetMapping("/hostDetail")
+	public String hostDetail(Model model) {
+		
+		return "host/hostDetail";
+	}
+}

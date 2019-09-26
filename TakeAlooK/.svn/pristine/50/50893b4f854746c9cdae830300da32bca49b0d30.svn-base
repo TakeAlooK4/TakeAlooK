@@ -1,0 +1,49 @@
+package com.bit.tak.model.vo.community;
+
+import static com.querydsl.core.types.PathMetadataFactory.*;
+
+import com.querydsl.core.types.dsl.*;
+
+import com.querydsl.core.types.PathMetadata;
+import javax.annotation.Generated;
+import com.querydsl.core.types.Path;
+
+
+/**
+ * QCommunity is a Querydsl query type for Community
+ */
+@Generated("com.querydsl.codegen.EntitySerializer")
+public class QCommunity extends EntityPathBase<Community> {
+
+    private static final long serialVersionUID = 533420818L;
+
+    public static final QCommunity community = new QCommunity("community");
+
+    public final StringPath commContents = createString("commContents");
+
+    public final DateTimePath<java.sql.Timestamp> commDate = createDateTime("commDate", java.sql.Timestamp.class);
+
+    public final NumberPath<Integer> commHit = createNumber("commHit", Integer.class);
+
+    public final NumberPath<Integer> commLike = createNumber("commLike", Integer.class);
+
+    public final NumberPath<Integer> commNo = createNumber("commNo", Integer.class);
+
+    public final StringPath commTitle = createString("commTitle");
+
+    public final NumberPath<User> nickname = createNumber("nickname", User.class);
+
+    public QCommunity(String variable) {
+        super(Community.class, forVariable(variable));
+    }
+
+    public QCommunity(Path<? extends Community> path) {
+        super(path.getType(), path.getMetadata());
+    }
+
+    public QCommunity(PathMetadata metadata) {
+        super(Community.class, metadata);
+    }
+
+}
+

@@ -1,0 +1,9 @@
+package com.bit.tak.model.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.bit.tak.model.vo.admin.P_Qna;
+
+public interface P_qnaRepo extends JpaRepository<P_Qna, Integer> {
+
+}

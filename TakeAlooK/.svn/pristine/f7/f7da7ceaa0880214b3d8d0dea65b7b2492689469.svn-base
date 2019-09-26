@@ -1,0 +1,5 @@
+package com.bit.tak.model.service;
+
+public class HostServiceImpl implements HostService {
+
+}

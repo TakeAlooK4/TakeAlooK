@@ -1,0 +1,13 @@
+package com.bit.tak.model.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.bit.tak.model.vo.pet.Medical;
+import com.bit.tak.model.vo.pet.Pet;
+
+@Repository
+public interface MedicalRepo extends JpaRepository<Medical, Integer>{
+
+	
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>장바구니 페이지</title>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	$(".sum").on('click',function(){
+
+		var cartArr = new Array();
+		var sum = $(this);
+		
+		var tr = sum.parent().parent();
+		var td = tr.children();
+		
+		var cartNo = td.eq(0).find('input').val();
+		var cartAmount = td.eq(6).find('input').val();
+		
+		alert(cartNo);
+		alert(cartAmount);
+		$.ajax({
+			url:"cartUpdate.do",
+			data:{
+				cartNo:cartNo,
+			
+				cartAmount:cartAmount
+			},
+			datatype:"json",
+			success:function(data){
+					var check = confirm("수량을 변경 하시겠습니까?");
+					if(check){
+						location.href="/productCartPage";
+					}
+			}
+		
+		});
+	});
+});	
+
+
+$(function(){
+	$(".deleteBtn").on('click',function(){
+		
+		var cartArr1 = new Array();
+		var deleteBtn = $(this);
+		
+		var tr = deleteBtn.parent().parent();
+		var td = tr.children();
+		
+		var cartNo = td.eq(0).find('input').val();
+	
+
+		$.ajax({
+			url:"deleteList.do",
+			data:{
+				cartNo:cartNo
+			},
+			datatype:"json",
+			success:function(data){
+					var check = confirm("지우시겠습니까?");
+					if(check){
+						location.href="/productCartPage";
+					}
+			}
+		
+		
+	});
+		
+});
+
+});
+
+</script>
+
+<style type="text/css">
+
+	td{
+		text-align : center;
+		border: solid;
+	}
+
+</style>
+
+</head>
+<body>
+
+	<form id="cartPage" name="cartPgae" method="get" action="/productMain">
+
+<div th:if="${count == 0}">
+장바구니가 비었습니다.
+<input type="submit" value="뒤로 가기">
+</div>
+
+<div th:if="${count != 0}">
+	<table>
+		<tr>
+			<th></th>
+			<th></th>
+			<th>상품 이미지</th>
+			<th>상품 이름</th>
+			<th>상품 가격</th>
+			<th>상품 개수</th>
+			<th></th>
+			<th></th>
+			
+			
+		</tr>
+		
+		
+		<tr th:each="cart:${cartList}">
+				<td><input type="hidden" class="cartNo" id="cartNo" name="cartNo" th:value="${cart.cartNo}"></td>
+				<input type="hidden" class="prNo" id="prNo" name="prNo" th:value="${cart.product.prNo}">
+				<td><input type="checkbox" name="check"></td>
+				<td><img th:src="${cart.product.mainImg01}"></td>
+				<td th:text="${cart.product.prName}"></td>
+				<td th:text="${cart.product.prCost}"></td>
+				<td><input type="number" class="cartAmount" id="cartAmount" name="cartAmount" th:value="${cart.cartAmount}"></td>
+				<td><input id="sum"  class="sum"  type="button" value="수량 변경">
+				<td><input type="button" class="deleteBtn" value="삭제"  ></td>
+		</tr>	
+		
+		<tr>
+					<td th:if="count != 0" colspan="5" align="right" >
+					<span>장바구니 금액 합계 : </span><span th:text="${sumMoney}+원"></span><br>
+					<span>배송료 : </span><span th:text="${fee}+원"></span><br>
+					<span>총합계 : </span><span th:text="${sum}+원"></span>
+			</tr>
+		
+		
+		
+	</table>
+</div>
+
+
+
+</form>
+</body>
+</html>

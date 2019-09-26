@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>기업 비밀번호 찾기</title>
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<script type="text/javascript">
+	
+	// 사업자번호(아이디) 정규식 체크
+	$(function(){
+		$("#cNo_check").css("color", "red")
+		$("#cid").blur(function(){
+			var cId = $("#cid").val();
+			var cIdRule = /([1-9]{3})-([0-9]{2})-([0-9]{5})/;
+			var cIdCheck = cId.match(cIdRule);
+			
+			if(!cIdCheck) {
+				$("#cNo_check").html("올바른  사업자번호를 입력해주세요. 숫자, -를 포함한 숫자만 입력하세요.")
+			} else {
+				$("#cNo_check").html("");
+			} 
+			if(!cId) {
+				$("#cNo_check").html("");
+			}
+			
+		});
+	}); 
+</script>
+</head>
+<header>
+	<h2 align="center">기업 비밀번호 찾기</h2>
+</header>
+<body>
+	<form action="#" method="post">
+		<div align="center">
+			<br><a href="companySearchId"><input type="button" value="아이디 찾기"></a> | <input type="button" value="비밀번호 찾기"><br>
+		</div>
+		<br><div align="center">
+				<label for="cName">회사명 : </label><input type="text" name="cName" id="cname" placeholder="이름 입력">
+				
+				<br><label for="cNo">아이디 : </label><input type="text" name="cNo" id="cid" placeholder="가입한 사업자 번호 입력">
+				<div class="cNo_check_font" id="cNo_check"></div>
+			</div>
+			<br><div align="center">
+				<br><input type="submit" value="비밀번호 찾기">
+			</div>
+	</form>		
+</body>
+</html>

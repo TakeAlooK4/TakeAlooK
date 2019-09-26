@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="http://code.jquery.com/jquery-Latest.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+	<table>
+		<tr>
+			<th>회원 아이디</th><th>가입 날짜</th><th>사유</th>
+		</tr>
+		<tr>
+		
+		</tr>
+	</table>
+</body>
+</html>

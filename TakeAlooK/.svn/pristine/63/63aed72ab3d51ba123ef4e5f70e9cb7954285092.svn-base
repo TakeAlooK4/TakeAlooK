@@ -1,0 +1,16 @@
+package com.bit.tak.model.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.bit.tak.model.vo.member.Muser;
+import com.bit.tak.model.vo.product.P_payment;
+
+
+
+
+public interface PaymentRepo extends JpaRepository<P_payment,Integer> {
+
+
+	
+}
